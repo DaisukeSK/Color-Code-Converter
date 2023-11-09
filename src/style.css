@@ -1,0 +1,174 @@
+html, #root {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+aside #hFAFAD2, aside #h66CDAA, aside #h00FA9A {
+  font-size: 0.8em;
+}
+
+input[type=text], input[type=number] {
+  font-size: 95%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  font-family: "Helvetica";
+}
+body .output_color {
+  position: absolute;
+  top: 55px;
+  left: 55px;
+  width: 100px;
+  height: 70px;
+  /* border: 1px solid black; */
+  margin: 0;
+  background: url("./assets/tree_3.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+body .output_color div.showColor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* z-index: 99; */
+}
+body .output_color::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  z-index: -1;
+}
+
+div.top {
+  margin: 15px auto 0;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: relative;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 50px;
+}
+.flex div div.HSLHSVLabel {
+  margin: 0 auto 7px;
+  position: relative;
+  height: 24px;
+  background: #bbbbbb;
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 7px;
+  border: 1px solid rgba(184, 184, 184, 0.459);
+  box-sizing: border-box;
+  border-radius: 9px;
+}
+.flex div .colorSpace {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0;
+  margin: 0 auto;
+}
+.flex #right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.flex #right div.hexa {
+  position: relative;
+}
+.flex #right div.hexa p {
+  position: absolute;
+  margin: 0;
+  right: 5px;
+  top: 7px;
+  color: red;
+  font-size: 0.9em;
+}
+
+/*---------------------------- input range ----------------------------*/
+/* #HSL label.HSL input.colorH_HSL[type="range"] {
+    width: 500px;
+} */
+input[type=range] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 15px;
+}
+
+input[type=range]::-moz-range-track {
+  background: transparent;
+  height: 15px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  /*margin-top: -12px;  Centers thumb on the track */
+  /*margin-top = (track height in pixels / 2) - (thumb height in pixels /2)*/
+  background: white;
+  background-repeat: no-repeat;
+  height: 15px;
+  width: 1px;
+}
+
+input[type=range]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+  background-color: #ffffff;
+  height: 15px;
+  width: 1px;
+  /* color: hsl(167, 66%, 8%); */
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type=range]:focus::-webkit-slider-thumb {
+  /* border: 1px solid #053a5f; */
+  outline: 1px solid #444444;
+  outline-offset: 1px;
+}
+
+/******** Firefox ********/
+input[type=range]:focus::-moz-range-thumb {
+  /* border: 1px solid #053a5f; */
+  outline: 1px solid #444444;
+  outline-offset: 1px;
+}
+
+input.colorH_HSL[type=range]::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #ff0000);
+}
+
+input.colorH_HSL[type=range]::-moz-range-track {
+  background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000);
+}
+
+/*-----------------------------------------------------------------*/
+/* 
+  #right label {
+      display: block;
+  } *//*# sourceMappingURL=style.css.map */
