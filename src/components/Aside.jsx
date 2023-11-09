@@ -14,7 +14,7 @@ const SideBar=()=>{
         showColor_Ref.current.style.transition="all .5s"
 
         // setHexa(Hexa_Ref.current.value)
-        console.log("e",e.target.closest("li").id)
+        // console.log("e",e.target.closest("li").id)
     
         InputRefs.OP1.current.value=1
         InputRefs.OP2.current.value=1

@@ -3,6 +3,9 @@ import { Cntxt } from "../../../App.jsx"
 import { HSLFrame,CN_Label4HSL_HSV,ToggleDiv,Label,Range,InputNumber,ColorSpaceDiv,HGrid,HSLGrid } from '../../../StyledComponents.jsx'
 import { HSLtoRGB,RGBtoHexa,RGBtoCMYK,HSLtoHSV,HSVtoHSL,ChangeInput } from '../../../Functions.jsx'
 
+import custom_pointer from "../../../../public/pointer.png";
+import transparent from "../../../../public/transparent.png";
+
 
 const ColorSpace=()=>{
 
@@ -11,7 +14,7 @@ const ColorSpace=()=>{
       //////////////////////////// movePointer ////////////////////////////
 const movePointer=(val)=>{
 
-    console.log("CS val.target",val.target.id)
+    // console.log("CS val.target",val.target.id)
 
     if(val.pageX && val.pageY){// Is this if necessary?
 
@@ -91,13 +94,13 @@ const movePointer=(val)=>{
                 return (
 
                     <ColorSpaceDiv pointer={states.pointer} csbg={states.CSBG} toggle={key==0?states.toggle:!states.toggle} bg={key==0?1:0} key={key}>
-                        <img src="./public/pointer.png" alt="pointer"/>
+                        <img src={custom_pointer} alt="pointer"/>
                         <div
                         draggable="true"
                         id={"CS_"+elm}
                         onDragStart={(e)=>{
                             const img = document.createElement("img");
-                            img.src = "./public/transparent.png";
+                            img.src = {transparent};
                             e.dataTransfer.setDragImage(img, 0, 0);
                         }}
                         onClick={(e)=>{movePointer(e)}}

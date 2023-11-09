@@ -263,7 +263,7 @@ const XXXinputRangeBG=()=>{ //Main function
 
 ///////////////////////////// functions /////////////////////////////
 const functions=(a)=>{
-    console.log("RangeBG",rangeBG)
+    // console.log("RangeBG",rangeBG)
 
     if(a){
         Input(Refs, InputRefs)

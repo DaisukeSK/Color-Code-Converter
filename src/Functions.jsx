@@ -17,7 +17,7 @@ export const ChangeInput=(val)=>{
   // Wikipedia is the only source.
   export const HSLtoHSV=(obj)=>{
 
-    console.log("FUNC",obj)
+    // console.log("FUNC",obj)
     obj.V.current.value=100*(obj.L.current.value/100+(obj.LS.current.value/100)*Math.min(1-(obj.L.current.value/100), obj.L.current.value/100))
     obj.VS.current.value= obj.V.current.value==0? 0 : 200*(1-obj.L.current.value/parseFloat(obj.V.current.value))
 }
@@ -256,7 +256,7 @@ let code=String(arr[1])+arr[0]
 hexa+=code
 })
 
-console.log("hexa Confirmation:",hexa)
+// console.log("hexa Confirmation:",hexa)
 }
 
 
