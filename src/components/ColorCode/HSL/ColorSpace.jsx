@@ -91,13 +91,13 @@ const movePointer=(val)=>{
                 return (
 
                     <ColorSpaceDiv pointer={states.pointer} csbg={states.CSBG} toggle={key==0?states.toggle:!states.toggle} bg={key==0?1:0} key={key}>
-                        <img src="./src/assets/pointer.png" alt="pointer"/>
+                        <img src="./public/pointer.png" alt="pointer"/>
                         <div
                         draggable="true"
                         id={"CS_"+elm}
                         onDragStart={(e)=>{
                             const img = document.createElement("img");
-                            img.src = "./src/assets/transparent.png";
+                            img.src = "./public/transparent.png";
                             e.dataTransfer.setDragImage(img, 0, 0);
                         }}
                         onClick={(e)=>{movePointer(e)}}

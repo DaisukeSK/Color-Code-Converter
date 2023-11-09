@@ -26,7 +26,7 @@ body .output_color {
   height: 70px;
   /* border: 1px solid black; */
   margin: 0;
-  background: url("./assets/tree_3.png");
+  background: url("../public/tree_3.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
