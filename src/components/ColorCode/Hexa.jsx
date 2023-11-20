@@ -6,10 +6,10 @@ import { RGBtoCMYK,HexaToRGB,RGBtoHSL,HSLtoHSV } from '../../Functions.jsx'
 
 const Hexa=()=>{
 
-    const {states,textColor1,functions,Refs}= useContext(Cntxt)
+    const { States,textColor,functions,Refs}= useContext(Cntxt)
 
     //////////////////////////// Hexa ////////////////////////////
-  const HexaAddE=()=>{
+  const Hexa_inputChange=()=>{
 
     const str="0123456789abcdefABCDEF"
     if(Refs.Hexa.current.value.length==7 && Refs.Hexa.current.value[0]=="#"){
@@ -42,12 +42,12 @@ const Hexa=()=>{
 
 
 
-        <Frame className="hexa" textcolor={states.textColor1}>
+        <Frame className="hexa" textcolor={States.textColor?1:0}>
             
             
-            <CN_Label textcolor={states.textColor1}>Hexa</CN_Label>
+            <CN_Label textcolor={States.textColor?1:0}>Hexa</CN_Label>
             
-            <Hexainput textcolor={states.textColor1} type="text" onInput={HexaAddE} ref={Refs.Hexa}/>
+            <Hexainput textcolor={States.textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Refs.Hexa}/>
             <p></p>
         </Frame>
     )

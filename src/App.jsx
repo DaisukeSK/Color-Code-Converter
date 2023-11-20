@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext, createContext } from 'react'
 import { OutputCN_Label,Frame,Hr,HSLFrame,OutputFrame, Section,InputNumber,CN_Label,CN_Label4HSL_HSV,Label, OutputText,CN_Label4Output,ToggleDiv,ColorSpaceDiv,Range,Grid,HGrid,HSLGrid,Hexainput,OpacityGrid,SVG,CopyBox } from './StyledComponents'
-import {ChangeInput,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColor,builtInColor,Input,outputColor,inputRangeBG} from "./Functions.jsx"
+import {sync_Input,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColorChange,builtInColor,Input,outputColor,inputRangeBG} from "./Functions.jsx"
 import json from "./builtInColors.json"
 import Hamburger from './components/Hamburger'
 import SideBar from './components/Aside'
@@ -19,18 +19,20 @@ export function App() {
     
     //Alert for incorrect hexa input.
     
-const [textColor1, setTextColor1]=useState(true)
+const [textColor, setTextColor]=useState(true)
 const [toggle, setToggle]=useState(true)
 const [aside, setAside]=useState(false)
 const [builtInColors, setBuiltInColors]=useState(json)
 const [moveLeft, setMoveLeft]=useState()
-const [builtInColorStt, setBuiltInColorStt]=useState([])
+const [checkIfBuiltInColor, setCheckIfBuiltInColor]=useState([])
 const [CSBG, setCSBG]=useState([])
-const [pointer, setPointer]=useState([])
+const [marginTop, setMarginTop]=useState()
+
+// const [pointer, setPointer]=useState([])
+const [pointerPosition, setPointerPosition]=useState({HSL_top:null,HSL_left:null,HSV_top:null,HSV_left:null})
 
 // Can't it be initialized as empty object?
 const [rangeBG, setRangeBG]=useState({LS:null,L:null,VS:null,V:null,R:null,G:null,B:null,C:null,M:null,Y:null,K:null})
-
 
 const aside_div_Ref=useRef()
 const aside_ul_Ref=useRef()
@@ -92,7 +94,7 @@ const outputCMYK_Ref=useRef()
 const Refs={
     H:H_Ref, LS:LS_Ref, L:L_Ref, VS:VS_Ref, V:V_Ref,
     Hexa:Hexa_Ref, R:R_Ref, G:G_Ref, B:B_Ref, C:C_Ref, M:M_Ref, Y:Y_Ref, K:K_Ref
-    // setCSBG:setCSBG, setPointer:setPointer, setTextColor1:setTextColor1, builtInColors:builtInColors, setBuiltInColorStt:setBuiltInColorStt
+    // setCSBG:setCSBG, setPointer:setPointer, setTextColor:setTextColor, builtInColors:builtInColors, setCheckIfBuiltInColor:setCheckIfBuiltInColor
 }
 
 const InputRefs={
@@ -105,32 +107,41 @@ const OutputRefs={
     HSL:outputHSL_Ref, HSV:outputHSV_Ref, Hexa:outputHexa_Ref, RGB:outputRGB_Ref, CMYK:outputCMYK_Ref
 }
 
-const states={
-  textColor1:textColor1, setTextColor1:setTextColor1,
+const States={
+  textColor:textColor, setTextColor:setTextColor,
   toggle:toggle, setToggle:setToggle,
 
   aside:aside, setAside:setAside,
   builtInColors:builtInColors, setBuiltInColors:setBuiltInColors,
   moveLeft:moveLeft, setMoveLeft:setMoveLeft,
-  builtInColorStt:builtInColorStt, setBuiltInColorStt:setBuiltInColorStt,
+  checkIfBuiltInColor:checkIfBuiltInColor, setCheckIfBuiltInColor:setCheckIfBuiltInColor,
   CSBG:CSBG, setCSBG:setCSBG,
-  pointer:pointer, setPointer:setPointer,
+  pointerPosition:pointerPosition, setPointerPosition:setPointerPosition,
   rangeBG:rangeBG, setRangeBG:setRangeBG
 }
 
 useEffect(()=>{
 
-  H2_Ref.current.value=210
-  LS2_Ref.current.value=50
-  L2_Ref.current.value=50
-  ChangeInput(H2_Ref.current)
-  ChangeInput(LS2_Ref.current)
-  ChangeInput(L2_Ref.current)
+    let initH=210;
+    let initLS=50;
+    let initL=50
 
-  H_Ref.current.value=210
-  LS_Ref.current.value=50
-  L_Ref.current.value=50
-    
+
+    const topHeight=217
+    const HSLheight=351
+    setMarginTop((window.innerHeight-topHeight-HSLheight)/3)
+
+  H2_Ref.current.value=initH
+  LS2_Ref.current.value=initLS
+  L2_Ref.current.value=initL
+  sync_Input(H2_Ref.current)
+  sync_Input(LS2_Ref.current)
+  sync_Input(L2_Ref.current)
+
+  H_Ref.current.value=initH
+  LS_Ref.current.value=initLS
+  L_Ref.current.value=initL
+
   HSLtoHSV(Refs)
   HSLtoRGB(Refs)
   RGBtoHexa(Refs)
@@ -143,146 +154,28 @@ aside_ul_Ref.current.style.height=window.innerHeight-aside_div_Ref.current.getBo
 }, [])
 
 
-///////////////////////////// input range background /////////////////////////////
-  
-const SandLforSv=(Sv)=>{ // Function to get bgcolor of Sv range input
-  const L=100*((parseFloat(V2_Ref.current.value)/100)*(1-((Sv/100)/2)))
-  let S;
-      S= (L==0 || L==100)? 0 : 100*(((parseFloat(V2_Ref.current.value)/100)-(L/100))/Math.min(L/100, 1-L/100))
-      return [S,L]
-}
-
-const SandLforV=(V)=>{ // Function to get bgcolor of V range input
-  const L=100*((V/100)*(1-((parseFloat(VS2_Ref.current.value)/100)/2)))
-  let S;
-
-  S= (L==0 || L==100)? 0 : 100*(((V/100)-(L/100))/Math.min(L/100, 1-L/100))
-
-  return [S,L]
-  
-}
-const CMYKbgColor=(c,m,y,k)=>{
-  return `rgb(${255*(1-c/100)*(1-k/100)},${255*(1-m/100)*(1-k/100)},${255*(1-y/100)*(1-k/100)})`
-}
-
-const XXXinputRangeBG=()=>{ //Main function
-  const HSL_Sleft=`hsl(0,0%,${parseFloat(L2_Ref.current.value)}%)`
-  const HSL_Sright=`hsl(${H2_Ref.current.value},100%,${parseFloat(L2_Ref.current.value)}%)`
-  // document.querySelector("div.HSL_Sbg").style.background=
-  // `linear-gradient(90deg, ${HSL_Sleft},${HSL_Sright})`
-  const LSbg=`linear-gradient(90deg, ${HSL_Sleft},${HSL_Sright})`
-  // setRangeBG({...rangeBG, LS:`linear-gradient(90deg, ${HSL_Sleft},${HSL_Sright})`})
-
-  const HSL_Lmiddle=`hsl(${H2_Ref.current.value},${LS2_Ref.current.value}%,50%)`
-  // document.querySelector("div.HSL_Lbg").style.background=
-  // `linear-gradient(90deg, hsl(0,0%,0%), ${HSL_Lmiddle}, hsl(0,0%,100%))`
-  const Lbg=`linear-gradient(90deg, hsl(0,0%,0%), ${HSL_Lmiddle}, hsl(0,0%,100%))`
-  // setRangeBG({...rangeBG, L:`linear-gradient(90deg, hsl(0,0%,0%), ${HSL_Lmiddle}, hsl(0,0%,100%))`})
-
-  //////////// HSV ////////////
-  // hsv(any, 0% value)   : left of Sv
-  // hsv(hue, 100% value) : right of Sv
-
-  // hsv(any, Sv 0%)   : left of V
-  // hsv(hue, Sv 100%) : right of V
-
-  // Convert them to hsl, Use the same method as HSVtoSHL function
-
-  // Sv
-  const hsvSleft=`hsl(0,${SandLforSv(0)[0]}%,${SandLforSv(0)[1]}%)`
-  const hsvSRight=`hsl(${H2_Ref.current.value},${SandLforSv(100)[0]}%,${SandLforSv(100)[1]}%)`
-  // document.querySelector("div.HSV_Sbg").style.background=`linear-gradient(90deg, ${hsvSleft}, ${hsvSRight})`
-  const VSbg=`linear-gradient(90deg, ${hsvSleft}, ${hsvSRight})`
-  // setRangeBG({...rangeBG, VS:`linear-gradient(90deg, ${hsvSleft}, ${hsvSRight})`})
-
-  // V
-  const hsvVleft=`hsl(0,${SandLforV(0)[0]}%,${SandLforV(0)[1]}%)`
-  const hsvVRight=`hsl(${H2_Ref.current.value},${SandLforV(100)[0]}%,${SandLforV(100)[1]}%)`
-  // document.querySelector("div.HSV_Vbg").style.background=`linear-gradient(90deg, ${hsvVleft}, ${hsvVRight})`
-  const Vbg=`linear-gradient(90deg, ${hsvVleft}, ${hsvVRight})`
-  // setRangeBG({...rangeBG, V:`linear-gradient(90deg, ${hsvVleft}, ${hsvVRight})`})
-
-
-
-
-  // RGB
-  const rgbRleft=`rgb(0,${parseFloat(G2_Ref.current.value)},${parseFloat(B2_Ref.current.value)})`
-  const rgbRright=`rgb(255,${parseFloat(G2_Ref.current.value)},${parseFloat(B2_Ref.current.value)})`
-  // document.querySelector("div.RGB_Rbg").style.background=`linear-gradient(90deg, ${rgbRleft}, ${rgbRright})`
-  const Rbg=`linear-gradient(90deg, ${rgbRleft}, ${rgbRright})`
-  // setRangeBG({...rangeBG, R:`linear-gradient(90deg, ${rgbRleft}, ${rgbRright})`})
-  // setRangeBG(prev=>({...prev, R:`linear-gradient(90deg, ${rgbRleft}, ${rgbRright})`}))
-
-  const rgbGleft=`rgb(${parseFloat(R2_Ref.current.value)},0,${parseFloat(B2_Ref.current.value)})`
-  const rgbGright=`rgb(${parseFloat(R2_Ref.current.value)},255,${parseFloat(B2_Ref.current.value)})`
-  // document.querySelector("div.RGB_Gbg").style.background=`linear-gradient(90deg, ${rgbGleft}, ${rgbGright})`
-  const Gbg=`linear-gradient(90deg, ${rgbGleft}, ${rgbGright})`
-  // setRangeBG({...rangeBG, G:`linear-gradient(90deg, ${rgbGleft}, ${rgbGright})`})
-
-  const rgbBleft=`rgb(${parseFloat(R2_Ref.current.value)},${parseFloat(G2_Ref.current.value)},0)`
-  const rgbBright=`rgb(${parseFloat(R2_Ref.current.value)},${parseFloat(G2_Ref.current.value)},255)`
-  // document.querySelector("div.RGB_Bbg").style.background=`linear-gradient(90deg, ${rgbBleft}, ${rgbBright})`
-  const Bbg=`linear-gradient(90deg, ${rgbBleft}, ${rgbBright})`
-  // setRangeBG({...rangeBG, B:`linear-gradient(90deg, ${rgbBleft}, ${rgbBright})`})
-
-
-
-
-
-  // CMYK
-  const Cleft=CMYKbgColor(0,parseFloat(M2_Ref.current.value),parseFloat(Y2_Ref.current.value),parseFloat(K2_Ref.current.value))
-  const Cright=CMYKbgColor(100,parseFloat(M2_Ref.current.value),parseFloat(Y2_Ref.current.value),parseFloat(K2_Ref.current.value))
-  // document.querySelector("div.CMYK_Cbg").style.background=`linear-gradient(90deg, ${Cleft}, ${Cright})`
-  const Cbg=`linear-gradient(90deg, ${Cleft}, ${Cright})`
-  // setRangeBG({...rangeBG, C:`linear-gradient(90deg, ${Cleft}, ${Cright})`})
-
-  const Mleft=CMYKbgColor(parseFloat(C2_Ref.current.value),0,parseFloat(Y2_Ref.current.value),parseFloat(K2_Ref.current.value))
-  const Mright=CMYKbgColor(parseFloat(C2_Ref.current.value),100,parseFloat(Y2_Ref.current.value),parseFloat(K2_Ref.current.value))
-  // document.querySelector("div.CMYK_Mbg").style.background=`linear-gradient(90deg, ${Mleft}, ${Mright})`
-  const Mbg=`linear-gradient(90deg, ${Mleft}, ${Mright})`
-  // setRangeBG({...rangeBG, M:`linear-gradient(90deg, ${Mleft}, ${Mright})`})
-
-  const Yleft=CMYKbgColor(parseFloat(C2_Ref.current.value),parseFloat(M2_Ref.current.value),0,parseFloat(K2_Ref.current.value))
-  const Yright=CMYKbgColor(parseFloat(C2_Ref.current.value),parseFloat(M2_Ref.current.value),100,parseFloat(K2_Ref.current.value))
-  // document.querySelector("div.CMYK_Ybg").style.background=`linear-gradient(90deg, ${Yleft}, ${Yright})`
-  const Ybg=`linear-gradient(90deg, ${Yleft}, ${Yright})`
-  // setRangeBG({...rangeBG, Y:`linear-gradient(90deg, ${Yleft}, ${Yright})`})
-
-  const Kleft=CMYKbgColor(parseFloat(C2_Ref.current.value),parseFloat(M2_Ref.current.value),parseFloat(Y2_Ref.current.value),0)
-  const Kright=CMYKbgColor(parseFloat(C2_Ref.current.value),parseFloat(M2_Ref.current.value),parseFloat(Y2_Ref.current.value),100)
-  // document.querySelector("div.CMYK_Kbg").style.background=`linear-gradient(90deg, ${Kleft}, ${Kright})`
-  const Kbg=`linear-gradient(90deg, ${Kleft}, ${Kright})`
-
-
-  setRangeBG({LS:LSbg,L:Lbg,VS:VSbg,V:Vbg, R:Rbg,B:Bbg,G:Gbg,C:Cbg,M:Mbg,Y:Ybg,K:Kbg})
-  
-  
-}
-
-
-
 ///////////////////////////// functions /////////////////////////////
 const functions=(a)=>{
     // console.log("RangeBG",rangeBG)
 
     if(a){
         Input(Refs, InputRefs)
-        colorSpaceBG(Refs,states)
+        colorSpaceBG(Refs,States)
         outputColor(InputRefs, OutputRefs, showColor_Ref)
-        HSLtoPointer(Refs,states)
-        textColor(Refs,states)
-        inputRangeBG(InputRefs,states)
+        HSLtoPointer(Refs,States)
+        textColorChange(Refs,States)
+        inputRangeBG(InputRefs,States)
         document.querySelector("div#right div.hexa p").innerText=""
-        builtInColor(Refs,states)
+        builtInColor(Refs,States)
     }else{
         Input(Refs, InputRefs)
         //colorSpaceBG()
         outputColor(InputRefs, OutputRefs, showColor_Ref)
         //HSLtoPointer()
-        textColor(Refs,states)
-        inputRangeBG(InputRefs,states)
+        textColorChange(Refs,States)
+        inputRangeBG(InputRefs,States)
         document.querySelector("div#right div.hexa p").innerText=""
-        builtInColor(Refs,states)
+        builtInColor(Refs,States)
 
     }
 
@@ -293,20 +186,20 @@ const functions=(a)=>{
   
   return (
     
-    <Cntxt.Provider value={{states,rangeBG,CSBG,toggle,setToggle,pointer,setPointer,builtInColorStt,OutputRefs,aside,functions,InputRefs,Refs,textColor1,setAside,aside_div_Ref,aside_ul_Ref,builtInColors,showColor_Ref}}>
+    <Cntxt.Provider value={{ States,rangeBG,CSBG,toggle,setToggle,pointerPosition,setPointerPosition,checkIfBuiltInColor,OutputRefs,aside,functions,InputRefs,Refs,textColor,setAside,aside_div_Ref,aside_ul_Ref,builtInColors,showColor_Ref}}>
     
     <Hamburger/>
     <SideBar/>
     <HiddenInput/>
 
-    <Section moveleft={moveLeft} aside={aside} ref={section_Ref}>
+    <Section moveleft={moveLeft} aside={aside?1:0} ref={section_Ref}>
   
 
     <div className="output_color">
         <div className="showColor" ref={showColor_Ref}></div>
     </div>
     {/* <!------------------------Output------------------------> */}
-    <div className="top">
+    <div className="top" style={{margin:`${marginTop}px auto`}}>
     {/* <!-- No need now but keeping it because styles collapse somehow if remove it--> */}
 
         <OutPut/>

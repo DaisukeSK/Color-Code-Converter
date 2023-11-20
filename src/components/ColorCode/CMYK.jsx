@@ -1,33 +1,27 @@
 import { useContext } from "react"
 import { Cntxt } from "../../App.jsx"
 import { Frame,CN_Label,Grid,Label,Range,InputNumber,CMYK_RangeBG } from '../../StyledComponents.jsx'
-import { CMYKtoRGB,RGBtoHexa,RGBtoHSL,HSLtoHSV,ChangeInput } from '../../Functions.jsx'
+import { CMYKtoRGB,RGBtoHexa,RGBtoHSL,HSLtoHSV,sync_Input } from '../../Functions.jsx'
 
 
 const CMYK=()=>{
 
-    const {states,textColor1,InputRefs,functions,Refs,rangeBG}= useContext(Cntxt)
+    const { States,textColor,InputRefs,functions,Refs,rangeBG}= useContext(Cntxt)
 
     //////////////////////////// CMYK ////////////////////////////
-  const CMYKaddE=(e)=>{
+  const CMYK_inputChange=(e)=>{
       
-    ChangeInput(e.target)
+    sync_Input(e.target)
+
+    // console.log("className",e.target.closest(""))
+    // console.log("className",e.target.className[1])
+    // console.log("className",e.target.className[2])
+    // e.target.className.forEach(val=>{
+    //     console.log(val)
+    // })
 
         switch(e.target){
-            // case C1_Ref.current: case C2_Ref.current:
-            // C_Ref.current.value=parseFloat(C2_Ref.current.value);
-            // break;
-
-            // case M1_Ref.current: case M2_Ref.current:
-            // M_Ref.current.value=parseFloat(M2_Ref.current.value);
-            // break;
-
-            // case Y1_Ref.current: case Y2_Ref.current:
-            // Y_Ref.current.value=parseFloat(Y2_Ref.current.value);
-            // break;
-
-            // default:
-            // K_Ref.current.value=parseFloat(K2_Ref.current.value)
+            
 
             case InputRefs.C1.current: case InputRefs.C2.current:
                 Refs.C.current.value=parseFloat(InputRefs.C2.current.value);
@@ -58,28 +52,29 @@ const CMYK=()=>{
 
 
 
-    <Frame textcolor={states.textColor1}>
+    <Frame textcolor={States.textColor?1:0}>
             
-            <CN_Label textcolor={states.textColor1}>CMYK</CN_Label>
+            <CN_Label textcolor={States.textColor?1:0}>CMYK</CN_Label>
 
             <div>
 
                 {["C","M","Y","K"].map((elm,key)=>{
                     return <Grid key={key}>
                     
-                    <Label textcolor={states.textColor1}>{elm}:</Label>
+                    <Label textcolor={States.textColor?1:0}>{elm}:</Label>
                     <Range>
 
-                        <CMYK_RangeBG className={`CMYK_${elm}bg`} bg={elm} rangebg={states.rangeBG}/>
+                        <CMYK_RangeBG bg={elm} rangebg={States.rangeBG}/>
                         <input type="range" min="0" max="100"
-                        onChange={(e)=>{CMYKaddE(e)}}
-                            onInput={(e)=>{CMYKaddE(e)}}
+
+                        onChange={(e)=>{CMYK_inputChange(e)}}
+                            onInput={(e)=>{CMYK_inputChange(e)}}
                             ref={key==0? InputRefs.C1:key==1? InputRefs.M1:key==2? InputRefs.Y1:InputRefs.K1}/>
 
                     </Range>
-                    <InputNumber textcolor={states.textColor1} min="0" max="100" step="1"
-                    onChange={(e)=>{CMYKaddE(e)}}
-                        onInput={(e)=>{CMYKaddE(e)}}
+                    <InputNumber textcolor={States.textColor?1:0} min="0" max="100" step="1"
+                    onChange={(e)=>{CMYK_inputChange(e)}}
+                        onInput={(e)=>{CMYK_inputChange(e)}}
                             ref={key==0? InputRefs.C2:key==1? InputRefs.M2:key==2? InputRefs.Y2:InputRefs.K2}/>
                     
                     </Grid>

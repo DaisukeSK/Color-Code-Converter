@@ -51,7 +51,6 @@ body .output_color::before {
 }
 
 div.top {
-  margin: 15px auto 0;
   width: -moz-fit-content;
   width: fit-content;
   position: relative;
@@ -59,7 +58,8 @@ div.top {
 .flex {
   display: flex;
   justify-content: center;
-  margin: 20px 0 50px;
+  margin: 20px 0;
+  margin: 0;
 }
 .flex div div.HSLHSVLabel {
   margin: 0 auto 7px;
@@ -159,11 +159,11 @@ input[type=range]:focus::-moz-range-thumb {
   outline-offset: 1px;
 }
 
-input.colorH_HSL[type=range]::-webkit-slider-runnable-track {
+input.input_H[type=range]::-webkit-slider-runnable-track {
   background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #ff0000);
 }
 
-input.colorH_HSL[type=range]::-moz-range-track {
+input.input_H[type=range]::-moz-range-track {
   background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000);
 }
 

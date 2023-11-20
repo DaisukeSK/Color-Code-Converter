@@ -5,14 +5,14 @@ import { HamburgerDiv } from '../StyledComponents'
 
 const Hamburger=()=>{
     
-    const {states,textColor1,setAside,aside}=useContext(Cntxt)
+    const {States,textColor,setAside,aside}=useContext(Cntxt)
     
     return(
         
         
-        <HamburgerDiv textcolor={states.textColor1} onClick={()=>states.setAside(!states.aside)}>
+        <HamburgerDiv textcolor={States.textColor?1:0} onClick={()=>States.setAside(true)}>
                 <div onClick={()=>{
-                    states.setAside(!states.aside)
+                    States.setAside(true)
                     // console.log("innerWidth",window.innerWidth)
                     // console.log("innerWidth",section_Ref.current.getBoundingClientRect().width)
                     
@@ -20,10 +20,10 @@ const Hamburger=()=>{
                     
                     }}></div>
         
-                <svg width="40" height="40">
-                    <path d="M0 0 l35 0 l0 4 l-35 0 Z"/>
-                    <path d="M0 9 l35 0 l0 4 l-35 0 Z"/>
-                    <path d="M0 18 l35 0 l0 4 l-35 0 Z"/>
+                <svg width="100%" height="100%">
+                    <path d="M0 0 h35 v4 h-35 Z"/>
+                    <path d="M0 9 h35 v4 h-35 Z"/>
+                    <path d="M0 18 h35 v4 h-35 Z"/>
         
         
                 </svg>

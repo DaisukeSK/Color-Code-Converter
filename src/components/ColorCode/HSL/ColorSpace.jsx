@@ -1,99 +1,94 @@
 import { useContext } from "react"
 import { Cntxt } from "../../../App.jsx"
-import { HSLFrame,CN_Label4HSL_HSV,ToggleDiv,Label,Range,InputNumber,ColorSpaceDiv,HGrid,HSLGrid } from '../../../StyledComponents.jsx'
-import { HSLtoRGB,RGBtoHexa,RGBtoCMYK,HSLtoHSV,HSVtoHSL,ChangeInput } from '../../../Functions.jsx'
+import { ColorSpaceDiv } from '../../../StyledComponents.jsx'
+import { HSLtoRGB, RGBtoHexa, RGBtoCMYK, HSLtoHSV, HSVtoHSL } from '../../../Functions.jsx'
 
 import custom_pointer from "../../../../public/pointer.png";
 import transparent from "../../../../public/transparent.png";
 
-
 const ColorSpace=()=>{
 
-    const {states,textColor1,aside,InputRefs,functions,Refs,toggle,setToggle,pointer,setPointer,CSBG}= useContext(Cntxt)
+    const { States, functions, Refs }= useContext(Cntxt)
 
-      //////////////////////////// movePointer ////////////////////////////
-const movePointer=(val)=>{
+    const movePointer=(val)=>{
 
-    // console.log("CS val.target",val.target.id)
+        if(val.pageX && val.pageY){// Is this if necessary?
 
-    if(val.pageX && val.pageY){// Is this if necessary?
-
-        let top=val.pageY-window.pageYOffset-val.target.getBoundingClientRect().top
-       
-        top<=0? top=0:null
-        top>=200? top=200:null
-
-        let left=val.pageX-window.pageXOffset-val.target.getBoundingClientRect().left
+            let top=val.pageY-window.pageYOffset-val.target.getBoundingClientRect().top
         
-        left<=0? left=0:null
-        left>=360? left=360:null
+            top<=0 && (top=0)
+            top>=200 && (top=200)
 
-        if(val.target.id=="CS_HSL"){
-
-            // pointer_HSL_Ref.current.style.top=top-12+"px"
-            // pointer_HSL_Ref.current.style.left=left-12+"px"
-
-            states.setPointer(pointer=>pointer.map((val,key)=>key==0?top-12+"px":val))
-            states.setPointer(pointer=>pointer.map((val,key)=>key==1?left-12+"px" :val))
-
-            Refs.LS.current.value=(top==200 || top==0)? 0 : left*100/360
-
-            Refs.L.current.value=Math.abs(top/2-100)
-
-            HSLtoHSV(Refs)
+            let left=val.pageX-window.pageXOffset-val.target.getBoundingClientRect().left
             
-            // pointer_HSV_Ref.current.style.top=Math.abs(parseFloat(V_Ref.current.value)*2-200)-12+"px"
-            // pointer_HSV_Ref.current.style.left=parseFloat(VS_Ref.current.value)*3.6-12+"px"
+            left<=0 && (left=0)
+            left>=360 && (left=360)
 
-            states.setPointer(prev=>prev.map((val,key)=>key==2?Math.abs(parseFloat(Refs.V.current.value)*2-200)-12+"px":val))
-            states.setPointer(prev=>prev.map((val,key)=>key==3?parseFloat(Refs.VS.current.value)*3.6-12+"px" :val))
+            if(val.target.id=="CS_HSL"){
+
+                // States.setPointerPosition(pointer=>pointer.map((val,key)=>key==0?top-12+"px":val))
+                // States.setPointerPosition(pointer=>pointer.map((val,key)=>key==1?left-12+"px" :val))
+
+                Refs.LS.current.value=(top==200 || top==0)? 0 : left*100/360
+
+                Refs.L.current.value=Math.abs(top/2-100)
+
+                HSLtoHSV(Refs)
+
+                // States.setPointerPosition(prev=>prev.map((val,key)=>key==2?Math.abs(parseFloat(Refs.V.current.value)*2-200)-12+"px":val))
+                // States.setPointerPosition(prev=>prev.map((val,key)=>key==3?parseFloat(Refs.VS.current.value)*3.6-12+"px" :val))
+                States.setPointerPosition({...States.pointerPosition,
+                
+                    HSL_top: top-12+"px",
+                    HSL_left: left-12+"px",
+                    HSV_top: Math.abs(parseFloat(Refs.V.current.value)*2-200)-12+"px",
+                    HSV_left: parseFloat(Refs.VS.current.value)*3.6-12+"px"
+
+                })
+                
+
+            }else if(val.target.id=="CS_HSV"){
+
+                // States.setPointerPosition(prev=>prev.map((val,key)=>key==2?top-12+"px":val))
+                // States.setPointerPosition(prev=>prev.map((val,key)=>key==3?left-12+"px" :val))
+
+                Refs.VS.current.value= top==200? 0 : left*100/360
+
+                Refs.V.current.value=Math.abs(top/2-100)
+
+                HSVtoHSL(Refs)
+                
+                // States.setPointerPosition(prev=>prev.map((val,key)=>key==0?Math.abs(parseFloat(Refs.L.current.value)*2-200)-12+"px":val))
+                // States.setPointerPosition(prev=>prev.map((val,key)=>key==1?Refs.LS.current.value*3.6-12+"px" :val))
+                
+                States.setPointerPosition({...States.pointerPosition,
+                
+                    HSL_top: Math.abs(parseFloat(Refs.L.current.value)*2-200)-12+"px",
+                    HSL_left: Refs.LS.current.value*3.6-12+"px",
+                    HSV_top: top-12+"px",
+                    HSV_left: left-12+"px"
+
+                })
+            
+            }
             
             
+            HSLtoRGB(Refs)
+            RGBtoHexa(Refs)
+            RGBtoCMYK(Refs)
 
-        }else if(val.target.id=="CS_HSV"){
-
-            // pointer_HSV_Ref.current.style.top=top-12+"px"
-            // pointer_HSV_Ref.current.style.left=left-12+"px"
-            states.setPointer(prev=>prev.map((val,key)=>key==2?top-12+"px":val))
-            states.setPointer(prev=>prev.map((val,key)=>key==3?left-12+"px" :val))
-
-            Refs.VS.current.value= top==200? 0 : left*100/360
-
-            Refs.V.current.value=Math.abs(top/2-100)
-
-            HSVtoHSL(Refs)
-            
-            // pointer_HSL_Ref.current.style.top=Math.abs(parseFloat(L_Ref.current.value)*2-200)-12+"px"
-            // pointer_HSL_Ref.current.style.left=LS_Ref.current.value*3.6-12+"px"
-            states.setPointer(prev=>prev.map((val,key)=>key==0?Math.abs(parseFloat(Refs.L.current.value)*2-200)-12+"px":val))
-            states.setPointer(prev=>prev.map((val,key)=>key==1?Refs.LS.current.value*3.6-12+"px" :val))
+            functions(false)
         }
-        
-        
-        HSLtoRGB(Refs)
-        RGBtoHexa(Refs)
-        RGBtoCMYK(Refs)
-
-        functions(false)
     }
-}
-
-
-    ///////////////////////////////////////////////////////////////
-
 
     return(
-
-
-
-       
-            
+        
         <div className="colorSpace">
 
             {["HSL","HSV"].map((elm,key)=>{
                 return (
 
-                    <ColorSpaceDiv pointer={states.pointer} csbg={states.CSBG} toggle={key==0?states.toggle:!states.toggle} bg={key==0?1:0} key={key}>
+                    <ColorSpaceDiv pointerposition={States.pointerPosition} csbg={States.CSBG} toggle={key==0?States.toggle:!States.toggle} bg={key==0?1:0} key={key}>
                         <img src={custom_pointer} alt="pointer"/>
                         <div
                         draggable="true"

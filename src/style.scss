@@ -343,7 +343,7 @@ body {
 // div.top{
 
 div.top{
-    margin: 15px auto 0;
+    // margin: 15px auto;
     // display: flex;
     // justify-content: center;
     // margin: 0 auto;
@@ -465,7 +465,8 @@ div.top{
 .flex {
     display: flex;
     justify-content: center;
-    margin: 20px 0 50px;
+    margin: 20px 0;
+    margin: 0;
     
 
     div{
@@ -597,7 +598,7 @@ input[type="range"]:focus::-moz-range-thumb {
 }
   
 
-input.colorH_HSL[type="range"]::-webkit-slider-runnable-track {
+input.input_H[type="range"]::-webkit-slider-runnable-track {
     
     background: linear-gradient(90deg,
         #FF0000,#FFFF00,#00FF00,
@@ -605,7 +606,7 @@ input.colorH_HSL[type="range"]::-webkit-slider-runnable-track {
     );
 }
 
-input.colorH_HSL[type="range"]::-moz-range-track {
+input.input_H[type="range"]::-moz-range-track {
     
     background: linear-gradient(90deg,
     #FF0000,#FFFF00,#00FF00,

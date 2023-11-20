@@ -1,17 +1,17 @@
 import { useContext } from "react"
 import { Cntxt } from "../App.jsx"
 import { Aside } from '../StyledComponents'
-import { RGBtoCMYK,HexaToRGB,RGBtoHSL,HSLtoHSV,ChangeInput } from '../Functions.jsx'
+import { RGBtoCMYK,HexaToRGB,RGBtoHSL,HSLtoHSV,sync_Input } from '../Functions.jsx'
 
 
 const SideBar=()=>{
     
-    const {states,aside_div_Ref,setAside,aside,Refs,aside_ul_Ref,builtInColors,showColor_Ref,InputRefs,functions}=useContext(Cntxt)
+    const {States,aside_div_Ref,setAside,aside,Refs,aside_ul_Ref,builtInColors,showColor_Ref,InputRefs,functions}=useContext(Cntxt)
 
     const LiClick=(e)=>{
 
-        document.querySelector("body").style.transition="all .5s"
-        showColor_Ref.current.style.transition="all .5s"
+        document.querySelector("body").style.transition="all .7s"
+        showColor_Ref.current.style.transition="all .7s"
 
         // setHexa(Hexa_Ref.current.value)
         // console.log("e",e.target.closest("li").id)
@@ -38,9 +38,9 @@ const SideBar=()=>{
 
     return (
 
-        <Aside aside={states.aside}>
+        <Aside aside={States.aside?1:0}>
         <div ref={aside_div_Ref}>
-            <div className='close' onClick={()=>states.setAside(!states.aside)}>
+            <div className='close' onClick={()=>States.setAside(false)}>
                 <svg width="20" height="20">
                     <rect x="1" y="1" rx="5" ry="5" width="18" height="18"/>
                     <path d="M5 5 l10 10"/>
@@ -58,26 +58,26 @@ const SideBar=()=>{
 
         {
         
-        Object.keys(states.builtInColors).map((val)=>{
+        Object.keys(States.builtInColors).map((val,key)=>{
             // console.log("val",builtInColors[val]["hexa"])
-            return <>
-            <li id={"h"+states.builtInColors[val]["hexa"].replace("#","")}
+            return (
+            <li key={key} id={"h"+States.builtInColors[val]["hexa"].replace("#","")}
             onClick={(e)=>LiClick(e)}
             onMouseLeave={()=>LiMouseleave()}
             style={{
-                backgroundColor: states.builtInColors[val]["hexa"],
-                color:states.builtInColors[val]["letterColor"]?states.builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
+                backgroundColor: States.builtInColors[val]["hexa"],
+                color:States.builtInColors[val]["letterColor"]?States.builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
 
             }}
             // onClick={(e)=>LiClick(e)}
             >
                 <div>{val}</div>
-                <div>{states.builtInColors[val]["hexa"]}</div>
+                <div>{States.builtInColors[val]["hexa"]}</div>
                 
                 
-            </li>
+            </li>)
             
-            </>
+            
         })
         
         

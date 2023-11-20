@@ -13,8 +13,8 @@ export const Section=Styled.section`
 
 export const HamburgerDiv=Styled.div`
     position:absolute;
-    top:20px;
-    left:20px;
+    top:15px;
+    left:15px;
     width:35px;
     height:25px;
         div {
@@ -189,21 +189,43 @@ const toLeft=keyframes`
     }
 `;
 
+// export const ToggleDiv=Styled.div`
+//     position: absolute;
+//     width: 48px;
+//     height: 100%;
+//     top: 0;
+//     left: 0;
+//     background-color: hsl(0, 0%, 30%);
+//     border-radius: 7px;
+//     // z-index: -1;
+
+//     animation-duration: .3s;
+//     animation-timing-function: ease-out;
+//     animation-iteration-count:1;/*can be "infinite"*/
+//     animation-fill-mode: both;
+//     animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
+// `;
+
 export const ToggleDiv=Styled.div`
     position: absolute;
     width: 48px;
     height: 100%;
     top: 0;
-    left: 0;
+
+    left: ${(props) => props.toggle? css`0`: css`100%`};
+    transform: ${(props) => props.toggle? css`none`: css`translateX(-100%);`};
+    transition: all .3s ease-out;
+
+
     background-color: hsl(0, 0%, 30%);
     border-radius: 7px;
     // z-index: -1;
 
-    animation-duration: .3s;
-    animation-timing-function: ease-out;
-    animation-iteration-count:1;/*can be "infinite"*/
-    animation-fill-mode: both;
-    animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
+    // animation-duration: .3s;
+    // animation-timing-function: ease-out;
+    // animation-iteration-count:1;/*can be "infinite"*/
+    // animation-fill-mode: both;
+    // animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
 `;
 
 export const InputNumber=Styled.input.attrs({type:"number"})`
@@ -223,7 +245,8 @@ export const CN_Label=Styled.h4`
 export const CN_Label4HSL_HSV=Styled(CN_Label)`
     padding-top: 2px;
     z-index:1;
-    color:  ${(props)=>props.toggle ? css`white`: css`#888888`}
+    color:  ${(props)=>props.toggle ? css`white`: css`#888888`};
+
 `;
 
 export const CN_Label4Output=Styled(CN_Label)`
@@ -273,8 +296,8 @@ export const ColorSpaceDiv=Styled.div`
     }
     img {
         position: absolute;
-        top: ${(props)=>props.bg?css`${props.pointer[0]}`:css`${props.pointer[2]}`};
-        left: ${(props)=>props.bg?css`${props.pointer[1]}`:css`${props.pointer[3]}`};
+        top: ${(props)=>props.bg?css`${props.pointerposition.HSL_top}`:css`${props.pointerposition.HSV_top}`};
+        left: ${(props)=>props.bg?css`${props.pointerposition.HSL_left}`:css`${props.pointerposition.HSV_left}`};
         
     }
     div {
