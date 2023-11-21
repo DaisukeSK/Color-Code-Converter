@@ -19,7 +19,8 @@ const Hexa=()=>{
           !str.includes(Refs.Hexa.current.value[i]) ? sum+=1 : null
         }
         if(sum==0){
-            document.querySelector("div#right div.hexa p").innerText=""
+            // document.querySelector("div#right div.hexa p").innerText=""
+            States.setValidHexaCode(true)
             
             HexaToRGB(Refs)
             RGBtoCMYK(Refs)
@@ -29,10 +30,13 @@ const Hexa=()=>{
             functions(true)
 
         }else{
-            document.querySelector("div#right div.hexa p").innerText="*Incorrect input format"
+            // document.querySelector("div#right div.hexa p").innerText="*Incorrect input format"
+            States.setValidHexaCode(false)
         }
     }else{
-        document.querySelector("div#right div.hexa p").innerText="*Incorrect input format"
+        // document.querySelector("div#right div.hexa p").innerText="*Incorrect input format"
+        States.setValidHexaCode(false)
+        
     }
 
 }
@@ -48,7 +52,7 @@ const Hexa=()=>{
             <CN_Label textcolor={States.textColor?1:0}>Hexa</CN_Label>
             
             <Hexainput textcolor={States.textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Refs.Hexa}/>
-            <p></p>
+            <p>{States.validHexaCode?"":"*Incorrect input format"}</p>
         </Frame>
     )
 }

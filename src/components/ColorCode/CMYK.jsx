@@ -20,24 +20,39 @@ const CMYK=()=>{
     //     console.log(val)
     // })
 
-        switch(e.target){
+    if(e.target.className.includes("input_C")){
+        // Refs.C.current.value=parseFloat(InputRefs.C2.current.value);
+        Refs.C.current.value=e.target.value
+    }else if(e.target.className.includes("input_M")){
+        // Refs.M.current.value=parseFloat(InputRefs.M2.current.value);
+        Refs.M.current.value=e.target.value
+    }else if(e.target.className.includes("input_Y")){
+        // Refs.Y.current.value=parseFloat(InputRefs.Y2.current.value);
+        Refs.Y.current.value=e.target.value
+    }else if(e.target.className.includes("input_K")){
+        // Refs.K.current.value=parseFloat(InputRefs.K2.current.value)
+        Refs.K.current.value=e.target.value
+    }
+
+
+    //     switch(e.target){
             
 
-            case InputRefs.C1.current: case InputRefs.C2.current:
-                Refs.C.current.value=parseFloat(InputRefs.C2.current.value);
-            break;
+    //         case InputRefs.C1.current: case InputRefs.C2.current:
+    //             Refs.C.current.value=parseFloat(InputRefs.C2.current.value);
+    //         break;
 
-            case InputRefs.M1.current: case InputRefs.M2.current:
-                Refs.M.current.value=parseFloat(InputRefs.M2.current.value);
-            break;
+    //         case InputRefs.M1.current: case InputRefs.M2.current:
+    //             Refs.M.current.value=parseFloat(InputRefs.M2.current.value);
+    //         break;
 
-            case InputRefs.Y1.current: case InputRefs.Y2.current:
-                Refs.Y.current.value=parseFloat(InputRefs.Y2.current.value);
-            break;
+    //         case InputRefs.Y1.current: case InputRefs.Y2.current:
+    //             Refs.Y.current.value=parseFloat(InputRefs.Y2.current.value);
+    //         break;
 
-            default:
-                Refs.K.current.value=parseFloat(InputRefs.K2.current.value)
-        }
+    //         default:
+    //             Refs.K.current.value=parseFloat(InputRefs.K2.current.value)
+    //     }
     
           CMYKtoRGB(Refs)
           RGBtoHexa(Refs)
@@ -65,14 +80,16 @@ const CMYK=()=>{
                     <Range>
 
                         <CMYK_RangeBG bg={elm} rangebg={States.rangeBG}/>
-                        <input type="range" min="0" max="100"
+                        <input className={`input_${elm}`} type="range" min="0" max="100"
 
                         onChange={(e)=>{CMYK_inputChange(e)}}
                             onInput={(e)=>{CMYK_inputChange(e)}}
-                            ref={key==0? InputRefs.C1:key==1? InputRefs.M1:key==2? InputRefs.Y1:InputRefs.K1}/>
+                            // ref={key==0? InputRefs.C1:key==1? InputRefs.M1:key==2? InputRefs.Y1:InputRefs.K1}
+                            value={Refs[elm].current? Refs[elm].current.value:0}
+                            />
 
                     </Range>
-                    <InputNumber textcolor={States.textColor?1:0} min="0" max="100" step="1"
+                    <InputNumber className={`input_${elm}`} textcolor={States.textColor?1:0} min="0" max="100" step="1"
                     onChange={(e)=>{CMYK_inputChange(e)}}
                         onInput={(e)=>{CMYK_inputChange(e)}}
                             ref={key==0? InputRefs.C2:key==1? InputRefs.M2:key==2? InputRefs.Y2:InputRefs.K2}/>

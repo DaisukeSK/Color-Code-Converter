@@ -16,62 +16,61 @@ const HSLInput=()=>{
     // console.log("HSLadE",Hexa_Ref.current.value)
     sync_Input(e.target)
 
+    // console.log(InputRefs.LS2.current.value, e.target.value)
 
-//   if(e.target==InputRefs.H1.current || e.target==InputRefs.H2.current){
-//       Refs.H.current.value=parseFloat(InputRefs.H2.current.value)
-
-//       HSLtoHSV(Refs)
+  if(e.target.className.includes("input_H")){
+      // Refs.H.current.value=parseFloat(InputRefs.H2.current.value)
+      Refs.H.current.value=e.target.value
+      HSLtoHSV(Refs)
     
-//     }
-  
-//     if(e.target==InputRefs.LS1.current || e.target==InputRefs.LS2.current){
+    }else if(e.target.className.includes("input_LS")){
+      // Refs.LS.current.value=parseFloat(InputRefs.LS2.current.value)
+      Refs.LS.current.value=e.target.value
+      HSLtoHSV(Refs)
+      
+    }else if(e.target.className.includes("input_L")){
+      // Refs.L.current.value=parseFloat(InputRefs.L2.current.value)
+      Refs.L.current.value=e.target.value
+      HSLtoHSV(Refs)
+    }else if(e.target.className.includes("input_VS")){
+      // Refs.VS.current.value=parseFloat(InputRefs.VS2.current.value)
+      Refs.VS.current.value=e.target.value
+      HSVtoHSL(Refs)
+      
+    }else if(e.target.className.includes("input_V")){
+      // Refs.V.current.value=parseFloat(InputRefs.V2.current.value)
+      Refs.V.current.value=e.target.value
+      HSVtoHSL(Refs)
+  }
+
+
+//   switch(e.target){
+
+//     case InputRefs.H1.current: case InputRefs.H2.current:
+//         Refs.H.current.value=parseFloat(InputRefs.H2.current.value)
+//         HSLtoHSV(Refs)
+//     break;
+
+//     case InputRefs.LS1.current: case InputRefs.LS2.current:
 //         Refs.LS.current.value=parseFloat(InputRefs.LS2.current.value)
-//       HSLtoHSV(Refs)
-      
-//     }
+//         HSLtoHSV(Refs)
+//     break;
 
-//     if(e.target==InputRefs.L1.current || e.target==InputRefs.L2.current){
+//     case InputRefs.L1.current: case InputRefs.L2.current:
 //         Refs.L.current.value=parseFloat(InputRefs.L2.current.value)
-//       HSLtoHSV(Refs)
-//   }
-  
-//   if(e.target==InputRefs.VS1.current || e.target==InputRefs.VS2.current){
-//     Refs.VS.current.value=parseFloat(InputRefs.VS2.current.value)
-//       HSVtoHSL(Refs)
-      
-//     }
-//     if(e.target==InputRefs.V1.current || e.target==InputRefs.V2.current){
+//         HSLtoHSV(Refs)
+//     break;
+
+//     case InputRefs.VS1.current: case InputRefs.VS2.current:
+//         Refs.VS.current.value=parseFloat(InputRefs.VS2.current.value)
+//         HSVtoHSL(Refs)
+//     break;
+
+//     default:
 //         Refs.V.current.value=parseFloat(InputRefs.V2.current.value)
-//       HSVtoHSL(Refs)
-//   }
+//         HSVtoHSL(Refs)
+// }
 
-
-  switch(e.target){
-
-    case InputRefs.H1.current: case InputRefs.H2.current:
-        Refs.H.current.value=parseFloat(InputRefs.H2.current.value)
-        HSLtoHSV(Refs)
-    break;
-
-    case InputRefs.LS1.current: case InputRefs.LS2.current:
-        Refs.LS.current.value=parseFloat(InputRefs.LS2.current.value)
-        HSLtoHSV(Refs)
-    break;
-
-    case InputRefs.L1.current: case InputRefs.L2.current:
-        Refs.L.current.value=parseFloat(InputRefs.L2.current.value)
-        HSLtoHSV(Refs)
-    break;
-
-    case InputRefs.VS1.current: case InputRefs.VS2.current:
-        Refs.VS.current.value=parseFloat(InputRefs.VS2.current.value)
-        HSVtoHSL(Refs)
-    break;
-
-    default:
-        Refs.V.current.value=parseFloat(InputRefs.V2.current.value)
-        HSVtoHSL(Refs)
-}
   
   HSLtoRGB(Refs)
   RGBtoHexa(Refs)
@@ -97,7 +96,8 @@ const HSLInput=()=>{
                     <input className="input_H" type="range" min="0" max="359"
                         onChange={(e)=>{HSL_inputChange(e)}}
                         onInput={(e)=>{HSL_inputChange(e)}}
-                        ref={InputRefs.H1}
+                        // ref={InputRefs.H1}
+                        value={Refs.H.current ? Refs.H.current.value:0}
                         />
 
                 </Range>
@@ -126,7 +126,9 @@ const HSLInput=()=>{
                     <input className={`input_${elm[4]}`} type="range" min="0" max="100"
                         onChange={(e)=>{HSL_inputChange(e)}}
                         onInput={(e)=>{HSL_inputChange(e)}}
-                        ref={elm[2]}/>
+                        // ref={elm[2]}
+                        value={Refs[elm[4]].current ? Refs[elm[4]].current.value:0}
+                        />
 
                 </Range>
 

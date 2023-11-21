@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext, createContext } from 'react'
 import { OutputCN_Label,Frame,Hr,HSLFrame,OutputFrame, Section,InputNumber,CN_Label,CN_Label4HSL_HSV,Label, OutputText,CN_Label4Output,ToggleDiv,ColorSpaceDiv,Range,Grid,HGrid,HSLGrid,Hexainput,OpacityGrid,SVG,CopyBox } from './StyledComponents'
-import {sync_Input,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColorChange,builtInColor,Input,outputColor,inputRangeBG} from "./Functions.jsx"
+import {sync_Input,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColorChange,check_Built_In_Color,updateInput,updateOutput,inputRangeBG} from "./Functions.jsx"
 import json from "./builtInColors.json"
 import Hamburger from './components/Hamburger'
 import SideBar from './components/Aside'
@@ -24,9 +24,11 @@ const [toggle, setToggle]=useState(true)
 const [aside, setAside]=useState(false)
 const [builtInColors, setBuiltInColors]=useState(json)
 const [moveLeft, setMoveLeft]=useState()
-const [checkIfBuiltInColor, setCheckIfBuiltInColor]=useState([])
+const [builtInColor, setBuiltInColor]=useState([])
 const [CSBG, setCSBG]=useState([])
 const [marginTop, setMarginTop]=useState()
+const [validHexaCode, setValidHexaCode]=useState(true)
+const [output, setOutput]=useState({HSL:"",HSV:"",Hexa:"",RGB:"",CMYK:""})
 
 // const [pointer, setPointer]=useState([])
 const [pointerPosition, setPointerPosition]=useState({HSL_top:null,HSL_left:null,HSV_top:null,HSV_left:null})
@@ -83,28 +85,29 @@ const Hexa_Ref=useRef()
 const opacity1_Ref=useRef()
 const opacity2_Ref=useRef()
 
-const outputHSL_Ref=useRef()
-const outputHSV_Ref=useRef()
-const outputHexa_Ref=useRef()
-const outputRGB_Ref=useRef()
-const outputCMYK_Ref=useRef()
+// const outputHSL_Ref=useRef()
+// const outputHSV_Ref=useRef()
+// const outputHexa_Ref=useRef()
+// const outputRGB_Ref=useRef()
+// const outputCMYK_Ref=useRef()
 
 
 
 const Refs={
     H:H_Ref, LS:LS_Ref, L:L_Ref, VS:VS_Ref, V:V_Ref,
     Hexa:Hexa_Ref, R:R_Ref, G:G_Ref, B:B_Ref, C:C_Ref, M:M_Ref, Y:Y_Ref, K:K_Ref
-    // setCSBG:setCSBG, setPointer:setPointer, setTextColor:setTextColor, builtInColors:builtInColors, setCheckIfBuiltInColor:setCheckIfBuiltInColor
+    // setCSBG:setCSBG, setPointer:setPointer, setTextColor:setTextColor, builtInColors:builtInColors, setBuiltInColor:setBuiltInColor
 }
 
+// const InputRefs={
+//     H1: H1_Ref, H2: H2_Ref, LS1:LS1_Ref, LS2:LS2_Ref, L1:L1_Ref, L2:L2_Ref, VS1:VS1_Ref, VS2:VS2_Ref, V1:V1_Ref, V2:V2_Ref, 
+//     Hexa:Hexa_Ref, R1:R1_Ref, R2:R2_Ref, G1:G1_Ref, G2:G2_Ref, B1:B1_Ref, B2:B2_Ref, 
+//     C1:C1_Ref, C2:C2_Ref, M1:M1_Ref, M2:M2_Ref, Y1:Y1_Ref, Y2:Y2_Ref, K1:K1_Ref, K2:K2_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
+// }
 const InputRefs={
-    H1: H1_Ref, H2: H2_Ref, LS1:LS1_Ref, LS2:LS2_Ref, L1:L1_Ref, L2:L2_Ref, VS1:VS1_Ref, VS2:VS2_Ref, V1:V1_Ref, V2:V2_Ref, 
-    Hexa:Hexa_Ref, R1:R1_Ref, R2:R2_Ref, G1:G1_Ref, G2:G2_Ref, B1:B1_Ref, B2:B2_Ref, 
-    C1:C1_Ref, C2:C2_Ref, M1:M1_Ref, M2:M2_Ref, Y1:Y1_Ref, Y2:Y2_Ref, K1:K1_Ref, K2:K2_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
-}
-
-const OutputRefs={
-    HSL:outputHSL_Ref, HSV:outputHSV_Ref, Hexa:outputHexa_Ref, RGB:outputRGB_Ref, CMYK:outputCMYK_Ref
+    H2: H2_Ref, LS2:LS2_Ref, L2:L2_Ref, VS2:VS2_Ref, V2:V2_Ref, 
+    Hexa:Hexa_Ref, R2:R2_Ref, G2:G2_Ref, B2:B2_Ref, 
+    C2:C2_Ref, M2:M2_Ref, Y2:Y2_Ref, K2:K2_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
 }
 
 const States={
@@ -114,13 +117,27 @@ const States={
   aside:aside, setAside:setAside,
   builtInColors:builtInColors, setBuiltInColors:setBuiltInColors,
   moveLeft:moveLeft, setMoveLeft:setMoveLeft,
-  checkIfBuiltInColor:checkIfBuiltInColor, setCheckIfBuiltInColor:setCheckIfBuiltInColor,
+  builtInColor:builtInColor, setBuiltInColor:setBuiltInColor,
   CSBG:CSBG, setCSBG:setCSBG,
   pointerPosition:pointerPosition, setPointerPosition:setPointerPosition,
-  rangeBG:rangeBG, setRangeBG:setRangeBG
+  rangeBG:rangeBG, setRangeBG:setRangeBG,
+  validHexaCode, setValidHexaCode,
+  output, setOutput
 }
 
 useEffect(()=>{
+    H_Ref.current.value=0
+    LS_Ref.current.value=0
+    L_Ref.current.value=0
+    VS_Ref.current.value=0
+    V_Ref.current.value=0
+    R_Ref.current.value=0
+    G_Ref.current.value=0
+    B_Ref.current.value=0
+    C_Ref.current.value=0
+    M_Ref.current.value=0
+    Y_Ref.current.value=0
+    K_Ref.current.value=0
 
     let initH=210;
     let initLS=50;
@@ -159,23 +176,25 @@ const functions=(a)=>{
     // console.log("RangeBG",rangeBG)
 
     if(a){
-        Input(Refs, InputRefs)
+        updateInput(Refs, InputRefs)
         colorSpaceBG(Refs,States)
-        outputColor(InputRefs, OutputRefs, showColor_Ref)
+        updateOutput(InputRefs, showColor_Ref,setOutput)
         HSLtoPointer(Refs,States)
         textColorChange(Refs,States)
         inputRangeBG(InputRefs,States)
-        document.querySelector("div#right div.hexa p").innerText=""
-        builtInColor(Refs,States)
+        // document.querySelector("div#right div.hexa p").innerText=""
+        setValidHexaCode(true)
+        check_Built_In_Color(Refs,States)
     }else{
-        Input(Refs, InputRefs)
+        updateInput(Refs, InputRefs)
         //colorSpaceBG()
-        outputColor(InputRefs, OutputRefs, showColor_Ref)
+        updateOutput(InputRefs, showColor_Ref,setOutput)
         //HSLtoPointer()
         textColorChange(Refs,States)
         inputRangeBG(InputRefs,States)
-        document.querySelector("div#right div.hexa p").innerText=""
-        builtInColor(Refs,States)
+        // document.querySelector("div#right div.hexa p").innerText=""
+        setValidHexaCode(true)
+        check_Built_In_Color(Refs,States)
 
     }
 
@@ -186,7 +205,7 @@ const functions=(a)=>{
   
   return (
     
-    <Cntxt.Provider value={{ States,rangeBG,CSBG,toggle,setToggle,pointerPosition,setPointerPosition,checkIfBuiltInColor,OutputRefs,aside,functions,InputRefs,Refs,textColor,setAside,aside_div_Ref,aside_ul_Ref,builtInColors,showColor_Ref}}>
+    <Cntxt.Provider value={{ States,rangeBG,CSBG,toggle,setToggle,pointerPosition,setPointerPosition,builtInColor,aside,functions,InputRefs,Refs,textColor,setAside,aside_div_Ref,aside_ul_Ref,builtInColors,showColor_Ref}}>
     
     <Hamburger/>
     <SideBar/>

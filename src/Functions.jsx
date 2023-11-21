@@ -176,7 +176,8 @@ export const RGBtoHSL=(obj)=>{
       H=(((R-G)/c)+4)*60
   }
 
-  H<0? H+=360:null
+  // H<0? H+=360:null
+  H<0 && (H+=360)
   
   obj.H.current.value=H
   obj.L.current.value=(max+min)*100/2
@@ -283,62 +284,62 @@ export const HSLtoPointer=(obj,stts)=>{
 }
 
 ///////////////////////////// text color /////////////////////////////
-export const textColorChange=(obj,stts)=>{
+export const textColorChange=(obj,states)=>{
 
-  parseFloat(obj.L.current.value)<=50? stts.setTextColor(true) : stts.setTextColor(false)
+  parseFloat(obj.L.current.value)<=50? states.setTextColor(true) : states.setTextColor(false)
 }
 
 ///////////////////////////// BuiltIn color /////////////////////////////
 
-export const builtInColor=(obj,stts)=>{
-  stts.setCheckIfBuiltInColor(["--",null])
-  Object.keys(stts.builtInColors).forEach((val)=>{
+export const check_Built_In_Color=(obj,states)=>{
+  states.setBuiltInColor(["--",null])
+  Object.keys(states.builtInColors).forEach((val)=>{
       
-      obj.Hexa.current.value==stts.builtInColors[val]["hexa"] &&
-      stts.setCheckIfBuiltInColor([val,stts.builtInColors[val]["hexa"]])
+      obj.Hexa.current.value==states.builtInColors[val]["hexa"] &&
+      states.setBuiltInColor([val,states.builtInColors[val]["hexa"]])
   })
 }
 
 
-export const Input=(ref, inputref)=>{
-  inputref.H1.current.value=Math.round(ref.H.current.value)
+export const updateInput=(ref, inputref)=>{
+  // inputref.H1.current.value=Math.round(ref.H.current.value)
   inputref.H2.current.value=Math.round(ref.H.current.value)
-  inputref.LS1.current.value=Math.round(ref.LS.current.value)
+  // inputref.LS1.current.value=Math.round(ref.LS.current.value)
   inputref.LS2.current.value=Math.round(ref.LS.current.value)
-  inputref.L1.current.value=Math.round(ref.L.current.value)
+  // inputref.L1.current.value=Math.round(ref.L.current.value)
   inputref.L2.current.value=Math.round(ref.L.current.value)
 
-  inputref.VS1.current.value=Math.round(ref.VS.current.value)
+  // inputref.VS1.current.value=Math.round(ref.VS.current.value)
   inputref.VS2.current.value=Math.round(ref.VS.current.value)
-  inputref.V1.current.value=Math.round(ref.V.current.value)
+  // inputref.V1.current.value=Math.round(ref.V.current.value)
   inputref.V2.current.value=Math.round(ref.V.current.value)
 
-  inputref.R1.current.value=Math.round(ref.R.current.value)
+  // inputref.R1.current.value=Math.round(ref.R.current.value)
   inputref.R2.current.value=Math.round(ref.R.current.value)
-  inputref.G1.current.value=Math.round(ref.G.current.value)
+  // inputref.G1.current.value=Math.round(ref.G.current.value)
   inputref.G2.current.value=Math.round(ref.G.current.value)
-  inputref.B1.current.value=Math.round(ref.B.current.value)
+  // inputref.B1.current.value=Math.round(ref.B.current.value)
   inputref.B2.current.value=Math.round(ref.B.current.value)
 
-  inputref.C1.current.value=Math.round(ref.C.current.value)
+  // inputref.C1.current.value=Math.round(ref.C.current.value)
   inputref.C2.current.value=Math.round(ref.C.current.value)
-  inputref.M1.current.value=Math.round(ref.M.current.value)
+  // inputref.M1.current.value=Math.round(ref.M.current.value)
   inputref.M2.current.value=Math.round(ref.M.current.value)
-  inputref.Y1.current.value=Math.round(ref.Y.current.value)
+  // inputref.Y1.current.value=Math.round(ref.Y.current.value)
   inputref.Y2.current.value=Math.round(ref.Y.current.value)
-  inputref.K1.current.value=Math.round(ref.K.current.value)
+  // inputref.K1.current.value=Math.round(ref.K.current.value)
   inputref.K2.current.value=Math.round(ref.K.current.value)
 }
 
 
 ///////////////////////////// output color /////////////////////////////
-export const outputColor=(inputRef, outputRef, showcolorRef)=>{
+export const updateOutput=(inputRef, showcolorRef,setter)=>{
 
   const hsl=`hsla(${inputRef.H2.current.value},${inputRef.LS2.current.value}%,${inputRef.L2.current.value}%,${inputRef.OP2.current.value})`
 
   showcolorRef.current.style.background=hsl
 
-document.querySelector("body").style.background=hsl
+document.body.style.background=hsl
 
 let hexa=""
 if(inputRef.OP2.current.value!==1){
@@ -366,7 +367,8 @@ if(inputRef.OP2.current.value!==1){
         }
         hexa=String(arr[1])+arr[0]
         
-        hexa=="undefinedundefined"? hexa="00":null
+        // hexa=="undefinedundefined"? hexa="00":null
+        hexa=="undefinedundefined" && (hexa="00")
         
 }
 
@@ -404,18 +406,34 @@ if(k==100){
 c==100 && m==100 && y==100? k=0:null
 
 if(inputRef.OP2.current.value==1){
-  outputRef.HSL.current.value=`hsl(${h}, ${sl}%, ${l}%)`
-  outputRef.HSV.current.value=`hsv(${h}, ${sv}%, ${v}%)`
-  outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}`
-  outputRef.RGB.current.value=`rgb(${r}, ${g}, ${b})`
-  outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+  // outputRef.HSL.current.value=`hsl(${h}, ${sl}%, ${l}%)`
+  // outputRef.HSV.current.value=`hsv(${h}, ${sv}%, ${v}%)`
+  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}`
+  // outputRef.RGB.current.value=`rgb(${r}, ${g}, ${b})`
+  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+
+  setter({
+    HSL:`hsl(${h}, ${sl}%, ${l}%)`,
+    HSV:`hsv(${h}, ${sv}%, ${v}%)`,
+    Hexa:`${inputRef.Hexa.current.value.toUpperCase()}`,
+    RGB:`rgb(${r}, ${g}, ${b})`,
+    CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+  })
     
 }else{
-  outputRef.HSL.current.value=`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`
-  outputRef.HSV.current.value=`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`
-  outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`
-  outputRef.RGB.current.value=`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`
-  outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+  // outputRef.HSL.current.value=`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`
+  // outputRef.HSV.current.value=`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`
+  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`
+  // outputRef.RGB.current.value=`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`
+  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+
+  setter({
+    HSL:`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`,
+    HSV:`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`,
+    Hexa:`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`,
+    RGB:`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`,
+    CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+  })
 }
 
 }

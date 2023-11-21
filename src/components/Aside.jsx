@@ -10,7 +10,7 @@ const SideBar=()=>{
 
     const LiClick=(e)=>{
 
-        document.querySelector("body").style.transition="all .7s"
+        document.body.style.transition="all .7s"
         showColor_Ref.current.style.transition="all .7s"
 
         // setHexa(Hexa_Ref.current.value)
@@ -30,7 +30,7 @@ const SideBar=()=>{
     }
 
     const LiMouseleave=()=>{
-        document.querySelector("body").style.transition="none"
+        document.body.style.transition="none"
         showColor_Ref.current.style.transition="none"
     }
 

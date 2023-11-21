@@ -6,7 +6,7 @@ import { CMYKtoRGB,RGBtoHexa,RGBtoHSL,HSLtoHSV,sync_Input } from '../../Function
 
 const OutPut=()=>{
 
-    const {States,textColor,InputRefs,functions,Refs,checkIfBuiltInColor,OutputRefs}= useContext(Cntxt)
+    const {States,textColor,InputRefs,functions,Refs,builtInColor,OutputRefs}= useContext(Cntxt)
 
     //////////////////////////// OpacityChange ////////////////////////////
   const OpacityChange=(e)=>{
@@ -22,17 +22,17 @@ const OutPut=()=>{
   }
 
 
-    console.log("BIC",States.checkIfBuiltInColor)
+    // console.log("BIC",States.builtInColor)
 
     return(
 
 
 
         <OutputFrame textcolor={States.textColor?1:0}>
-        {/* <TEST bultin={checkIfBuiltInColor}>TEST</TEST> */}
-            <OutputCN_Label textcolor={States.textColor?1:0} bultin={States.checkIfBuiltInColor}>
+        {/* <TEST bultin={builtInColor}>TEST</TEST> */}
+            <OutputCN_Label textcolor={States.textColor?1:0} bultin={States.builtInColor}>
                 <CN_Label textcolor={States.textColor?1:0}>Color Name:</CN_Label>
-                <span>{States.checkIfBuiltInColor[0]}</span>
+                <span>{States.builtInColor[0]}</span>
                 <div></div>
             </OutputCN_Label>
 
@@ -40,18 +40,17 @@ const OutPut=()=>{
             
             <div className="grid">
 
-            {[
-                ["HSL",OutputRefs.HSL],
-                ["HSV",OutputRefs.HSV],
-                ["Hexa",OutputRefs.Hexa],
-                ["RGB",OutputRefs.RGB],
-                ["CMYK",OutputRefs.CMYK]
-            ].map((elm,key)=>{
+            {
+            ["HSL", "HSV", "Hexa", "RGB", "CMYK" ].map((elm,key)=>{
                 
                 return (
                 <Fragment key={key}>
-                    <CN_Label4Output textcolor={States.textColor?1:0} key={key}>{elm[0]}:</CN_Label4Output>
-                    <OutputText textcolor={States.textColor?1:0} ref={elm[1]}/>
+                    <CN_Label4Output textcolor={States.textColor?1:0} key={key}>{elm}:</CN_Label4Output>
+                    <OutputText
+                        textcolor={States.textColor?1:0}
+                        // ref={elm[1]}
+                        value={States.output[elm]}
+                    />
                     {/* <button onClick={(e)=>copyCode(e)}></button> */}
                     {/* <SVG textcolor={textColor?1:0} onClick={(e)=>copyCode(e)} width="16" height="16">
                         <path d="M1 12 l0 -11 l11 0" strokeWidth="1" fill="none"/>
