@@ -85,14 +85,16 @@ const CMYK=()=>{
                         onChange={(e)=>{CMYK_inputChange(e)}}
                             onInput={(e)=>{CMYK_inputChange(e)}}
                             // ref={key==0? InputRefs.C1:key==1? InputRefs.M1:key==2? InputRefs.Y1:InputRefs.K1}
-                            value={Refs[elm].current? Refs[elm].current.value:0}
+                            value={Refs[elm].current? Math.round(Refs[elm].current.value):0}
                             />
 
                     </Range>
                     <InputNumber className={`input_${elm}`} textcolor={States.textColor?1:0} min="0" max="100" step="1"
                     onChange={(e)=>{CMYK_inputChange(e)}}
                         onInput={(e)=>{CMYK_inputChange(e)}}
-                            ref={key==0? InputRefs.C2:key==1? InputRefs.M2:key==2? InputRefs.Y2:InputRefs.K2}/>
+                            // ref={key==0? InputRefs.C2:key==1? InputRefs.M2:key==2? InputRefs.Y2:InputRefs.K2}
+                            value={Refs[elm].current? Math.round(Refs[elm].current.value):0}
+                            />
                     
                     </Grid>
                 })}

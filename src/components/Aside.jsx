@@ -40,7 +40,12 @@ const SideBar=()=>{
 
         <Aside aside={States.aside?1:0}>
         <div ref={aside_div_Ref}>
-            <div className='close' onClick={()=>States.setAside(false)}>
+            <div
+            className='close'
+            onClick={()=>{
+                States.setAside(false)
+            }}
+            >
                 <svg width="20" height="20">
                     <rect x="1" y="1" rx="5" ry="5" width="18" height="18"/>
                     <path d="M5 5 l10 10"/>

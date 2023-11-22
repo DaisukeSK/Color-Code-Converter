@@ -5,12 +5,17 @@ import { HamburgerDiv } from '../StyledComponents'
 
 const Hamburger=()=>{
     
-    const {States,textColor,setAside,aside}=useContext(Cntxt)
+    const {States,textColor,setAside,aside,Refs}=useContext(Cntxt)
     
     return(
         
         
-        <HamburgerDiv textcolor={States.textColor?1:0} onClick={()=>States.setAside(true)}>
+        <HamburgerDiv
+        textcolor={States.textColor?1:0}
+        onClick={()=>{
+            States.setAside(true)
+            
+            }}>
                 <div onClick={()=>{
                     States.setAside(true)
                     // console.log("innerWidth",window.innerWidth)

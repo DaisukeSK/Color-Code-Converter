@@ -70,14 +70,15 @@ const RGB=()=>{
                         onChange={(e)=>{RGB_inputChange(e)}}
                         onInput={(e)=>{RGB_inputChange(e)}}
                             // ref={key==0? InputRefs.R1: key==1? InputRefs.G1:InputRefs.B1}
-                            value={Refs[elm].current? Refs[elm].current.value:0}
+                            value={Refs[elm].current? Math.round(Refs[elm].current.value):0}
                             />
 
                     </Range>
                     <InputNumber className={`input_${elm}`} textcolor={States.textColor?1:0} min="0" max="255" step="1"
                     onChange={(e)=>{RGB_inputChange(e)}}
                     onInput={(e)=>{RGB_inputChange(e)}}
-                        ref={key==0? InputRefs.R2: key==1? InputRefs.G2:InputRefs.B2}
+                        // ref={key==0? InputRefs.R2: key==1? InputRefs.G2:InputRefs.B2}
+                        value={Refs[elm].current? Math.round(Refs[elm].current.value):0}
                         />
                 </Grid>
             })}

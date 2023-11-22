@@ -301,48 +301,108 @@ export const check_Built_In_Color=(obj,states)=>{
 }
 
 
-export const updateInput=(ref, inputref)=>{
+// export const updateInput=(ref, inputref)=>{
   // inputref.H1.current.value=Math.round(ref.H.current.value)
-  inputref.H2.current.value=Math.round(ref.H.current.value)
+  // inputref.H2.current.value=Math.round(ref.H.current.value)
   // inputref.LS1.current.value=Math.round(ref.LS.current.value)
-  inputref.LS2.current.value=Math.round(ref.LS.current.value)
+  // inputref.LS2.current.value=Math.round(ref.LS.current.value)
   // inputref.L1.current.value=Math.round(ref.L.current.value)
-  inputref.L2.current.value=Math.round(ref.L.current.value)
+  // inputref.L2.current.value=Math.round(ref.L.current.value)
 
   // inputref.VS1.current.value=Math.round(ref.VS.current.value)
-  inputref.VS2.current.value=Math.round(ref.VS.current.value)
+  // inputref.VS2.current.value=Math.round(ref.VS.current.value)
   // inputref.V1.current.value=Math.round(ref.V.current.value)
-  inputref.V2.current.value=Math.round(ref.V.current.value)
+  // inputref.V2.current.value=Math.round(ref.V.current.value)
 
   // inputref.R1.current.value=Math.round(ref.R.current.value)
-  inputref.R2.current.value=Math.round(ref.R.current.value)
+  // inputref.R2.current.value=Math.round(ref.R.current.value)
   // inputref.G1.current.value=Math.round(ref.G.current.value)
-  inputref.G2.current.value=Math.round(ref.G.current.value)
+  // inputref.G2.current.value=Math.round(ref.G.current.value)
   // inputref.B1.current.value=Math.round(ref.B.current.value)
-  inputref.B2.current.value=Math.round(ref.B.current.value)
+  // inputref.B2.current.value=Math.round(ref.B.current.value)
 
   // inputref.C1.current.value=Math.round(ref.C.current.value)
-  inputref.C2.current.value=Math.round(ref.C.current.value)
+  // inputref.C2.current.value=Math.round(ref.C.current.value)
   // inputref.M1.current.value=Math.round(ref.M.current.value)
-  inputref.M2.current.value=Math.round(ref.M.current.value)
+  // inputref.M2.current.value=Math.round(ref.M.current.value)
   // inputref.Y1.current.value=Math.round(ref.Y.current.value)
-  inputref.Y2.current.value=Math.round(ref.Y.current.value)
+  // inputref.Y2.current.value=Math.round(ref.Y.current.value)
   // inputref.K1.current.value=Math.round(ref.K.current.value)
-  inputref.K2.current.value=Math.round(ref.K.current.value)
-}
+  // inputref.K2.current.value=Math.round(ref.K.current.value)
+// }
 
 
 ///////////////////////////// output color /////////////////////////////
-export const updateOutput=(inputRef, showcolorRef,setter)=>{
+export const updateOutput=(refs, inputRef, showcolorRef,setter)=>{
 
-  const hsl=`hsla(${inputRef.H2.current.value},${inputRef.LS2.current.value}%,${inputRef.L2.current.value}%,${inputRef.OP2.current.value})`
+  // console.log(inputRef.LS2.current.value, refs.LS.current.value,)
+
+  const hsl=`hsla(${Math.round(refs.H.current.value)},${Math.round(refs.LS.current.value)}%,${Math.round(refs.L.current.value)}%,${inputRef.OP2.current.value})`
 
   showcolorRef.current.style.background=hsl
 
 document.body.style.background=hsl
 
-let hexa=""
-if(inputRef.OP2.current.value!==1){
+// if(inputRef.OP2.current.value!==1){
+  
+        
+// }
+
+let h=Math.round(refs.H.current.value);
+let sl=Math.round(refs.LS.current.value);
+let l=Math.round(refs.L.current.value);
+let sv=Math.round(refs.VS.current.value);
+let v=Math.round(refs.V.current.value);
+
+sl==0 || l==0 || l==100 ? h=0:null
+
+if(l==0 || l==100){
+    sl=0
+    sv=0
+}
+
+let r=Math.round(refs.R.current.value);
+let g=Math.round(refs.G.current.value);
+let b=Math.round(refs.B.current.value);
+
+let c,m,y;
+
+let k=Math.round(refs.K.current.value);
+if(k==100){
+    c=0;
+    m=0;
+    y=0;
+    
+}else{
+    c=Math.round(refs.C.current.value);
+    m=Math.round(refs.M.current.value);
+    y=Math.round(refs.Y.current.value);
+}
+
+c==100 && m==100 && y==100? k=0:null
+
+if(inputRef.OP2.current.value==1){
+  // outputRef.HSL.current.value=`hsl(${h}, ${sl}%, ${l}%)`
+  // outputRef.HSV.current.value=`hsv(${h}, ${sv}%, ${v}%)`
+  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}`
+  // outputRef.RGB.current.value=`rgb(${r}, ${g}, ${b})`
+  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+
+  setter({
+    HSL:`hsl(${h}, ${sl}%, ${l}%)`,
+    HSV:`hsv(${h}, ${sv}%, ${v}%)`,
+    Hexa:`${inputRef.Hexa.current.value.toUpperCase()}`,
+    RGB:`rgb(${r}, ${g}, ${b})`,
+    CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+  })
+    
+}else{
+  // outputRef.HSL.current.value=`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`
+  // outputRef.HSV.current.value=`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`
+  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`
+  // outputRef.RGB.current.value=`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`
+  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+  let hexa=""
   let quotient,remainder;
   let a=Math.round(inputRef.OP2.current.value*255)
 
@@ -369,63 +429,6 @@ if(inputRef.OP2.current.value!==1){
         
         // hexa=="undefinedundefined"? hexa="00":null
         hexa=="undefinedundefined" && (hexa="00")
-        
-}
-
-let h=inputRef.H2.current.value;
-let sl=inputRef.LS2.current.value;
-let l=inputRef.L2.current.value;
-let sv=inputRef.VS2.current.value;
-let v=inputRef.V2.current.value;
-
-sl==0 || l==0 || l==100 ? h=0:null
-
-if(l==0 || l==100){
-    sl=0
-    sv=0
-}
-
-let r=inputRef.R2.current.value;
-let g=inputRef.G2.current.value;
-let b=inputRef.B2.current.value;
-
-let c,m,y;
-
-let k=inputRef.K2.current.value;
-if(k==100){
-    c=0;
-    m=0;
-    y=0;
-    
-}else{
-    c=inputRef.C2.current.value;
-    m=inputRef.M2.current.value;
-    y=inputRef.Y2.current.value;
-}
-
-c==100 && m==100 && y==100? k=0:null
-
-if(inputRef.OP2.current.value==1){
-  // outputRef.HSL.current.value=`hsl(${h}, ${sl}%, ${l}%)`
-  // outputRef.HSV.current.value=`hsv(${h}, ${sv}%, ${v}%)`
-  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}`
-  // outputRef.RGB.current.value=`rgb(${r}, ${g}, ${b})`
-  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
-
-  setter({
-    HSL:`hsl(${h}, ${sl}%, ${l}%)`,
-    HSV:`hsv(${h}, ${sv}%, ${v}%)`,
-    Hexa:`${inputRef.Hexa.current.value.toUpperCase()}`,
-    RGB:`rgb(${r}, ${g}, ${b})`,
-    CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
-  })
-    
-}else{
-  // outputRef.HSL.current.value=`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`
-  // outputRef.HSV.current.value=`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`
-  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`
-  // outputRef.RGB.current.value=`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`
-  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
 
   setter({
     HSL:`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`,
@@ -441,14 +444,14 @@ if(inputRef.OP2.current.value==1){
 ///////////////////////////// input range background /////////////////////////////
   
 const SandLforSv=(Sv,ob)=>{ // Function to get bgcolor of Sv range input
-  const L=100*((parseFloat(ob.V2.current.value)/100)*(1-((Sv/100)/2)))
+  const L=100*(((ob.V.current.value)/100)*(1-((Sv/100)/2)))
   let S;
-      S= (L==0 || L==100)? 0 : 100*(((parseFloat(ob.V2.current.value)/100)-(L/100))/Math.min(L/100, 1-L/100))
+      S= (L==0 || L==100)? 0 : 100*((((ob.V.current.value)/100)-(L/100))/Math.min(L/100, 1-L/100))
       return [S,L]
 }
 
 const SandLforV=(V,ob)=>{ // Function to get bgcolor of V range input
-  const L=100*((V/100)*(1-((parseFloat(ob.VS2.current.value)/100)/2)))
+  const L=100*((V/100)*(1-(((ob.VS.current.value)/100)/2)))
   let S;
 
   S= (L==0 || L==100)? 0 : 100*(((V/100)-(L/100))/Math.min(L/100, 1-L/100))
@@ -457,16 +460,19 @@ const SandLforV=(V,ob)=>{ // Function to get bgcolor of V range input
   
 }
 const CMYKbgColor=(c,m,y,k)=>{
-  return `rgb(${255*(1-c/100)*(1-k/100)},${255*(1-m/100)*(1-k/100)},${255*(1-y/100)*(1-k/100)})`
+  return `rgb(${Math.round(255*(1-c/100)*(1-k/100))},${Math.round(255*(1-m/100)*(1-k/100))},${Math.round(255*(1-y/100)*(1-k/100))})`
 }
 
-export const inputRangeBG=(obj,stts)=>{ //Main function
-  const HSL_Sleft=`hsl(0,0%,${parseFloat(obj.L2.current.value)}%)`
-  const HSL_Sright=`hsl(${obj.H2.current.value},100%,${parseFloat(obj.L2.current.value)}%)`
-  const LSbg=`linear-gradient(90deg, ${HSL_Sleft},${HSL_Sright})`
+export const inputRangeBG=(refs, obj,stts)=>{ //Main function
 
-  const HSL_Lmiddle=`hsl(${obj.H2.current.value},${obj.LS2.current.value}%,50%)`
-  const Lbg=`linear-gradient(90deg, hsl(0,0%,0%), ${HSL_Lmiddle}, hsl(0,0%,100%))`
+  // console.log(refs.H.current.value, typeof refs.H.current.value, Math.round(refs.H.current.value))
+
+  const LS_left=`hsl(0,0%,${Math.round(refs.L.current.value)}%)`
+  const LS_right=`hsl(${Math.round(refs.H.current.value)},100%,${Math.round(refs.L.current.value)}%)`
+  const LS_bg=`linear-gradient(90deg, ${LS_left},${LS_right})`
+
+  const L_middle=`hsl(${Math.round(refs.H.current.value)},${Math.round(refs.LS.current.value)}%,50%)`
+  const L_bg=`linear-gradient(90deg, hsl(0,0%,0%), ${L_middle}, hsl(0,0%,100%))`
   //////////// HSV ////////////
   // hsv(any, 0% value)   : left of Sv
   // hsv(hue, 100% value) : right of Sv
@@ -477,53 +483,51 @@ export const inputRangeBG=(obj,stts)=>{ //Main function
   // Convert them to hsl, Use the same method as HSVtoSHL function
 
   // Sv
-  const hsvSleft=`hsl(0,${SandLforSv(0,obj)[0]}%,${SandLforSv(0,obj)[1]}%)`
-  const hsvSRight=`hsl(${obj.H2.current.value},${SandLforSv(100,obj)[0]}%,${SandLforSv(100,obj)[1]}%)`
+  const VS_left=`hsl(0,${Math.round(SandLforSv(0,refs)[0])}%,${Math.round(SandLforSv(0,refs)[1])}%)`
+  const VS_Right=`hsl(${Math.round(refs.H.current.value)},${Math.round(SandLforSv(100,refs)[0])}%,${Math.round(SandLforSv(100,refs)[1])}%)`
 
-  const VSbg=`linear-gradient(90deg, ${hsvSleft}, ${hsvSRight})`
+  const VS_bg=`linear-gradient(90deg, ${VS_left}, ${VS_Right})`
 
   // V
-  const hsvVleft=`hsl(0,${SandLforV(0,obj)[0]}%,${SandLforV(0,obj)[1]}%)`
-  const hsvVRight=`hsl(${obj.H2.current.value},${SandLforV(100,obj)[0]}%,${SandLforV(100,obj)[1]}%)`
+  const V_left=`hsl(0,${Math.round(SandLforV(0,refs)[0])}%,${Math.round(SandLforV(0,refs)[1])}%)`
+  const V_Right=`hsl(${Math.round(refs.H.current.value)},${Math.round(SandLforV(100,refs)[0])}%,${Math.round(SandLforV(100,refs)[1])}%)`
 
-  const Vbg=`linear-gradient(90deg, ${hsvVleft}, ${hsvVRight})`
+  const V_bg=`linear-gradient(90deg, ${V_left}, ${V_Right})`
 
   // RGB
-  const rgbRleft=`rgb(0,${parseFloat(obj.G2.current.value)},${parseFloat(obj.B2.current.value)})`
-  const rgbRright=`rgb(255,${parseFloat(obj.G2.current.value)},${parseFloat(obj.B2.current.value)})`
+  const R_left=`rgb(0,${Math.round(refs.G.current.value)},${Math.round(refs.B.current.value)})`
+  const R_right=`rgb(255,${Math.round(refs.G.current.value)},${Math.round(refs.B.current.value)})`
+  const R_bg=`linear-gradient(90deg, ${R_left}, ${R_right})`
 
-  const Rbg=`linear-gradient(90deg, ${rgbRleft}, ${rgbRright})`
+  const G_left=`rgb(${Math.round(refs.R.current.value)},0,${Math.round(refs.B.current.value)})`
+  const G_right=`rgb(${Math.round(refs.R.current.value)},255,${Math.round(refs.B.current.value)})`
+  const G_bg=`linear-gradient(90deg, ${G_left}, ${G_right})`
 
-  const rgbGleft=`rgb(${parseFloat(obj.R2.current.value)},0,${parseFloat(obj.B2.current.value)})`
-  const rgbGright=`rgb(${parseFloat(obj.R2.current.value)},255,${parseFloat(obj.B2.current.value)})`
-  const Gbg=`linear-gradient(90deg, ${rgbGleft}, ${rgbGright})`
-
-  const rgbBleft=`rgb(${parseFloat(obj.R2.current.value)},${parseFloat(obj.G2.current.value)},0)`
-  const rgbBright=`rgb(${parseFloat(obj.R2.current.value)},${parseFloat(obj.G2.current.value)},255)`
-
-  const Bbg=`linear-gradient(90deg, ${rgbBleft}, ${rgbBright})`
+  const B_left=`rgb(${Math.round(refs.R.current.value)},${Math.round(refs.G.current.value)},0)`
+  const B_right=`rgb(${Math.round(refs.R.current.value)},${Math.round(refs.G.current.value)},255)`
+  const B_bg=`linear-gradient(90deg, ${B_left}, ${B_right})`
 
   // CMYK
-  const Cleft=CMYKbgColor(0,parseFloat(obj.M2.current.value),parseFloat(obj.Y2.current.value),parseFloat(obj.K2.current.value))
-  const Cright=CMYKbgColor(100,parseFloat(obj.M2.current.value),parseFloat(obj.Y2.current.value),parseFloat(obj.K2.current.value))
+  const C_left=CMYKbgColor(0,(refs.M.current.value),(refs.Y.current.value),(refs.K.current.value))
+  const C_right=CMYKbgColor(100,(refs.M.current.value),(refs.Y.current.value),(refs.K.current.value))
   
-  const Cbg=`linear-gradient(90deg, ${Cleft}, ${Cright})`
+  const C_bg=`linear-gradient(90deg, ${C_left}, ${C_right})`
 
-  const Mleft=CMYKbgColor(parseFloat(obj.C2.current.value),0,parseFloat(obj.Y2.current.value),parseFloat(obj.K2.current.value))
-  const Mright=CMYKbgColor(parseFloat(obj.C2.current.value),100,parseFloat(obj.Y2.current.value),parseFloat(obj.K2.current.value))
+  const M_left=CMYKbgColor((refs.C.current.value),0,(refs.Y.current.value),(refs.K.current.value))
+  const M_right=CMYKbgColor((refs.C.current.value),100,(refs.Y.current.value),(refs.K.current.value))
   
-  const Mbg=`linear-gradient(90deg, ${Mleft}, ${Mright})`
+  const M_bg=`linear-gradient(90deg, ${M_left}, ${M_right})`
 
-  const Yleft=CMYKbgColor(parseFloat(obj.C2.current.value),parseFloat(obj.M2.current.value),0,parseFloat(obj.K2.current.value))
-  const Yright=CMYKbgColor(parseFloat(obj.C2.current.value),parseFloat(obj.M2.current.value),100,parseFloat(obj.K2.current.value))
+  const Y_left=CMYKbgColor((refs.C.current.value),(refs.M.current.value),0,(refs.K.current.value))
+  const Y_right=CMYKbgColor((refs.C.current.value),(refs.M.current.value),100,(refs.K.current.value))
   
-  const Ybg=`linear-gradient(90deg, ${Yleft}, ${Yright})`
+  const Y_bg=`linear-gradient(90deg, ${Y_left}, ${Y_right})`
 
-  const Kleft=CMYKbgColor(parseFloat(obj.C2.current.value),parseFloat(obj.M2.current.value),parseFloat(obj.Y2.current.value),0)
-  const Kright=CMYKbgColor(parseFloat(obj.C2.current.value),parseFloat(obj.M2.current.value),parseFloat(obj.Y2.current.value),100)
+  const K_left=CMYKbgColor((refs.C.current.value),(refs.M.current.value),(refs.Y.current.value),0)
+  const K_right=CMYKbgColor((refs.C.current.value),(refs.M.current.value),(refs.Y.current.value),100)
   
-  const Kbg=`linear-gradient(90deg, ${Kleft}, ${Kright})`
+  const K_bg=`linear-gradient(90deg, ${K_left}, ${K_right})`
 
-  stts.setRangeBG({LS:LSbg,L:Lbg,VS:VSbg,V:Vbg, R:Rbg,B:Bbg,G:Gbg,C:Cbg,M:Mbg,Y:Ybg,K:Kbg})
+  stts.setRangeBG({LS:LS_bg,L:L_bg,VS:VS_bg,V:V_bg, R:R_bg,B:B_bg,G:G_bg,C:C_bg,M:M_bg,Y:Y_bg,K:K_bg})
   
 }

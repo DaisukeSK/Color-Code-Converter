@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext, createContext } from 'react'
 import { OutputCN_Label,Frame,Hr,HSLFrame,OutputFrame, Section,InputNumber,CN_Label,CN_Label4HSL_HSV,Label, OutputText,CN_Label4Output,ToggleDiv,ColorSpaceDiv,Range,Grid,HGrid,HSLGrid,Hexainput,OpacityGrid,SVG,CopyBox } from './StyledComponents'
-import {sync_Input,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColorChange,check_Built_In_Color,updateInput,updateOutput,inputRangeBG} from "./Functions.jsx"
+import {sync_Input,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColorChange,check_Built_In_Color,updateOutput,inputRangeBG} from "./Functions.jsx"
 import json from "./builtInColors.json"
 import Hamburger from './components/Hamburger'
 import SideBar from './components/Aside'
@@ -23,7 +23,7 @@ const [textColor, setTextColor]=useState(true)
 const [toggle, setToggle]=useState(true)
 const [aside, setAside]=useState(false)
 const [builtInColors, setBuiltInColors]=useState(json)
-const [moveLeft, setMoveLeft]=useState()
+// const [moveLeft, setMoveLeft]=useState()
 const [builtInColor, setBuiltInColor]=useState([])
 const [CSBG, setCSBG]=useState([])
 const [marginTop, setMarginTop]=useState()
@@ -39,7 +39,7 @@ const [rangeBG, setRangeBG]=useState({LS:null,L:null,VS:null,V:null,R:null,G:nul
 const aside_div_Ref=useRef()
 const aside_ul_Ref=useRef()
 const showColor_Ref=useRef()
-const section_Ref=useRef()
+// const section_Ref=useRef()
 
 const H_Ref=useRef()
 const LS_Ref=useRef()
@@ -54,31 +54,31 @@ const M_Ref=useRef()
 const Y_Ref=useRef()
 const K_Ref=useRef()
 
-const H1_Ref=useRef()
-const H2_Ref=useRef()
-const LS1_Ref=useRef()
-const LS2_Ref=useRef()
-const L1_Ref=useRef()
-const L2_Ref=useRef()
-const VS1_Ref=useRef()
-const VS2_Ref=useRef()
-const V1_Ref=useRef()
-const V2_Ref=useRef()
-const R1_Ref=useRef()
-const R2_Ref=useRef()
-const G1_Ref=useRef()
-const G2_Ref=useRef()
-const B1_Ref=useRef()
-const B2_Ref=useRef()
+// const H1_Ref=useRef()
+// const H2_Ref=useRef()
+// const LS1_Ref=useRef()
+// const LS2_Ref=useRef()
+// const L1_Ref=useRef()
+// const L2_Ref=useRef()
+// const VS1_Ref=useRef()
+// const VS2_Ref=useRef()
+// const V1_Ref=useRef()
+// const V2_Ref=useRef()
+// const R1_Ref=useRef()
+// const R2_Ref=useRef()
+// const G1_Ref=useRef()
+// const G2_Ref=useRef()
+// const B1_Ref=useRef()
+// const B2_Ref=useRef()
 
-const C1_Ref=useRef()
-const C2_Ref=useRef()
-const M1_Ref=useRef()
-const M2_Ref=useRef()
-const Y1_Ref=useRef()
-const Y2_Ref=useRef()
-const K1_Ref=useRef()
-const K2_Ref=useRef()
+// const C1_Ref=useRef()
+// const C2_Ref=useRef()
+// const M1_Ref=useRef()
+// const M2_Ref=useRef()
+// const Y1_Ref=useRef()
+// const Y2_Ref=useRef()
+// const K1_Ref=useRef()
+// const K2_Ref=useRef()
 
 const Hexa_Ref=useRef()
 
@@ -105,9 +105,8 @@ const Refs={
 //     C1:C1_Ref, C2:C2_Ref, M1:M1_Ref, M2:M2_Ref, Y1:Y1_Ref, Y2:Y2_Ref, K1:K1_Ref, K2:K2_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
 // }
 const InputRefs={
-    H2: H2_Ref, LS2:LS2_Ref, L2:L2_Ref, VS2:VS2_Ref, V2:V2_Ref, 
-    Hexa:Hexa_Ref, R2:R2_Ref, G2:G2_Ref, B2:B2_Ref, 
-    C2:C2_Ref, M2:M2_Ref, Y2:Y2_Ref, K2:K2_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
+    
+    Hexa:Hexa_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
 }
 
 const States={
@@ -116,45 +115,50 @@ const States={
 
   aside:aside, setAside:setAside,
   builtInColors:builtInColors, setBuiltInColors:setBuiltInColors,
-  moveLeft:moveLeft, setMoveLeft:setMoveLeft,
+//   moveLeft:moveLeft, setMoveLeft:setMoveLeft,
   builtInColor:builtInColor, setBuiltInColor:setBuiltInColor,
   CSBG:CSBG, setCSBG:setCSBG,
   pointerPosition:pointerPosition, setPointerPosition:setPointerPosition,
   rangeBG:rangeBG, setRangeBG:setRangeBG,
-  validHexaCode, setValidHexaCode,
-  output, setOutput
+  validHexaCode:validHexaCode, setValidHexaCode:setValidHexaCode,
+  
+  output:output, setOutput:setOutput
 }
 
 useEffect(()=>{
-    H_Ref.current.value=0
-    LS_Ref.current.value=0
-    L_Ref.current.value=0
-    VS_Ref.current.value=0
-    V_Ref.current.value=0
-    R_Ref.current.value=0
-    G_Ref.current.value=0
-    B_Ref.current.value=0
-    C_Ref.current.value=0
-    M_Ref.current.value=0
-    Y_Ref.current.value=0
-    K_Ref.current.value=0
+    // H_Ref.current.value=0
+    // LS_Ref.current.value=0
+    // L_Ref.current.value=0
+    // VS_Ref.current.value=0
+    // V_Ref.current.value=0
+    // R_Ref.current.value=0
+    // G_Ref.current.value=0
+    // B_Ref.current.value=0
+    // C_Ref.current.value=0
+    // M_Ref.current.value=0
+    // Y_Ref.current.value=0
+    // K_Ref.current.value=0
 
-    let initH=210;
-    let initLS=50;
-    let initL=50
-
-
+    
+    
     const topHeight=217
     const HSLheight=351
     setMarginTop((window.innerHeight-topHeight-HSLheight)/3)
 
-  H2_Ref.current.value=initH
-  LS2_Ref.current.value=initLS
-  L2_Ref.current.value=initL
-  sync_Input(H2_Ref.current)
-  sync_Input(LS2_Ref.current)
-  sync_Input(L2_Ref.current)
+    
 
+    // console.log("sectionRef",section_Ref.current.getBoundingClientRect().width)
+    
+    //   H2_Ref.current.value=initH
+    //   LS2_Ref.current.value=initLS
+    //   L2_Ref.current.value=initL
+    //   sync_Input(H2_Ref.current)
+    //   sync_Input(LS2_Ref.current)
+    //   sync_Input(L2_Ref.current)
+    let initH=210;
+    let initLS=50;
+    let initL=50
+    
   H_Ref.current.value=initH
   LS_Ref.current.value=initLS
   L_Ref.current.value=initL
@@ -166,7 +170,7 @@ useEffect(()=>{
   functions(true)
 
 
-setMoveLeft((window.innerWidth-section_Ref.current.getBoundingClientRect().width)/2)
+// setMoveLeft((window.innerWidth-section_Ref.current.getBoundingClientRect().width)/2)
 aside_ul_Ref.current.style.height=window.innerHeight-aside_div_Ref.current.getBoundingClientRect().height-15+"px"
 }, [])
 
@@ -176,22 +180,22 @@ const functions=(a)=>{
     // console.log("RangeBG",rangeBG)
 
     if(a){
-        updateInput(Refs, InputRefs)
+        // updateInput(Refs, InputRefs)
         colorSpaceBG(Refs,States)
-        updateOutput(InputRefs, showColor_Ref,setOutput)
+        updateOutput(Refs,InputRefs, showColor_Ref,setOutput)
         HSLtoPointer(Refs,States)
         textColorChange(Refs,States)
-        inputRangeBG(InputRefs,States)
+        inputRangeBG(Refs,InputRefs,States)
         // document.querySelector("div#right div.hexa p").innerText=""
         setValidHexaCode(true)
         check_Built_In_Color(Refs,States)
     }else{
-        updateInput(Refs, InputRefs)
+        // updateInput(Refs, InputRefs)
         //colorSpaceBG()
-        updateOutput(InputRefs, showColor_Ref,setOutput)
+        updateOutput(Refs,InputRefs, showColor_Ref,setOutput)
         //HSLtoPointer()
         textColorChange(Refs,States)
-        inputRangeBG(InputRefs,States)
+        inputRangeBG(Refs,InputRefs,States)
         // document.querySelector("div#right div.hexa p").innerText=""
         setValidHexaCode(true)
         check_Built_In_Color(Refs,States)
@@ -211,7 +215,7 @@ const functions=(a)=>{
     <SideBar/>
     <HiddenInput/>
 
-    <Section moveleft={moveLeft} aside={aside?1:0} ref={section_Ref}>
+    <Section aside={aside?1:0}>
   
 
     <div className="output_color">

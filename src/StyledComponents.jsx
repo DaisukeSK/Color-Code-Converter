@@ -4,7 +4,8 @@ import { css,keyframes } from "styled-components";
 
 export const Section=Styled.section`
     position:relative;
-    left:${props=>props.aside? css`${250+"px"}`:css`0`};
+
+    left:${props=>props.aside? css`250px`:css`0`};
     transition: left .5s;
     width: fit-content;
     margin: 0 auto;

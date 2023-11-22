@@ -97,45 +97,47 @@ const HSLInput=()=>{
                         onChange={(e)=>{HSL_inputChange(e)}}
                         onInput={(e)=>{HSL_inputChange(e)}}
                         // ref={InputRefs.H1}
-                        value={Refs.H.current ? Refs.H.current.value:0}
+                        // defaultValue={210}
+                        value={Refs.H.current ? Math.round(Refs.H.current.value):0}
                         />
 
                 </Range>
                 <InputNumber textcolor={States.textColor?1:0} className="input_H" min="0" max="359" step="1"
                     onChange={(e)=>{HSL_inputChange(e)}}
                     onInput={(e)=>{HSL_inputChange(e)}}
-                    ref={InputRefs.H2}
+                    // defaultValue={210}
+                    value={Refs.H.current ? Math.round(Refs.H.current.value):0}
+                    // ref={InputRefs.H2}
                     />
 
             </HGrid>
 
             {
-            [
-                ["HSL","S", InputRefs.LS1, InputRefs.LS2,"LS"],
-                ["HSL","L", InputRefs.L1, InputRefs.L2,"L"],
-                ["HSV","S", InputRefs.VS1, InputRefs.VS2,"VS"],
-                ["HSV","V", InputRefs.V1, InputRefs.V2,"V"]
-            ].map((elm, key)=>{
+            ["LS","L","VS","V"].map((elm, key)=>{
                 return <HSLGrid toggle={key==0 || key==1?States.toggle:!States.toggle} key={key}>
                 
-                <Label textcolor={States.textColor?1:0}>{elm[4].split("")[elm[4].length-1]}:</Label>
+                <Label textcolor={States.textColor?1:0}>{elm.split("")[elm.length-1]}:</Label>
                 
                 <Range>
                     {/* <HSL_RangeBG className={`${elm[0]}_${elm[1]}bg`} bg={elm[4]} rangebg={States.rangeBG}/> */}
-                    <HSL_RangeBG bg={elm[4]} rangebg={States.rangeBG}/>
-                    <input className={`input_${elm[4]}`} type="range" min="0" max="100"
+                    <HSL_RangeBG bg={elm} rangebg={States.rangeBG}/>
+                    <input className={`input_${elm}`} type="range" min="0" max="100"
                         onChange={(e)=>{HSL_inputChange(e)}}
                         onInput={(e)=>{HSL_inputChange(e)}}
                         // ref={elm[2]}
-                        value={Refs[elm[4]].current ? Refs[elm[4]].current.value:0}
+                        // defaultValue={key==0 || key==1 && 50}
+                        value={Refs[elm].current ? Math.round(Refs[elm].current.value):0}
                         />
 
                 </Range>
 
-                <InputNumber textcolor={States.textColor?1:0} className={`input_${elm[4]}`} min="0" max="100" step="1"
+                <InputNumber textcolor={States.textColor?1:0} className={`input_${elm}`} min="0" max="100" step="1"
                     onChange={(e)=>{HSL_inputChange(e)}}
                     onInput={(e)=>{HSL_inputChange(e)}}
-                    ref={elm[3]}/>
+                    // ref={elm[3]}
+                    // defaultValue={key==0 || key==1 && 50}
+                    value={Refs[elm].current ? Math.round(Refs[elm].current.value):0}
+                    />
                 
                 </HSLGrid>
             })
