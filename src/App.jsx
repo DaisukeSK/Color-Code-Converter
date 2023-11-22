@@ -214,8 +214,10 @@ const functions=(a)=>{
     <Hamburger/>
     <SideBar/>
     <HiddenInput/>
+        <div style={{position:"absolute",top:0,right:0}}>Test: 11/22</div>
 
     <Section aside={aside?1:0}>
+
   
 
     <div className="output_color">
