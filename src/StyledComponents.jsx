@@ -109,8 +109,17 @@ export const Aside=Styled.aside`
         .logo {
             margin: 0 auto;
             width: 80%;
-            height: 200px;
-            background-color: blue;
+            height: 100px;
+            // background-color: #0F0F0F;
+            // border: 1px #242424 solid;
+
+            img {
+                width: 100%;
+            }
+            .presentedBy{
+                color: white;
+                text-align: center;
+            }
         }
         &>h4 {
             text-align:center;

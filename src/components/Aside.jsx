@@ -53,7 +53,12 @@ const SideBar=()=>{
                     
                 </svg>
             </div>
-            <div className='logo'>Logo</div>
+            <div className='logo'>
+                <img src="../../public/logo_letter.svg"/>
+                <div class="presentedBy">
+                    Presented by DaisukeSK
+                </div>
+            </div>
                     
             <h4>Built-in Colors</h4>
 

@@ -214,7 +214,7 @@ const functions=(a)=>{
     <Hamburger/>
     <SideBar/>
     <HiddenInput/>
-        <div style={{position:"absolute",top:0,right:0}}>Test: 11/22</div>
+        {/* <div style={{position:"absolute",top:0,right:0}}>Test: 12/05</div> */}
 
     <Section aside={aside?1:0}>
 
