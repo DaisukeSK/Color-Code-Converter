@@ -3,6 +3,7 @@ import { Cntxt } from "../App.jsx"
 import { Aside } from '../StyledComponents'
 import { RGBtoCMYK,HexaToRGB,RGBtoHSL,HSLtoHSV,sync_Input } from '../Functions.jsx'
 
+import logo from "../../public/logo_letter.svg";
 
 const SideBar=()=>{
     
@@ -54,7 +55,7 @@ const SideBar=()=>{
                 </svg>
             </div>
             <div className='logo'>
-                <img src="../../public/logo_letter.svg"/>
+                <img src={logo}/>
                 <div class="presentedBy">
                     Presented by DaisukeSK
                 </div>
