@@ -9,6 +9,7 @@ import CMYK from './components/ColorCode/CMYK'
 import RGB from './components/ColorCode/RGB'
 import Hexa from './components/ColorCode/Hexa'
 import OutPut from './components/ColorCode/OutPut'
+import imgPath from '../public/tree_2.png'
 
 export const Cntxt= createContext(null)
 
@@ -55,7 +56,7 @@ useEffect(()=>{
     dispatch({type:'RGBtoCMYK',payload:null})
     dispatch({type:'trigger', payload:true})
 
-    document.body.style.background = 'url("../public/tree_2.png")';
+    document.body.style.background = `url(${imgPath})`;
 
 }, [])
 

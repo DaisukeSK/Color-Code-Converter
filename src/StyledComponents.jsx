@@ -128,9 +128,9 @@ export const Aside=Styled.aside`
         .logo {
             margin: 0 auto;
             width: 80%;
-            height: 150px;
+            height: 100px;
             // background-color: #0F0F0F;
-            border: 1px #242424 solid;
+            // border: 1px #242424 solid;
 
             img {
                 width: 100%;
@@ -155,7 +155,7 @@ export const Aside=Styled.aside`
         padding: 0;
         margin: 0;
         overflow:auto;
-        height: ${window.innerHeight-250-10+"px"}; // If change height sibling div, don't forget to change this too.
+        height: ${window.innerHeight-200-10+"px"}; // If change height sibling div, don't forget to change this too.
         
         &>li{
             margin: 7px 0;
