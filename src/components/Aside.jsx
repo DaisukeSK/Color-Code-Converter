@@ -1,46 +1,35 @@
 import { useContext } from "react"
 import { Cntxt } from "../App.jsx"
 import { Aside } from '../StyledComponents'
-import { RGBtoCMYK,HexaToRGB,RGBtoHSL,HSLtoHSV,sync_Input } from '../Functions.jsx'
 
 import logo from "../../public/logo_letter.svg";
 
 const SideBar=()=>{
     
-    const {States,aside_div_Ref,setAside,aside,Refs,aside_ul_Ref,builtInColors,showColor_Ref,InputRefs,functions}=useContext(Cntxt)
+    const {dispatch, States, showColor_Ref}=useContext(Cntxt)
 
     const LiClick=(e)=>{
 
-        document.body.style.transition="all .7s"
         showColor_Ref.current.style.transition="all .7s"
+        setTimeout(()=>{
+            showColor_Ref.current.style.transition="none"
+        },700)
 
-        // setHexa(Hexa_Ref.current.value)
-        // console.log("e",e.target.closest("li").id)
+        States.setOpacity(1)
     
-        InputRefs.OP1.current.value=1
-        InputRefs.OP2.current.value=1
-    
-        InputRefs.Hexa.current.value="#"+e.target.closest("li").id.replace("h","")
-    
-        HexaToRGB(Refs)
-        RGBtoCMYK(Refs)
-        RGBtoHSL(Refs)
-        HSLtoHSV(Refs)
+        dispatch({type:'Hexa',payload:"#"+e.target.closest("li").id.replace("h","")})
 
-        functions(true)
+        dispatch({type:'HexaToRGB',payload:null})
+        dispatch({type:'RGBtoCMYK',payload:null})
+        dispatch({type:'RGBtoHSL',payload:null})
+        dispatch({type:'HSLtoHSV',payload:null})
+        dispatch({type:'trigger', payload:true})
     }
-
-    const LiMouseleave=()=>{
-        document.body.style.transition="none"
-        showColor_Ref.current.style.transition="none"
-    }
-
-
 
     return (
 
         <Aside aside={States.aside?1:0}>
-        <div ref={aside_div_Ref}>
+        <div>
             <div
             className='close'
             onClick={()=>{
@@ -56,7 +45,7 @@ const SideBar=()=>{
             </div>
             <div className='logo'>
                 <img src={logo}/>
-                <div class="presentedBy">
+                <div className="presentedBy">
                     Presented by DaisukeSK
                 </div>
             </div>
@@ -65,32 +54,25 @@ const SideBar=()=>{
 
         </div>
         
-        <ul ref={aside_ul_Ref}>
+        <ul>
 
         {
         
         Object.keys(States.builtInColors).map((val,key)=>{
-            // console.log("val",builtInColors[val]["hexa"])
             return (
             <li key={key} id={"h"+States.builtInColors[val]["hexa"].replace("#","")}
             onClick={(e)=>LiClick(e)}
-            onMouseLeave={()=>LiMouseleave()}
             style={{
                 backgroundColor: States.builtInColors[val]["hexa"],
                 color:States.builtInColors[val]["letterColor"]?States.builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
-
             }}
-            // onClick={(e)=>LiClick(e)}
             >
                 <div>{val}</div>
                 <div>{States.builtInColors[val]["hexa"]}</div>
                 
-                
             </li>)
             
-            
         })
-        
         
         }
 

@@ -6,353 +6,60 @@ export const sync_Input=(val)=>{
   val.previousSibling.querySelector('input[type="range"]').value=val.value
 }
 
-///////////////////////////// HSL to HSV /////////////////////////////OK
-// Wikipedia is the only source.
-export const HSLtoHSV=(obj)=>{
-  obj.V.current.value=100*(obj.L.current.value/100+(obj.LS.current.value/100)*Math.min(1-(obj.L.current.value/100), obj.L.current.value/100))
-  
-  obj.VS.current.value = obj.V.current.value==0?
-  0 : 200*(1-obj.L.current.value/parseFloat(obj.V.current.value))
-}
-
-///////////////////////////// HSV to HSL /////////////////////////////ok
-  // Wikipedia is the only source.
-export const HSVtoHSL=(obj)=>{
-
-  obj.L.current.value=100*((parseFloat(obj.V.current.value)/100)*(1-((parseFloat(obj.VS.current.value)/100)/2)))
-
-  if(obj.L.current.value==0 || obj.L.current.value==100){
-      obj.LS.current.value=0
-  }else{
-      obj.LS.current.value=100*(((parseFloat(obj.V.current.value)/100)-(obj.L.current.value/100))/Math.min(obj.L.current.value/100, 1-obj.L.current.value/100))
-  }
-}
-
-///////////////////////////// HSL to RGB /////////////////////////////
-export const HSLtoRGB=(obj)=>{
-  // source1: https://www.peko-step.com/tool/hslrgb.html#ppick3
-  // source2: https://yanohirota.com/color-converter/
-
-  let L,H,fx,r,g,b;
-
-  L=obj.L.current.value<50? obj.L.current.value:100-obj.L.current.value
-  const max=2.55*(parseFloat(obj.L.current.value)+(L*obj.LS.current.value/100))
-  const min=2.55*(parseFloat(obj.L.current.value)-(L*obj.LS.current.value/100))
-
-  if(0<=obj.H.current.value && obj.H.current.value<60){
-      
-      H=obj.H.current.value
-      fx=(H*(max-min)/60)+min
-      r=max
-      g=fx
-      b=min
-      
-  }else if(60<=obj.H.current.value && obj.H.current.value<120){
-      H=120-obj.H.current.value
-      fx=(H*(max-min)/60)+min
-      r=fx
-      g=max
-      b=min
-      
-  }else if(120<=obj.H.current.value && obj.H.current.value<180){
-      H=obj.H.current.value-120
-      fx=(H*(max-min)/60)+min
-      r=min
-      g=max
-      b=fx
-      
-  }else if(180<=obj.H.current.value && obj.H.current.value<240){
-      H=240-obj.H.current.value
-      fx=(H*(max-min)/60)+min
-      r=min
-      g=fx
-      b=max
-      
-  }else if(240<=obj.H.current.value && obj.H.current.value<300){
-      H=obj.H.current.value-240
-      fx=(H*(max-min)/60)+min
-      r=fx
-      g=min
-      b=max
-
-  }else if(300<=obj.H.current.value && obj.H.current.value<360){
-      H=360-obj.H.current.value
-      fx=(H*(max-min)/60)+min
-      r=max
-      g=min
-      b=fx
-  }
-
-  obj.R.current.value=r
-  obj.G.current.value=g
-  obj.B.current.value=b
-}
-
-
-///////////////////////////// RGB to Hexa /////////////////////////////
-export const RGBtoHexa=(obj)=>{
-
-  let rgb=[Math.round(obj.R.current.value).toString(), Math.round(obj.G.current.value).toString(), Math.round(obj.B.current.value).toString()]
-  let hexa="#";
-
-  rgb.forEach((elm)=>{
-    let quotient, remainder;
-    let a=elm;
-    let arr=[]
-    while(a!==0){
-        quotient=Math.floor(a/16)
-        remainder=a%16
-
-        switch(remainder){
-            case 10:remainder="A"; break;
-            case 11:remainder="B"; break;
-            case 12:remainder="C"; break;
-            case 13:remainder="D"; break;
-            case 14:remainder="E"; break;
-            case 15:remainder="F"
-        }
-        arr.push(remainder)
-        a=quotient
-        a==0 && arr.length==1 ? arr.push(a) : null
-    }
-    let code=String(arr[1])+arr[0]
-  hexa+=code
-  })
-
-  obj.Hexa.current.value=hexa
-
-}
-
-///////////////////////////// RGB to CMYK /////////////////////////////ok
-export const RGBtoCMYK=(obj)=>{
-  //source: https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
-  
-  // Using Math.round to avoid problem mentioned on the top of code.
-
-  const r=Math.round(parseFloat(obj.R.current.value))/255
-  const g=Math.round(parseFloat(obj.G.current.value))/255
-  const b=Math.round(parseFloat(obj.B.current.value))/255
-
-  let K=1-Math.max(r,g,b)
-  let C=(1-r-K)*100/(1-K)
-  let M=(1-g-K)*100/(1-K)
-  let Y=(1-b-K)*100/(1-K)
-  
-  !K? K=0:null
-  !C? C=0:null
-  !M? M=0:null
-  !Y? Y=0:null
-  
-  obj.C.current.value=C
-  obj.M.current.value=M
-  obj.Y.current.value=Y
-  obj.K.current.value=K*100
-
-}
-
-///////////////////////////// RGB to HSL /////////////////////////////ok
-export const RGBtoHSL=(obj)=>{
-  /////////////////////////////////////////////////////////////////////
-  //source1: https://www.rapidtables.com/convert/color/rgb-to-hsl.html
-  //source2: Wikipedia
-  
-  const R=parseFloat(obj.R.current.value)/255
-  const G=parseFloat(obj.G.current.value)/255
-  const B=parseFloat(obj.B.current.value)/255
-  
-  const max=Math.max(R,G,B)
-  const min=Math.min(R,G,B)
-  const c=max-min
-  let H;
-  if(c==0){
-      H=0
-      H=obj.H.current.value
-      //Putting current hue value instead of 0 to avoid sudden color change
-  }else if(max==R){
-      H=(((G-B)/c)%6)*60
-  }else if(max==G){
-      H=(((B-R)/c)+2)*60
-  }else if(max==B){
-      H=(((R-G)/c)+4)*60
-  }
-
-  // H<0? H+=360:null
-  H<0 && (H+=360)
-  
-  obj.H.current.value=H
-  obj.L.current.value=(max+min)*100/2
-  obj.LS.current.value= c==0? 0 : c*100/(1-Math.abs(2*parseFloat(obj.L.current.value)/100-1))
-
-}
-
-///////////////////////////// Hexa to RGB /////////////////////////////ok
-export const HexaToRGB=(obj)=>{
-    
-  let newArray=[];
-  let a;
-  for(let key in obj.Hexa.current.value){
-
-      switch(obj.Hexa.current.value[key]){
-
-          case "a": case "A": a=10;
-          break;
-          case "b": case "B": a=11;
-          break;
-          case "c": case "C": a=12;
-          break;
-          case "d": case "D": a=13;
-          break;
-          case "e": case "E": a=14;
-          break;
-          case "f": case "F": a=15;
-          break;
-          default: a=obj.Hexa.current.value[key];
-
-      }
-
-      newArray.push(parseInt(a))
-  }
-
-  obj.R.current.value=newArray[1]*16+newArray[2]
-  obj.G.current.value=newArray[3]*16+newArray[4]
-  obj.B.current.value=newArray[5]*16+newArray[6]
-  
-  //////////////// For comfirmation ////////////////
-
-  let rgb=[parseFloat(obj.R.current.value).toString(), parseFloat(obj.G.current.value).toString(), parseFloat(obj.B.current.value).toString()]
-  let hexa="#";
-  rgb.forEach((elm)=>{
-  let quotient, remainder;
-  let a=elm;
-  let arr=[]
-  while(a!==0){
-  quotient=Math.floor(a/16)
-  remainder=a%16
-
-  switch(remainder){
-    case 10:remainder="A"; break;
-    case 11:remainder="B"; break;
-    case 12:remainder="C"; break;
-    case 13:remainder="D"; break;
-    case 14:remainder="E"; break;
-    case 15:remainder="F"
-  }
-  arr.push(remainder)
-  a=quotient
-  a==0 && arr.length==1 ? arr.push(a) : null
-  }
-  let code=String(arr[1])+arr[0]
-  hexa+=code
-  })
-
-// console.log("hexa Confirmation:",hexa)
-}
-
-
-///////////////////////////// CMYK to RGB /////////////////////////////ok
-export const CMYKtoRGB=(obj)=>{
-  //source: https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
-  
-  obj.R.current.value=255*(1-parseFloat(obj.C.current.value)/100)*(1-parseFloat(obj.K.current.value)/100)
-  obj.G.current.value=255*(1-parseFloat(obj.M.current.value)/100)*(1-parseFloat(obj.K.current.value)/100)
-  obj.B.current.value=255*(1-parseFloat(obj.Y.current.value)/100)*(1-parseFloat(obj.K.current.value)/100)
-
-}
-
 ///////////////////////////// Hue /////////////////////////////
   
-export const colorSpaceBG=(obj,stts)=>{
+// export const colorSpaceBG=(ColorCodes,setCSBG)=>{
     
-  const hsl_1='hsl('+obj.H.current.value+',0%,50%)'
-  const hsl_2='hsl('+obj.H.current.value+',100%,50%)'
+//   const hsl_1='hsl('+ColorCodes.H+',0%,50%)'
+//   const hsl_2='hsl('+ColorCodes.H+',100%,50%)'
 
-  const hsv_2='hsl('+obj.H.current.value+',100%,50%)'
-  stts.setCSBG(['linear-gradient(90deg, '+hsl_1+','+hsl_2+')', 'linear-gradient(90deg, white,'+hsv_2+')'])
+//   const hsv_2='hsl('+ColorCodes.H+',100%,50%)'
+//   setCSBG(['linear-gradient(90deg, '+hsl_1+','+hsl_2+')', 'linear-gradient(90deg, white,'+hsv_2+')'])
 
-}
+// }
 
 
 ///////////////////////////// HSL to pointer /////////////////////////////
-export const HSLtoPointer=(obj,stts)=>{
+export const HSLtoPointer=(ColorCodes,setPointerPosition)=>{
 
-  stts.setPointerPosition({
-    HSL_top:Math.abs(obj.L.current.value*2-200)-12+"px",
-    HSL_left:obj.LS.current.value*3.6-12+"px",
-    HSV_top:Math.abs(obj.V.current.value*2-200)-12+"px",
-    HSV_left:obj.VS.current.value*3.6-12+"px"
+  setPointerPosition({
+    HSL_top:Math.abs(ColorCodes.L*2-200)-12+"px",
+    HSL_left:ColorCodes.LS*3.6-12+"px",
+    HSV_top:Math.abs(ColorCodes.V*2-200)-12+"px",
+    HSV_left:ColorCodes.VS*3.6-12+"px"
   })
 }
 
 ///////////////////////////// text color /////////////////////////////
-export const textColorChange=(obj,states)=>{
+export const textColorChange=(ColorCodes,setTextColor)=>{
 
-  parseFloat(obj.L.current.value)<=50? states.setTextColor(true) : states.setTextColor(false)
+  parseFloat(ColorCodes.L)<=50? setTextColor(true) : setTextColor(false)
 }
 
 ///////////////////////////// BuiltIn color /////////////////////////////
 
-export const check_Built_In_Color=(obj,states)=>{
-  states.setBuiltInColor(["--",null])
-  Object.keys(states.builtInColors).forEach((val)=>{
+export const check_Built_In_Color=(ColorCodes,builtInColors,setBuiltInColor)=>{
+  setBuiltInColor(["--",null])
+  Object.keys(builtInColors).forEach((val)=>{
       
-      obj.Hexa.current.value==states.builtInColors[val]["hexa"] &&
-      states.setBuiltInColor([val,states.builtInColors[val]["hexa"]])
+      ColorCodes.Hexa==builtInColors[val]["hexa"] &&
+      setBuiltInColor([val,builtInColors[val]["hexa"]])
   })
 }
 
 
-// export const updateInput=(ref, inputref)=>{
-  // inputref.H1.current.value=Math.round(ref.H.current.value)
-  // inputref.H2.current.value=Math.round(ref.H.current.value)
-  // inputref.LS1.current.value=Math.round(ref.LS.current.value)
-  // inputref.LS2.current.value=Math.round(ref.LS.current.value)
-  // inputref.L1.current.value=Math.round(ref.L.current.value)
-  // inputref.L2.current.value=Math.round(ref.L.current.value)
-
-  // inputref.VS1.current.value=Math.round(ref.VS.current.value)
-  // inputref.VS2.current.value=Math.round(ref.VS.current.value)
-  // inputref.V1.current.value=Math.round(ref.V.current.value)
-  // inputref.V2.current.value=Math.round(ref.V.current.value)
-
-  // inputref.R1.current.value=Math.round(ref.R.current.value)
-  // inputref.R2.current.value=Math.round(ref.R.current.value)
-  // inputref.G1.current.value=Math.round(ref.G.current.value)
-  // inputref.G2.current.value=Math.round(ref.G.current.value)
-  // inputref.B1.current.value=Math.round(ref.B.current.value)
-  // inputref.B2.current.value=Math.round(ref.B.current.value)
-
-  // inputref.C1.current.value=Math.round(ref.C.current.value)
-  // inputref.C2.current.value=Math.round(ref.C.current.value)
-  // inputref.M1.current.value=Math.round(ref.M.current.value)
-  // inputref.M2.current.value=Math.round(ref.M.current.value)
-  // inputref.Y1.current.value=Math.round(ref.Y.current.value)
-  // inputref.Y2.current.value=Math.round(ref.Y.current.value)
-  // inputref.K1.current.value=Math.round(ref.K.current.value)
-  // inputref.K2.current.value=Math.round(ref.K.current.value)
-// }
-
-
 ///////////////////////////// output color /////////////////////////////
-export const updateOutput=(refs, inputRef, showcolorRef,setter)=>{
+export const updateOutput=(ColorCodes, opacity, showcolorRef,setter)=>{
 
-  // console.log(inputRef.LS2.current.value, refs.LS.current.value,)
-
-  const hsl=`hsla(${Math.round(refs.H.current.value)},${Math.round(refs.LS.current.value)}%,${Math.round(refs.L.current.value)}%,${inputRef.OP2.current.value})`
+  const hsl=`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${opacity})`
 
   showcolorRef.current.style.background=hsl
 
-document.body.style.background=hsl
-
-// if(inputRef.OP2.current.value!==1){
-  
-        
-// }
-
-let h=Math.round(refs.H.current.value);
-let sl=Math.round(refs.LS.current.value);
-let l=Math.round(refs.L.current.value);
-let sv=Math.round(refs.VS.current.value);
-let v=Math.round(refs.V.current.value);
+let h=Math.round(ColorCodes.H);
+let sl=Math.round(ColorCodes.LS);
+let l=Math.round(ColorCodes.L);
+let sv=Math.round(ColorCodes.VS);
+let v=Math.round(ColorCodes.V);
 
 sl==0 || l==0 || l==100 ? h=0:null
 
@@ -361,50 +68,42 @@ if(l==0 || l==100){
     sv=0
 }
 
-let r=Math.round(refs.R.current.value);
-let g=Math.round(refs.G.current.value);
-let b=Math.round(refs.B.current.value);
+let r=Math.round(ColorCodes.R);
+let g=Math.round(ColorCodes.G);
+let b=Math.round(ColorCodes.B);
 
 let c,m,y;
 
-let k=Math.round(refs.K.current.value);
+let k=Math.round(ColorCodes.K);
 if(k==100){
     c=0;
     m=0;
     y=0;
     
 }else{
-    c=Math.round(refs.C.current.value);
-    m=Math.round(refs.M.current.value);
-    y=Math.round(refs.Y.current.value);
+    c=Math.round(ColorCodes.C);
+    m=Math.round(ColorCodes.M);
+    y=Math.round(ColorCodes.Y);
 }
 
 c==100 && m==100 && y==100? k=0:null
 
-if(inputRef.OP2.current.value==1){
-  // outputRef.HSL.current.value=`hsl(${h}, ${sl}%, ${l}%)`
-  // outputRef.HSV.current.value=`hsv(${h}, ${sv}%, ${v}%)`
-  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}`
-  // outputRef.RGB.current.value=`rgb(${r}, ${g}, ${b})`
-  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+if(opacity==1){
 
   setter({
     HSL:`hsl(${h}, ${sl}%, ${l}%)`,
     HSV:`hsv(${h}, ${sv}%, ${v}%)`,
-    Hexa:`${inputRef.Hexa.current.value.toUpperCase()}`,
+    // Hexa:`${ColorCodes.Hexa.toUpperCase()}`,
+    Hexa:`${ColorCodes.Hexa}`,
     RGB:`rgb(${r}, ${g}, ${b})`,
     CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
   })
     
 }else{
-  // outputRef.HSL.current.value=`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`
-  // outputRef.HSV.current.value=`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`
-  // outputRef.Hexa.current.value=`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`
-  // outputRef.RGB.current.value=`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`
-  // outputRef.CMYK.current.value=`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
+
   let hexa=""
   let quotient,remainder;
-  let a=Math.round(inputRef.OP2.current.value*255)
+  let a=Math.round(opacity*255)
 
     let arr=[]
 
@@ -427,14 +126,14 @@ if(inputRef.OP2.current.value==1){
         }
         hexa=String(arr[1])+arr[0]
         
-        // hexa=="undefinedundefined"? hexa="00":null
         hexa=="undefinedundefined" && (hexa="00")
 
   setter({
-    HSL:`hsla(${h}, ${sl}%, ${l}%, ${inputRef.OP2.current.value})`,
-    HSV:`hsva(${h}, ${sv}%, ${v}%, ${inputRef.OP2.current.value})`,
-    Hexa:`${inputRef.Hexa.current.value.toUpperCase()}${hexa}`,
-    RGB:`rgba(${r}, ${g}, ${b}, ${inputRef.OP2.current.value})`,
+    HSL:`hsla(${h}, ${sl}%, ${l}%, ${opacity})`,
+    HSV:`hsva(${h}, ${sv}%, ${v}%, ${opacity})`,
+    // Hexa:`${ColorCodes.Hexa.toUpperCase()}${hexa}`,
+    Hexa:`${ColorCodes.Hexa}${hexa}`,
+    RGB:`rgba(${r}, ${g}, ${b}, ${opacity})`,
     CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
   })
 }
@@ -444,14 +143,14 @@ if(inputRef.OP2.current.value==1){
 ///////////////////////////// input range background /////////////////////////////
   
 const SandLforSv=(Sv,ob)=>{ // Function to get bgcolor of Sv range input
-  const L=100*(((ob.V.current.value)/100)*(1-((Sv/100)/2)))
+  const L=100*(((ob.V)/100)*(1-((Sv/100)/2)))
   let S;
-      S= (L==0 || L==100)? 0 : 100*((((ob.V.current.value)/100)-(L/100))/Math.min(L/100, 1-L/100))
+      S= (L==0 || L==100)? 0 : 100*((((ob.V)/100)-(L/100))/Math.min(L/100, 1-L/100))
       return [S,L]
 }
 
 const SandLforV=(V,ob)=>{ // Function to get bgcolor of V range input
-  const L=100*((V/100)*(1-(((ob.VS.current.value)/100)/2)))
+  const L=100*((V/100)*(1-(((ob.VS)/100)/2)))
   let S;
 
   S= (L==0 || L==100)? 0 : 100*(((V/100)-(L/100))/Math.min(L/100, 1-L/100))
@@ -463,71 +162,311 @@ const CMYKbgColor=(c,m,y,k)=>{
   return `rgb(${Math.round(255*(1-c/100)*(1-k/100))},${Math.round(255*(1-m/100)*(1-k/100))},${Math.round(255*(1-y/100)*(1-k/100))})`
 }
 
-export const inputRangeBG=(refs, obj,stts)=>{ //Main function
+export const inputRangeBG=(ColorCodes,setRangeBG)=>{ //Main function
 
-  // console.log(refs.H.current.value, typeof refs.H.current.value, Math.round(refs.H.current.value))
-
-  const LS_left=`hsl(0,0%,${Math.round(refs.L.current.value)}%)`
-  const LS_right=`hsl(${Math.round(refs.H.current.value)},100%,${Math.round(refs.L.current.value)}%)`
+  const LS_left=`hsl(0,0%,${Math.round(ColorCodes.L)}%)`
+  const LS_right=`hsl(${Math.round(ColorCodes.H)},100%,${Math.round(ColorCodes.L)}%)`
   const LS_bg=`linear-gradient(90deg, ${LS_left},${LS_right})`
 
-  const L_middle=`hsl(${Math.round(refs.H.current.value)},${Math.round(refs.LS.current.value)}%,50%)`
+  const L_middle=`hsl(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,50%)`
   const L_bg=`linear-gradient(90deg, hsl(0,0%,0%), ${L_middle}, hsl(0,0%,100%))`
-  //////////// HSV ////////////
-  // hsv(any, 0% value)   : left of Sv
-  // hsv(hue, 100% value) : right of Sv
-
-  // hsv(any, Sv 0%)   : left of V
-  // hsv(hue, Sv 100%) : right of V
-
-  // Convert them to hsl, Use the same method as HSVtoSHL function
-
+  
   // Sv
-  const VS_left=`hsl(0,${Math.round(SandLforSv(0,refs)[0])}%,${Math.round(SandLforSv(0,refs)[1])}%)`
-  const VS_Right=`hsl(${Math.round(refs.H.current.value)},${Math.round(SandLforSv(100,refs)[0])}%,${Math.round(SandLforSv(100,refs)[1])}%)`
+  const VS_left=`hsl(0,${Math.round(SandLforSv(0,ColorCodes)[0])}%,${Math.round(SandLforSv(0,ColorCodes)[1])}%)`
+  const VS_Right=`hsl(${Math.round(ColorCodes.H)},${Math.round(SandLforSv(100,ColorCodes)[0])}%,${Math.round(SandLforSv(100,ColorCodes)[1])}%)`
 
   const VS_bg=`linear-gradient(90deg, ${VS_left}, ${VS_Right})`
 
   // V
-  const V_left=`hsl(0,${Math.round(SandLforV(0,refs)[0])}%,${Math.round(SandLforV(0,refs)[1])}%)`
-  const V_Right=`hsl(${Math.round(refs.H.current.value)},${Math.round(SandLforV(100,refs)[0])}%,${Math.round(SandLforV(100,refs)[1])}%)`
+  const V_left=`hsl(0,${Math.round(SandLforV(0,ColorCodes)[0])}%,${Math.round(SandLforV(0,ColorCodes)[1])}%)`
+  const V_Right=`hsl(${Math.round(ColorCodes.H)},${Math.round(SandLforV(100,ColorCodes)[0])}%,${Math.round(SandLforV(100,ColorCodes)[1])}%)`
 
   const V_bg=`linear-gradient(90deg, ${V_left}, ${V_Right})`
 
   // RGB
-  const R_left=`rgb(0,${Math.round(refs.G.current.value)},${Math.round(refs.B.current.value)})`
-  const R_right=`rgb(255,${Math.round(refs.G.current.value)},${Math.round(refs.B.current.value)})`
+  const R_left=`rgb(0,${Math.round(ColorCodes.G)},${Math.round(ColorCodes.B)})`
+  const R_right=`rgb(255,${Math.round(ColorCodes.G)},${Math.round(ColorCodes.B)})`
   const R_bg=`linear-gradient(90deg, ${R_left}, ${R_right})`
 
-  const G_left=`rgb(${Math.round(refs.R.current.value)},0,${Math.round(refs.B.current.value)})`
-  const G_right=`rgb(${Math.round(refs.R.current.value)},255,${Math.round(refs.B.current.value)})`
+  const G_left=`rgb(${Math.round(ColorCodes.R)},0,${Math.round(ColorCodes.B)})`
+  const G_right=`rgb(${Math.round(ColorCodes.R)},255,${Math.round(ColorCodes.B)})`
   const G_bg=`linear-gradient(90deg, ${G_left}, ${G_right})`
 
-  const B_left=`rgb(${Math.round(refs.R.current.value)},${Math.round(refs.G.current.value)},0)`
-  const B_right=`rgb(${Math.round(refs.R.current.value)},${Math.round(refs.G.current.value)},255)`
+  const B_left=`rgb(${Math.round(ColorCodes.R)},${Math.round(ColorCodes.G)},0)`
+  const B_right=`rgb(${Math.round(ColorCodes.R)},${Math.round(ColorCodes.G)},255)`
   const B_bg=`linear-gradient(90deg, ${B_left}, ${B_right})`
 
   // CMYK
-  const C_left=CMYKbgColor(0,(refs.M.current.value),(refs.Y.current.value),(refs.K.current.value))
-  const C_right=CMYKbgColor(100,(refs.M.current.value),(refs.Y.current.value),(refs.K.current.value))
+  const C_left=CMYKbgColor(0,(ColorCodes.M),(ColorCodes.Y),(ColorCodes.K))
+  const C_right=CMYKbgColor(100,(ColorCodes.M),(ColorCodes.Y),(ColorCodes.K))
   
   const C_bg=`linear-gradient(90deg, ${C_left}, ${C_right})`
 
-  const M_left=CMYKbgColor((refs.C.current.value),0,(refs.Y.current.value),(refs.K.current.value))
-  const M_right=CMYKbgColor((refs.C.current.value),100,(refs.Y.current.value),(refs.K.current.value))
+  const M_left=CMYKbgColor((ColorCodes.C),0,(ColorCodes.Y),(ColorCodes.K))
+  const M_right=CMYKbgColor((ColorCodes.C),100,(ColorCodes.Y),(ColorCodes.K))
   
   const M_bg=`linear-gradient(90deg, ${M_left}, ${M_right})`
 
-  const Y_left=CMYKbgColor((refs.C.current.value),(refs.M.current.value),0,(refs.K.current.value))
-  const Y_right=CMYKbgColor((refs.C.current.value),(refs.M.current.value),100,(refs.K.current.value))
+  const Y_left=CMYKbgColor((ColorCodes.C),(ColorCodes.M),0,(ColorCodes.K))
+  const Y_right=CMYKbgColor((ColorCodes.C),(ColorCodes.M),100,(ColorCodes.K))
   
   const Y_bg=`linear-gradient(90deg, ${Y_left}, ${Y_right})`
 
-  const K_left=CMYKbgColor((refs.C.current.value),(refs.M.current.value),(refs.Y.current.value),0)
-  const K_right=CMYKbgColor((refs.C.current.value),(refs.M.current.value),(refs.Y.current.value),100)
+  const K_left=CMYKbgColor((ColorCodes.C),(ColorCodes.M),(ColorCodes.Y),0)
+  const K_right=CMYKbgColor((ColorCodes.C),(ColorCodes.M),(ColorCodes.Y),100)
   
   const K_bg=`linear-gradient(90deg, ${K_left}, ${K_right})`
 
-  stts.setRangeBG({LS:LS_bg,L:L_bg,VS:VS_bg,V:V_bg, R:R_bg,B:B_bg,G:G_bg,C:C_bg,M:M_bg,Y:Y_bg,K:K_bg})
+  setRangeBG({LS:LS_bg,L:L_bg,VS:VS_bg,V:V_bg, R:R_bg,B:B_bg,G:G_bg,C:C_bg,M:M_bg,Y:Y_bg,K:K_bg})
   
+}
+
+export const reducer=(state,action)=>{
+
+  switch(action.type){
+
+    case 'H': return {...state, H:action.payload}
+    case 'LS': return {...state, LS:action.payload}
+    case 'L': return {...state, L:action.payload}
+    case 'VS': return {...state, VS:action.payload}
+    case 'V': return {...state, V:action.payload}
+
+    case 'R': return {...state, R:action.payload}
+    case 'G': return {...state, G:action.payload}
+    case 'B': return {...state, B:action.payload}
+
+    case 'Hexa': return {...state, Hexa:action.payload}
+
+    case 'C': return {...state, C:action.payload}
+    case 'M': return {...state, M:action.payload}
+    case 'Y': return {...state, Y:action.payload}
+    case 'K': return {...state, K:action.payload}
+    
+    case 'HSLtoHSV':// Wikipedia is the only source.
+      
+      const V=100*(state.L/100+(state.LS/100)*Math.min(1-(state.L/100), state.L/100))
+      const VS = V==0?
+      0 : 200*(1-state.L/V)
+      return {...state,VS:VS,V:V}
+
+
+    case 'HSVtoHSL':// Wikipedia is the only source.
+    
+      const L2=100*((parseFloat(state.V)/100)*(1-((parseFloat(state.VS)/100)/2)))
+
+      let LS=(L2==0 || L2==100)?
+      0:100*(((parseFloat(state.V)/100)-(L2/100))/Math.min(L2/100, 1-L2/100))
+
+      return {...state, LS:LS,L:L2}
+
+    case 'HSLtoRGB':
+      // source1: https://www.peko-step.com/tool/hslrgb.html#ppick3
+      // source2: https://yanohirota.com/color-converter/
+
+      let L,H,fx,r,g,b;
+
+      L=state.L<50? state.L:100-state.L
+      const max=2.55*(parseFloat(state.L)+(L*state.LS/100))
+      const min=2.55*(parseFloat(state.L)-(L*state.LS/100))
+
+      if(0<=state.H && state.H<60){
+          
+          H=state.H
+          fx=(H*(max-min)/60)+min
+          r=max
+          g=fx
+          b=min
+          
+      }else if(60<=state.H && state.H<120){
+          H=120-state.H
+          fx=(H*(max-min)/60)+min
+          r=fx
+          g=max
+          b=min
+          
+      }else if(120<=state.H && state.H<180){
+          H=state.H-120
+          fx=(H*(max-min)/60)+min
+          r=min
+          g=max
+          b=fx
+          
+      }else if(180<=state.H && state.H<240){
+          H=240-state.H
+          fx=(H*(max-min)/60)+min
+          r=min
+          g=fx
+          b=max
+          
+      }else if(240<=state.H && state.H<300){
+          H=state.H-240
+          fx=(H*(max-min)/60)+min
+          r=fx
+          g=min
+          b=max
+
+      }else if(300<=state.H && state.H<360){
+          H=360-state.H
+          fx=(H*(max-min)/60)+min
+          r=max
+          g=min
+          b=fx
+      }
+
+      return {...state,R:r,G:g,B:b}
+
+    case 'RGBtoHexa':
+
+      let rgb=[Math.round(state.R).toString(), Math.round(state.G).toString(), Math.round(state.B).toString()]
+
+      let hexa="#";
+    
+      rgb.forEach((elm)=>{
+        let quotient, remainder;
+        let a=elm;
+        let arr=[]
+        while(a!==0){
+            quotient=Math.floor(a/16)
+            remainder=a%16
+    
+            switch(remainder){
+                case 10:remainder="A"; break;
+                case 11:remainder="B"; break;
+                case 12:remainder="C"; break;
+                case 13:remainder="D"; break;
+                case 14:remainder="E"; break;
+                case 15:remainder="F"
+            }
+            arr.push(remainder)
+            a=quotient
+            a==0 && arr.length==1 ? arr.push(a) : null
+        }
+        let code=String(arr[1])+arr[0]
+      hexa+=code
+    })
+      return {...state, Hexa:hexa}
+
+    case 'RGBtoCMYK':
+      //source: https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
+  
+  // Using Math.round to avoid problem mentioned on the top of code.  ??
+
+      const rr=Math.round(parseFloat(state.R))/255
+      const gg=Math.round(parseFloat(state.G))/255
+      const bb=Math.round(parseFloat(state.B))/255
+
+      let K=1-Math.max(rr,gg,bb)
+      let C=(1-rr-K)*100/(1-K)
+      let M=(1-gg-K)*100/(1-K)
+      let Y=(1-bb-K)*100/(1-K)
+      
+      !K? K=0:null
+      !C? C=0:null
+      !M? M=0:null
+      !Y? Y=0:null
+      
+      return {...state, C:C,M:M,Y:Y,K:K*100}
+
+
+    case 'HexaToRGB':
+
+    console.log("state.Hexa",state.Hexa)
+      let newArray=[];
+      let a;
+      for(let key in state.Hexa){
+
+          switch(state.Hexa[key]){
+
+              case "a": case "A": a=10;
+              break;
+              case "b": case "B": a=11;
+              break;
+              case "c": case "C": a=12;
+              break;
+              case "d": case "D": a=13;
+              break;
+              case "e": case "E": a=14;
+              break;
+              case "f": case "F": a=15;
+              break;
+              default: a=state.Hexa[key];
+
+          }
+
+          newArray.push(parseInt(a))
+      }
+
+      //////////////// For comfirmation ////////////////
+
+  let rgb2=[parseFloat(newArray[1]*16+newArray[2]).toString(), parseFloat(newArray[3]*16+newArray[4]).toString(), parseFloat(newArray[5]*16+newArray[6]).toString()]
+  let hexa2="#";
+  rgb2.forEach((elm)=>{
+  let quotient, remainder;
+  let a=elm;
+  let arr=[]
+  while(a!==0){
+  quotient=Math.floor(a/16)
+  remainder=a%16
+
+  switch(remainder){
+    case 10:remainder="A"; break;
+    case 11:remainder="B"; break;
+    case 12:remainder="C"; break;
+    case 13:remainder="D"; break;
+    case 14:remainder="E"; break;
+    case 15:remainder="F"
+  }
+  arr.push(remainder)
+  a=quotient
+  a==0 && arr.length==1 ? arr.push(a) : null
+  }
+  let code=String(arr[1])+arr[0]
+  hexa2+=code
+  })
+
+console.log("hexa Confirmation:",hexa2)
+
+
+      return {...state, R:newArray[1]*16+newArray[2], G:newArray[3]*16+newArray[4] ,B:newArray[5]*16+newArray[6]}
+      
+    case 'RGBtoHSL':
+      //source1: https://www.rapidtables.com/convert/color/rgb-to-hsl.html
+  //source2: Wikipedia
+      const R=parseFloat(state.R)/255
+      const G=parseFloat(state.G)/255
+      const B=parseFloat(state.B)/255
+
+      const max2=Math.max(R,G,B)
+      const min2=Math.min(R,G,B)
+      const c=max2-min2
+      let H2;
+      if(c==0){
+          // H2=0
+          H2=state.H
+          //Putting current hue value instead of 0 to avoid sudden color change
+      }else if(max2==R){
+          H2=(((G-B)/c)%6)*60
+      }else if(max2==G){
+          H2=(((B-R)/c)+2)*60
+      }else if(max2==B){
+          H2=(((R-G)/c)+4)*60
+      }
+
+      H2<0 && (H2+=360)
+      
+      return {...state, H:H2, LS:c==0? 0 : c*100/(1-Math.abs(2*parseFloat((max2+min2)*100/2)/100-1)), L:(max2+min2)*100/2}
+
+    case 'CMYKtoRGB':
+      //source: https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
+      const R2=255*(1-parseFloat(state.C)/100)*(1-parseFloat(state.K)/100)
+      const G2=255*(1-parseFloat(state.M)/100)*(1-parseFloat(state.K)/100)
+      const B2=255*(1-parseFloat(state.Y)/100)*(1-parseFloat(state.K)/100)
+      return {...state, R:R2,G:G2,B:B2}
+
+      case 'trigger':
+
+      return {...state, trigger:(!state.trigger || state.trigger>100)?1:state.trigger+1,boolean:action.payload}
+
+  }
+
 }

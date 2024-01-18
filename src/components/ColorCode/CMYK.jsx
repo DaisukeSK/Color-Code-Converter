@@ -1,71 +1,37 @@
 import { useContext } from "react"
 import { Cntxt } from "../../App.jsx"
 import { Frame,CN_Label,Grid,Label,Range,InputNumber,CMYK_RangeBG } from '../../StyledComponents.jsx'
-import { CMYKtoRGB,RGBtoHexa,RGBtoHSL,HSLtoHSV,sync_Input } from '../../Functions.jsx'
+import { sync_Input } from '../../Functions.jsx'
 
 
 const CMYK=()=>{
 
-    const { States,textColor,InputRefs,functions,Refs,rangeBG}= useContext(Cntxt)
+    const { ColorCodes,dispatch, States}= useContext(Cntxt)
 
     //////////////////////////// CMYK ////////////////////////////
   const CMYK_inputChange=(e)=>{
       
     sync_Input(e.target)
 
-    // console.log("className",e.target.closest(""))
-    // console.log("className",e.target.className[1])
-    // console.log("className",e.target.className[2])
-    // e.target.className.forEach(val=>{
-    //     console.log(val)
-    // })
-
     if(e.target.className.includes("input_C")){
-        // Refs.C.current.value=parseFloat(InputRefs.C2.current.value);
-        Refs.C.current.value=e.target.value
+        dispatch({type:'C',payload:e.target.value})
     }else if(e.target.className.includes("input_M")){
-        // Refs.M.current.value=parseFloat(InputRefs.M2.current.value);
-        Refs.M.current.value=e.target.value
+        dispatch({type:'M',payload:e.target.value})
     }else if(e.target.className.includes("input_Y")){
-        // Refs.Y.current.value=parseFloat(InputRefs.Y2.current.value);
-        Refs.Y.current.value=e.target.value
+        dispatch({type:'Y',payload:e.target.value})
     }else if(e.target.className.includes("input_K")){
-        // Refs.K.current.value=parseFloat(InputRefs.K2.current.value)
-        Refs.K.current.value=e.target.value
+        dispatch({type:'K',payload:e.target.value})
     }
 
-
-    //     switch(e.target){
-            
-
-    //         case InputRefs.C1.current: case InputRefs.C2.current:
-    //             Refs.C.current.value=parseFloat(InputRefs.C2.current.value);
-    //         break;
-
-    //         case InputRefs.M1.current: case InputRefs.M2.current:
-    //             Refs.M.current.value=parseFloat(InputRefs.M2.current.value);
-    //         break;
-
-    //         case InputRefs.Y1.current: case InputRefs.Y2.current:
-    //             Refs.Y.current.value=parseFloat(InputRefs.Y2.current.value);
-    //         break;
-
-    //         default:
-    //             Refs.K.current.value=parseFloat(InputRefs.K2.current.value)
-    //     }
-    
-          CMYKtoRGB(Refs)
-          RGBtoHexa(Refs)
-          RGBtoHSL(Refs)
-          HSLtoHSV(Refs)
-          
-          functions(true)
+        dispatch({type:'CMYKtoRGB',payload:null})
+        dispatch({type:'RGBtoHexa',payload:null})
+        dispatch({type:'RGBtoHSL',payload:null})
+        dispatch({type:'HSLtoHSV',payload:null})
+        dispatch({type:'trigger', payload:true})
 
   }
 
     return(
-
-
 
     <Frame textcolor={States.textColor?1:0}>
             
@@ -84,16 +50,14 @@ const CMYK=()=>{
 
                         onChange={(e)=>{CMYK_inputChange(e)}}
                             onInput={(e)=>{CMYK_inputChange(e)}}
-                            // ref={key==0? InputRefs.C1:key==1? InputRefs.M1:key==2? InputRefs.Y1:InputRefs.K1}
-                            value={Refs[elm].current? Math.round(Refs[elm].current.value):0}
+                            value={ColorCodes[elm]? Math.round(ColorCodes[elm]):0}
                             />
 
                     </Range>
                     <InputNumber className={`input_${elm}`} textcolor={States.textColor?1:0} min="0" max="100" step="1"
                     onChange={(e)=>{CMYK_inputChange(e)}}
                         onInput={(e)=>{CMYK_inputChange(e)}}
-                            // ref={key==0? InputRefs.C2:key==1? InputRefs.M2:key==2? InputRefs.Y2:InputRefs.K2}
-                            value={Refs[elm].current? Math.round(Refs[elm].current.value):0}
+                            value={ColorCodes[elm]? Math.round(ColorCodes[elm]):0}
                             />
                     
                     </Grid>

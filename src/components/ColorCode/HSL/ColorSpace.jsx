@@ -1,14 +1,12 @@
 import { useContext } from "react"
 import { Cntxt } from "../../../App.jsx"
 import { ColorSpaceDiv } from '../../../StyledComponents.jsx'
-import { HSLtoRGB, RGBtoHexa, RGBtoCMYK, HSLtoHSV, HSVtoHSL } from '../../../Functions.jsx'
-
 import custom_pointer from "../../../../public/pointer.png";
 import transparent from "../../../../public/transparent.png";
 
 const ColorSpace=()=>{
 
-    const { States, functions, Refs }= useContext(Cntxt)
+    const { ColorCodes,dispatch,States }= useContext(Cntxt)
 
     const movePointer=(val)=>{
 
@@ -26,58 +24,61 @@ const ColorSpace=()=>{
 
             if(val.target.id=="CS_HSL"){
 
-                // States.setPointerPosition(pointer=>pointer.map((val,key)=>key==0?top-12+"px":val))
-                // States.setPointerPosition(pointer=>pointer.map((val,key)=>key==1?left-12+"px" :val))
+                dispatch({type:'LS', payload:(top==200 || top==0)? 0 : left*100/360})
+                dispatch({type:'L', payload:Math.abs(top/2-100)})
+                dispatch({type:'HSLtoHSV', payload:null})
 
-                Refs.LS.current.value=(top==200 || top==0)? 0 : left*100/360
+                // Doing the same things as above to use these variables below
+                const LS=(top==200 || top==0)? 0 : left*100/360
+                const L=Math.abs(top/2-100)
+                const V=100*(L/100+(LS/100)*Math.min(1-(L/100), L/100))
+                const VS = V==0?
+                0 : 200*(1-L/parseFloat(V))
 
-                Refs.L.current.value=Math.abs(top/2-100)
-
-                HSLtoHSV(Refs)
-
-                // States.setPointerPosition(prev=>prev.map((val,key)=>key==2?Math.abs(parseFloat(Refs.V.current.value)*2-200)-12+"px":val))
-                // States.setPointerPosition(prev=>prev.map((val,key)=>key==3?parseFloat(Refs.VS.current.value)*3.6-12+"px" :val))
                 States.setPointerPosition({...States.pointerPosition,
                 
                     HSL_top: top-12+"px",
                     HSL_left: left-12+"px",
-                    HSV_top: Math.abs(parseFloat(Refs.V.current.value)*2-200)-12+"px",
-                    HSV_left: parseFloat(Refs.VS.current.value)*3.6-12+"px"
+                    HSV_top: Math.abs(V*2-200)-12+"px",
+                    HSV_left: VS*3.6-12+"px"
 
                 })
                 
 
             }else if(val.target.id=="CS_HSV"){
 
-                // States.setPointerPosition(prev=>prev.map((val,key)=>key==2?top-12+"px":val))
-                // States.setPointerPosition(prev=>prev.map((val,key)=>key==3?left-12+"px" :val))
+                dispatch({type:'VS', payload:top==200? 0 : left*100/360})
+                dispatch({type:'V', payload:Math.abs(top/2-100)})
+                dispatch({type:'HSVtoHSL', payload:null})
 
-                Refs.VS.current.value= top==200? 0 : left*100/360
+                // Doing the same things as above to use these variables below
+                const VS= top==200? 0 : left*100/360
+                const V=Math.abs(top/2-100)
 
-                Refs.V.current.value=Math.abs(top/2-100)
+                const L=100*((parseFloat(V)/100)*(1-((parseFloat(VS)/100)/2)))
 
-                HSVtoHSL(Refs)
-                
-                // States.setPointerPosition(prev=>prev.map((val,key)=>key==0?Math.abs(parseFloat(Refs.L.current.value)*2-200)-12+"px":val))
-                // States.setPointerPosition(prev=>prev.map((val,key)=>key==1?Refs.LS.current.value*3.6-12+"px" :val))
-                
+                let LS;
+                if(L==0 || L==100){
+                    LS=0
+                }else{
+                    LS=100*(((parseFloat(V)/100)-(L/100))/Math.min(L/100, 1-L/100))
+                }
+
                 States.setPointerPosition({...States.pointerPosition,
                 
-                    HSL_top: Math.abs(parseFloat(Refs.L.current.value)*2-200)-12+"px",
-                    HSL_left: Refs.LS.current.value*3.6-12+"px",
+                    HSL_top: Math.abs(L*2-200)-12+"px",
+                    HSL_left: LS*3.6-12+"px",
                     HSV_top: top-12+"px",
                     HSV_left: left-12+"px"
 
                 })
             
             }
-            
-            
-            HSLtoRGB(Refs)
-            RGBtoHexa(Refs)
-            RGBtoCMYK(Refs)
 
-            functions(false)
+            dispatch({type:'HSLtoRGB', payload:null})
+            dispatch({type:'RGBtoHexa', payload:null})
+            dispatch({type:'RGBtoCMYK', payload:null})
+            dispatch({type:'trigger', payload:false})
         }
     }
 
@@ -88,7 +89,14 @@ const ColorSpace=()=>{
             {["HSL","HSV"].map((elm,key)=>{
                 return (
 
-                    <ColorSpaceDiv pointerposition={States.pointerPosition} csbg={States.CSBG} toggle={key==0?States.toggle:!States.toggle} bg={key==0?1:0} key={key}>
+                    <ColorSpaceDiv
+                    pointerposition={States.pointerPosition}
+                    // csbg={States.CSBG}
+                    hue={ColorCodes.H}
+                    toggle={key==0?States.toggle:!States.toggle}
+                    bg={key==0?1:0}
+                    key={key}
+                    >
                         <img src={custom_pointer} alt="pointer"/>
                         <div
                         draggable="true"
@@ -109,7 +117,6 @@ const ColorSpace=()=>{
 
         </div>
 
-        
     )
 }
 

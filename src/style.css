@@ -13,41 +13,23 @@ input[type=text], input[type=number] {
 }
 
 body {
+  width: 100%;
+  height: 100vh;
   padding: 0;
   margin: 0;
   position: relative;
   font-family: "Helvetica";
-}
-body .output_color {
-  position: absolute;
-  top: 55px;
-  left: 55px;
-  width: 100px;
-  height: 70px;
-  /* border: 1px solid black; */
-  margin: 0;
-  background: url("../public/tree_3.png");
-  background-size: contain;
-  background-position: center;
+  background-position-x: 50px;
+  background-position-y: 50px;
   background-repeat: no-repeat;
 }
-body .output_color div.showColor {
+body .bgDiv {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  /* z-index: 99; */
-}
-body .output_color::before {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  z-index: -1;
+  height: 100vh;
+  /* border: 1px solid black; */
 }
 
 div.top {

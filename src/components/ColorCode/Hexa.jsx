@@ -1,58 +1,63 @@
-import { useContext } from "react"
+import { useContext,useState,useEffect,useRef } from "react"
 import { Cntxt } from "../../App.jsx"
 import { Frame,CN_Label,Hexainput } from '../../StyledComponents.jsx'
-import { RGBtoCMYK,HexaToRGB,RGBtoHSL,HSLtoHSV } from '../../Functions.jsx'
-
 
 const Hexa=()=>{
 
-    const { States,textColor,functions,Refs}= useContext(Cntxt)
+    const { ColorCodes, dispatch, States}= useContext(Cntxt)
+
+    const [validHexaCode, setValidHexaCode]=useState(true)
+
+    const Hexa_Ref=useRef()
 
     //////////////////////////// Hexa ////////////////////////////
-  const Hexa_inputChange=()=>{
+  const Hexa_inputChange=(e)=>{
 
     const str="0123456789abcdefABCDEF"
-    if(Refs.Hexa.current.value.length==7 && Refs.Hexa.current.value[0]=="#"){
+    if(e.target.value.length==7 && e.target.value[0]=="#"){
         let sum=0;
-        for(let i=1; i<Refs.Hexa.current.value.length; i++){
+        for(let i=1; i<e.target.value.length; i++){
             
-          !str.includes(Refs.Hexa.current.value[i]) ? sum+=1 : null
+          !str.includes(e.target.value[i]) && (sum+=1)
         }
         if(sum==0){
-            // document.querySelector("div#right div.hexa p").innerText=""
-            States.setValidHexaCode(true)
-            
-            HexaToRGB(Refs)
-            RGBtoCMYK(Refs)
-            RGBtoHSL(Refs)
-            HSLtoHSV(Refs)
-            
-            functions(true)
+            setValidHexaCode(true)
+            dispatch({type:'Hexa', payload:e.target.value})
+
+            dispatch({type:'HexaToRGB', payload:null})
+            dispatch({type:'RGBtoCMYK', payload:null})
+            dispatch({type:'RGBtoHSL', payload:null})
+            dispatch({type:'HSLtoHSV', payload:null})
+            dispatch({type:'trigger', payload:true})
+
 
         }else{
-            // document.querySelector("div#right div.hexa p").innerText="*Incorrect input format"
-            States.setValidHexaCode(false)
+            setValidHexaCode(false)
         }
     }else{
-        // document.querySelector("div#right div.hexa p").innerText="*Incorrect input format"
-        States.setValidHexaCode(false)
+        setValidHexaCode(false)
         
     }
 
 }
+useEffect(()=>{
+    Hexa_Ref.current.value=ColorCodes.Hexa
+},[ColorCodes.Hexa])
+
+useEffect(()=>{
+console.log("useEffect running");
+(Hexa_Ref.current?.value.length==7 && Hexa_Ref.current?.value[0]=='#') &&
+setValidHexaCode(true)
+},[Hexa_Ref.current?.value])
    
-
     return(
-
-
 
         <Frame className="hexa" textcolor={States.textColor?1:0}>
             
+           <CN_Label textcolor={States.textColor?1:0}>Hexa</CN_Label>
             
-            <CN_Label textcolor={States.textColor?1:0}>Hexa</CN_Label>
-            
-            <Hexainput textcolor={States.textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Refs.Hexa}/>
-            <p>{States.validHexaCode?"":"*Incorrect input format"}</p>
+            <Hexainput textcolor={States.textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Hexa_Ref}/>
+            <p>{validHexaCode?"":"*Incorrect input format"}</p>
         </Frame>
     )
 }

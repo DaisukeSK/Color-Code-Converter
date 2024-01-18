@@ -81,6 +81,8 @@ input[type="text"],input[type="number"] {
 }
 
 body {
+    width: 100%;
+    height: 100vh;
     padding: 0;
     margin: 0;
 
@@ -91,6 +93,16 @@ body {
     
     position: relative;// For output_color element
     font-family: "Helvetica";
+
+    // background:url("../public/tree_2.png");
+        //background:url("vegetables2.png");
+        // background-size: 10%;
+        
+        background-position-x: 50px;//It's not working
+        background-position-y: 50px;//It's not working
+        background-repeat: no-repeat;//It's not working
+
+        
 
     // color: rgb(0, 0, 77);
 
@@ -301,43 +313,44 @@ body {
     //     }
     // }
     
-    .output_color {
+    .bgDiv {
         position: absolute;
-        top: 55px;
-        left: 55px;
-        width: 100px;
-        height: 70px;
-        
-
-        /* border: 1px solid black; */
-        margin: 0;
-        // margin-bottom: 10px;
-        background:url("../public/tree_3.png");
-        //background:url("vegetables2.png");
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-
-        div.showColor {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* z-index: 99; */
-        }
-    }
-
-    .output_color::before {
-        position: absolute;
-        content: "";
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
-        background-color: #ffffff;
-        z-index: -1;
+        height: 100vh;
+        
+
+        /* border: 1px solid black; */
+        // margin: 0;
+        // // margin-bottom: 10px;
+        // background:url("../public/tree_3.png");
+        // //background:url("vegetables2.png");
+        // background-size: contain;
+        // background-position: center;
+        // background-repeat: no-repeat;
+  
+
+        // div.showColor {
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        //     width: 100%;
+        //     height: 100%;
+        //     /* z-index: 99; */
+        // }
     }
+
+    // .output_color::before {
+    //     position: absolute;
+    //     content: "";
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: #ffffff;
+    //     z-index: -1;
+    // }
     
 }
 
@@ -361,7 +374,7 @@ div.top{
     .output_text {
         // padding-bottom: 0;
         // margin-right: 40px;
-        // z-index: 1;//Need this to put the element in front of output_color element.
+
         
         // width: 300px;
         // height: 170px;

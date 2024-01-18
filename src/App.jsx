@@ -1,236 +1,120 @@
-import { useState, useEffect, useRef, useContext, createContext } from 'react'
-import { OutputCN_Label,Frame,Hr,HSLFrame,OutputFrame, Section,InputNumber,CN_Label,CN_Label4HSL_HSV,Label, OutputText,CN_Label4Output,ToggleDiv,ColorSpaceDiv,Range,Grid,HGrid,HSLGrid,Hexainput,OpacityGrid,SVG,CopyBox } from './StyledComponents'
-import {sync_Input,HSLtoHSV,HSVtoHSL,HSLtoRGB,RGBtoHexa,RGBtoCMYK,HexaToRGB,RGBtoHSL,CMYKtoRGB,colorSpaceBG,HSLtoPointer,textColorChange,check_Built_In_Color,updateOutput,inputRangeBG} from "./Functions.jsx"
+import { useState, useEffect, useRef, useReducer, createContext } from 'react'
+import { Section } from './StyledComponents'
+import {HSLtoPointer,textColorChange,check_Built_In_Color,updateOutput,inputRangeBG,reducer} from "./Functions.jsx"
 import json from "./builtInColors.json"
 import Hamburger from './components/Hamburger'
 import SideBar from './components/Aside'
-import HiddenInput from './components/HiddenInput'
 import HSL from './components/ColorCode/HSL/HSL'
 import CMYK from './components/ColorCode/CMYK'
 import RGB from './components/ColorCode/RGB'
 import Hexa from './components/ColorCode/Hexa'
 import OutPut from './components/ColorCode/OutPut'
 
-
 export const Cntxt= createContext(null)
 
 export function App() {
-    //When movig a pointer to the top on HSL colorspace, K of CMYK is 1: Solved with Math.round
-    
-    //Alert for incorrect hexa input.
-    
+
+const [ColorCodes, dispatch]=useReducer(reducer,{H:210,LS:50,L:50})
+
+const [opacity, setOpacity]=useState(1)
 const [textColor, setTextColor]=useState(true)
 const [toggle, setToggle]=useState(true)
 const [aside, setAside]=useState(false)
 const [builtInColors, setBuiltInColors]=useState(json)
-// const [moveLeft, setMoveLeft]=useState()
 const [builtInColor, setBuiltInColor]=useState([])
-const [CSBG, setCSBG]=useState([])
+// const [CSBG, setCSBG]=useState([])
 const [marginTop, setMarginTop]=useState()
-const [validHexaCode, setValidHexaCode]=useState(true)
 const [output, setOutput]=useState({HSL:"",HSV:"",Hexa:"",RGB:"",CMYK:""})
-
-// const [pointer, setPointer]=useState([])
 const [pointerPosition, setPointerPosition]=useState({HSL_top:null,HSL_left:null,HSV_top:null,HSV_left:null})
-
-// Can't it be initialized as empty object?
 const [rangeBG, setRangeBG]=useState({LS:null,L:null,VS:null,V:null,R:null,G:null,B:null,C:null,M:null,Y:null,K:null})
 
-const aside_div_Ref=useRef()
-const aside_ul_Ref=useRef()
 const showColor_Ref=useRef()
-// const section_Ref=useRef()
-
-const H_Ref=useRef()
-const LS_Ref=useRef()
-const L_Ref=useRef()
-const VS_Ref=useRef()
-const V_Ref=useRef()
-const R_Ref=useRef()
-const G_Ref=useRef()
-const B_Ref=useRef()
-const C_Ref=useRef()
-const M_Ref=useRef()
-const Y_Ref=useRef()
-const K_Ref=useRef()
-
-// const H1_Ref=useRef()
-// const H2_Ref=useRef()
-// const LS1_Ref=useRef()
-// const LS2_Ref=useRef()
-// const L1_Ref=useRef()
-// const L2_Ref=useRef()
-// const VS1_Ref=useRef()
-// const VS2_Ref=useRef()
-// const V1_Ref=useRef()
-// const V2_Ref=useRef()
-// const R1_Ref=useRef()
-// const R2_Ref=useRef()
-// const G1_Ref=useRef()
-// const G2_Ref=useRef()
-// const B1_Ref=useRef()
-// const B2_Ref=useRef()
-
-// const C1_Ref=useRef()
-// const C2_Ref=useRef()
-// const M1_Ref=useRef()
-// const M2_Ref=useRef()
-// const Y1_Ref=useRef()
-// const Y2_Ref=useRef()
-// const K1_Ref=useRef()
-// const K2_Ref=useRef()
-
-const Hexa_Ref=useRef()
-
-const opacity1_Ref=useRef()
-const opacity2_Ref=useRef()
-
-// const outputHSL_Ref=useRef()
-// const outputHSV_Ref=useRef()
-// const outputHexa_Ref=useRef()
-// const outputRGB_Ref=useRef()
-// const outputCMYK_Ref=useRef()
-
-
-
-const Refs={
-    H:H_Ref, LS:LS_Ref, L:L_Ref, VS:VS_Ref, V:V_Ref,
-    Hexa:Hexa_Ref, R:R_Ref, G:G_Ref, B:B_Ref, C:C_Ref, M:M_Ref, Y:Y_Ref, K:K_Ref
-    // setCSBG:setCSBG, setPointer:setPointer, setTextColor:setTextColor, builtInColors:builtInColors, setBuiltInColor:setBuiltInColor
-}
-
-// const InputRefs={
-//     H1: H1_Ref, H2: H2_Ref, LS1:LS1_Ref, LS2:LS2_Ref, L1:L1_Ref, L2:L2_Ref, VS1:VS1_Ref, VS2:VS2_Ref, V1:V1_Ref, V2:V2_Ref, 
-//     Hexa:Hexa_Ref, R1:R1_Ref, R2:R2_Ref, G1:G1_Ref, G2:G2_Ref, B1:B1_Ref, B2:B2_Ref, 
-//     C1:C1_Ref, C2:C2_Ref, M1:M1_Ref, M2:M2_Ref, Y1:Y1_Ref, Y2:Y2_Ref, K1:K1_Ref, K2:K2_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
-// }
-const InputRefs={
-    
-    Hexa:Hexa_Ref, OP1:opacity1_Ref, OP2:opacity2_Ref
-}
 
 const States={
   textColor:textColor, setTextColor:setTextColor,
   toggle:toggle, setToggle:setToggle,
-
   aside:aside, setAside:setAside,
   builtInColors:builtInColors, setBuiltInColors:setBuiltInColors,
-//   moveLeft:moveLeft, setMoveLeft:setMoveLeft,
   builtInColor:builtInColor, setBuiltInColor:setBuiltInColor,
-  CSBG:CSBG, setCSBG:setCSBG,
+//   CSBG:CSBG, setCSBG:setCSBG,
   pointerPosition:pointerPosition, setPointerPosition:setPointerPosition,
   rangeBG:rangeBG, setRangeBG:setRangeBG,
-  validHexaCode:validHexaCode, setValidHexaCode:setValidHexaCode,
-  
-  output:output, setOutput:setOutput
+  output:output, setOutput:setOutput,
+  opacity:opacity, setOpacity:setOpacity,
 }
 
 useEffect(()=>{
-    // H_Ref.current.value=0
-    // LS_Ref.current.value=0
-    // L_Ref.current.value=0
-    // VS_Ref.current.value=0
-    // V_Ref.current.value=0
-    // R_Ref.current.value=0
-    // G_Ref.current.value=0
-    // B_Ref.current.value=0
-    // C_Ref.current.value=0
-    // M_Ref.current.value=0
-    // Y_Ref.current.value=0
-    // K_Ref.current.value=0
 
-    
-    
     const topHeight=217
     const HSLheight=351
     setMarginTop((window.innerHeight-topHeight-HSLheight)/3)
 
-    
+    dispatch({type:'HSLtoHSV',payload:null})
+    dispatch({type:'HSLtoRGB',payload:null})
+    dispatch({type:'RGBtoHexa',payload:null})
+    dispatch({type:'RGBtoCMYK',payload:null})
+    dispatch({type:'trigger', payload:true})
 
-    // console.log("sectionRef",section_Ref.current.getBoundingClientRect().width)
-    
-    //   H2_Ref.current.value=initH
-    //   LS2_Ref.current.value=initLS
-    //   L2_Ref.current.value=initL
-    //   sync_Input(H2_Ref.current)
-    //   sync_Input(LS2_Ref.current)
-    //   sync_Input(L2_Ref.current)
-    let initH=210;
-    let initLS=50;
-    let initL=50
-    
-  H_Ref.current.value=initH
-  LS_Ref.current.value=initLS
-  L_Ref.current.value=initL
+    document.body.style.background = 'url("../public/tree_2.png")';
 
-  HSLtoHSV(Refs)
-  HSLtoRGB(Refs)
-  RGBtoHexa(Refs)
-  RGBtoCMYK(Refs)
-  functions(true)
-
-
-// setMoveLeft((window.innerWidth-section_Ref.current.getBoundingClientRect().width)/2)
-aside_ul_Ref.current.style.height=window.innerHeight-aside_div_Ref.current.getBoundingClientRect().height-15+"px"
 }, [])
 
 
 ///////////////////////////// functions /////////////////////////////
 const functions=(a)=>{
-    // console.log("RangeBG",rangeBG)
 
-    if(a){
-        // updateInput(Refs, InputRefs)
-        colorSpaceBG(Refs,States)
-        updateOutput(Refs,InputRefs, showColor_Ref,setOutput)
-        HSLtoPointer(Refs,States)
-        textColorChange(Refs,States)
-        inputRangeBG(Refs,InputRefs,States)
-        // document.querySelector("div#right div.hexa p").innerText=""
-        setValidHexaCode(true)
-        check_Built_In_Color(Refs,States)
-    }else{
-        // updateInput(Refs, InputRefs)
-        //colorSpaceBG()
-        updateOutput(Refs,InputRefs, showColor_Ref,setOutput)
-        //HSLtoPointer()
-        textColorChange(Refs,States)
-        inputRangeBG(Refs,InputRefs,States)
-        // document.querySelector("div#right div.hexa p").innerText=""
-        setValidHexaCode(true)
-        check_Built_In_Color(Refs,States)
+    console.log("a",a)
+    // if(a){
+        if(a){
+            // colorSpaceBG(ColorCodes,setCSBG)
+            HSLtoPointer(ColorCodes,setPointerPosition)
 
-    }
+        }
+        updateOutput(ColorCodes,opacity, showColor_Ref,setOutput)
+        textColorChange(ColorCodes,setTextColor)
+        inputRangeBG(ColorCodes,setRangeBG)
+        check_Built_In_Color(ColorCodes,builtInColors,setBuiltInColor)
 
 }
 
-///////////////////////////////////////////////
+const sectionOnClick=()=>{
+    aside && setAside(false)
+}
 
-  
+
+useEffect(()=>{
+    functions(true)
+},[opacity])
+
+useEffect(()=>{
+    console.log("triggered",ColorCodes.trigger,ColorCodes.boolean)
+    functions(ColorCodes.boolean)
+    
+},[ColorCodes.trigger])
+
   return (
     
-    <Cntxt.Provider value={{ States,rangeBG,CSBG,toggle,setToggle,pointerPosition,setPointerPosition,builtInColor,aside,functions,InputRefs,Refs,textColor,setAside,aside_div_Ref,aside_ul_Ref,builtInColors,showColor_Ref}}>
+    <Cntxt.Provider value={{ ColorCodes,dispatch,States, showColor_Ref}}>
     
+    <div className="bgDiv" ref={showColor_Ref}>
+
+    </div>
+
     <Hamburger/>
     <SideBar/>
-    <HiddenInput/>
-        {/* <div style={{position:"absolute",top:0,right:0}}>Test: 12/05</div> */}
+        <div style={{position:"absolute",top:0,right:0}}>Test: 1/17</div>
 
-    <Section aside={aside?1:0}>
+    <Section aside={aside?1:0} onClick={sectionOnClick}>
 
-  
-
-    <div className="output_color">
-        <div className="showColor" ref={showColor_Ref}></div>
-    </div>
     {/* <!------------------------Output------------------------> */}
-    <div className="top" style={{margin:`${marginTop}px auto`}}>
+    <div className="top"
+    style={{margin:`${marginTop}px auto`}}
+    >
     {/* <!-- No need now but keeping it because styles collapse somehow if remove it--> */}
 
         <OutPut/>
         
     </div>
-    {/* <hr className="middleLine"/> */}
     <div className="flex">
 {/* <!------------------------Left, HSL------------------------> */}
 <HSL/>
@@ -242,15 +126,10 @@ const functions=(a)=>{
         <RGB/>
         <CMYK/>
     </div>
-
     </div>
 
-    
     </Section>
-      {/* <script src="./src/func.jsx"></script> */}
       </Cntxt.Provider>
     
   )
 }
-
-// export default App

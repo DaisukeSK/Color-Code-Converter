@@ -18,17 +18,28 @@ export const HamburgerDiv=Styled.div`
     left:15px;
     width:35px;
     height:25px;
-        div {
-            position:absolute;
-            top:0;
-            left:0;
-            width: 100%;
-            height: 100%;
-            z-index:1;
+
+    &:hover {
+        svg {
+            .blurPath {
+                display:  block;
+            }
         }
+    }
+        // div {
+        //     position:absolute;
+        //     top:0;
+        //     left:0;
+        //     width: 100%;
+        //     height: 100%;
+        //     z-index:1;
+        // }
         svg {
             path {
                 fill:  ${(props)=>props.textcolor ? css`white`: css`black`}
+            }
+            .blurPath {
+                display:  none;
             }
         }
 `;
@@ -49,7 +60,7 @@ export const HSLFrame=Styled(Frame)`
 `;
 
 export const OutputFrame=Styled(Frame)`
-    z-index: 1;//Need this to put the element in front of output_color element.
+
     .grid {
         display: grid;
         grid-template-columns: 75px 210px 15px;
@@ -86,7 +97,8 @@ export const Aside=Styled.aside`
     z-index:1;
     transition: left .5s;
 
-    &>div {
+
+    &>div { // If change this height, don't forget to change height of sibling ul too.
         position: relative;
         padding: 30px 0;
         box-sizing:border-box;
@@ -104,14 +116,21 @@ export const Aside=Styled.aside`
                     fill: none;
                 }
             }
+            &:hover {
+                svg {
+                    path,rect {
+                        stroke: #cccccc;
+                    }
+                }
+            }
         }// .close
         
         .logo {
             margin: 0 auto;
             width: 80%;
-            height: 100px;
+            height: 150px;
             // background-color: #0F0F0F;
-            // border: 1px #242424 solid;
+            border: 1px #242424 solid;
 
             img {
                 width: 100%;
@@ -136,6 +155,7 @@ export const Aside=Styled.aside`
         padding: 0;
         margin: 0;
         overflow:auto;
+        height: ${window.innerHeight-250-10+"px"}; // If change height sibling div, don't forget to change this too.
         
         &>li{
             margin: 7px 0;
@@ -292,7 +312,10 @@ export const ColorSpaceDiv=Styled.div`
     height: 200px; 
     overflow: hidden;
     margin-bottom: 15px;
-    background: ${(props)=>props.bg?css`${props.csbg[0]}`:css`${props.csbg[1]}`};
+    background: ${(props)=>props.bg?
+        css`linear-gradient(90deg, hsl(${props.hue},0%,50%),hsl(${props.hue},100%,50%))`:
+        css`linear-gradient(90deg, white,hsl(${props.hue},100%,50%))`
+    };
     
     &::before {
         position: absolute;
@@ -457,8 +480,8 @@ span {
 }
 
 div {
-    width: 10px;
-    height: 10px;
+    width: 30px;
+    height: 15px;
     border: 1px solid grey;
     margin: 0 0 0 5px;
 
