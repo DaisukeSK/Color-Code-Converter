@@ -2,10 +2,12 @@ import { useContext } from "react"
 import { Cntxt } from "../../../App.jsx"
 import { Label,Range,InputNumber,HGrid,HSLGrid,HSL_RangeBG } from '../../../StyledComponents.jsx'
 import { sync_Input } from '../../../Functions.jsx'
+import {HSLContext} from './HSL.jsx'
 
 const HSLInput=()=>{
 
-    const { ColorCodes,dispatch,States}= useContext(Cntxt)
+    const { ColorCodes,dispatch,textColor,rangeBG}= useContext(Cntxt)
+    const { HSLtoggle }= useContext(HSLContext)
 
     //////////////////////////// HSL, HSV ////////////////////////////
 
@@ -14,27 +16,27 @@ const HSLInput=()=>{
 
   if(e.target.className.includes("input_H")){
 
-      dispatch({type:'H', payload:e.target.value})
+      dispatch({type:'H', payload:+e.target.value})
       dispatch({type:'HSLtoHSV', payload:null})
     
     }else if(e.target.className.includes("input_LS")){
 
-      dispatch({type:'LS', payload:e.target.value})
+      dispatch({type:'LS', payload:+e.target.value})
       dispatch({type:'HSLtoHSV', payload:null})
       
     }else if(e.target.className.includes("input_L")){
 
-      dispatch({type:'L', payload:e.target.value})
+      dispatch({type:'L', payload:+e.target.value})
       dispatch({type:'HSLtoHSV', payload:null})
 
     }else if(e.target.className.includes("input_VS")){
 
-      dispatch({type:'VS', payload:e.target.value})
+      dispatch({type:'VS', payload:+e.target.value})
       dispatch({type:'HSVtoHSL', payload:null})
       
     }else if(e.target.className.includes("input_V")){
 
-      dispatch({type:'V', payload:e.target.value})
+      dispatch({type:'V', payload:+e.target.value})
       dispatch({type:'HSVtoHSL', payload:null})
   }
 
@@ -50,7 +52,7 @@ const HSLInput=()=>{
         <div>
             <HGrid>
 
-                <Label textcolor={States.textColor?1:0}>H:</Label>
+                <Label textcolor={textColor?1:0}>H:</Label>
                 <Range>
 
                     <input className="input_H" type="range" min="0" max="359"
@@ -60,7 +62,7 @@ const HSLInput=()=>{
                         />
 
                 </Range>
-                <InputNumber textcolor={States.textColor?1:0} className="input_H" min="0" max="359" step="1"
+                <InputNumber textcolor={textColor?1:0} className="input_H" min="0" max="359" step="1"
                     onChange={(e)=>{HSL_inputChange(e)}}
                     onInput={(e)=>{HSL_inputChange(e)}}
                     value={ColorCodes.H ? Math.round(ColorCodes.H):0}
@@ -70,12 +72,12 @@ const HSLInput=()=>{
 
             {
             ["LS","L","VS","V"].map((elm, key)=>{
-                return <HSLGrid toggle={key==0 || key==1?States.toggle:!States.toggle} key={key}>
+                return <HSLGrid toggle={key==0 || key==1?HSLtoggle:!HSLtoggle} key={key}>
                 
-                <Label textcolor={States.textColor?1:0}>{elm.split("")[elm.length-1]}:</Label>
+                <Label textcolor={textColor?1:0}>{elm.split("")[elm.length-1]}:</Label>
                 
                 <Range>
-                  <HSL_RangeBG bg={elm} rangebg={States.rangeBG}/>
+                  <HSL_RangeBG bg={elm} rangebg={rangeBG}/>
                     <input className={`input_${elm}`} type="range" min="0" max="100"
                         onChange={(e)=>{HSL_inputChange(e)}}
                         onInput={(e)=>{HSL_inputChange(e)}}
@@ -84,7 +86,7 @@ const HSLInput=()=>{
 
                 </Range>
 
-                <InputNumber textcolor={States.textColor?1:0} className={`input_${elm}`} min="0" max="100" step="1"
+                <InputNumber textcolor={textColor?1:0} className={`input_${elm}`} min="0" max="100" step="1"
                     onChange={(e)=>{HSL_inputChange(e)}}
                     onInput={(e)=>{HSL_inputChange(e)}}
                     value={ColorCodes[elm] ? Math.round(ColorCodes[elm]):0}

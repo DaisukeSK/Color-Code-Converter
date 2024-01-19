@@ -4,7 +4,7 @@ import { Frame,CN_Label,Hexainput } from '../../StyledComponents.jsx'
 
 const Hexa=()=>{
 
-    const { ColorCodes, dispatch, States}= useContext(Cntxt)
+    const { ColorCodes, dispatch, textColor}= useContext(Cntxt)
 
     const [validHexaCode, setValidHexaCode]=useState(true)
 
@@ -52,11 +52,11 @@ setValidHexaCode(true)
    
     return(
 
-        <Frame className="hexa" textcolor={States.textColor?1:0}>
+        <Frame className="hexa" textcolor={textColor?1:0}>
             
-           <CN_Label textcolor={States.textColor?1:0}>Hexa</CN_Label>
+           <CN_Label textcolor={textColor?1:0}>Hexa</CN_Label>
             
-            <Hexainput textcolor={States.textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Hexa_Ref}/>
+            <Hexainput textcolor={textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Hexa_Ref}/>
             <p>{validHexaCode?"":"*Incorrect input format"}</p>
         </Frame>
     )

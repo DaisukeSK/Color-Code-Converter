@@ -5,18 +5,18 @@ import { sync_Input } from '../../Functions.jsx'
 
 const RGB=()=>{
     
-    const {ColorCodes,dispatch,States}= useContext(Cntxt)
+    const {ColorCodes,dispatch,textColor,rangeBG}= useContext(Cntxt)
 
      //////////////////////////// RGB ////////////////////////////
   const RGB_inputChange=(e)=>{
     sync_Input(e.target)
 
     if(e.target.className.includes("input_R")){
-        dispatch({type:'R',payload:e.target.value})
+        dispatch({type:'R',payload:+e.target.value})
     }else if(e.target.className.includes("input_G")){
-        dispatch({type:'G',payload:e.target.value})
+        dispatch({type:'G',payload:+e.target.value})
     }else if(e.target.className.includes("input_B")){
-        dispatch({type:'B',payload:e.target.value})
+        dispatch({type:'B',payload:+e.target.value})
     }
 
         dispatch({type:'RGBtoHSL',payload:null})
@@ -28,19 +28,19 @@ const RGB=()=>{
 
     return(
 
-        <Frame textcolor={States.textColor?1:0}>
+        <Frame textcolor={textColor?1:0}>
             
-        <CN_Label textcolor={States.textColor?1:0}>RGB</CN_Label>
+        <CN_Label textcolor={textColor?1:0}>RGB</CN_Label>
         
         <div>
 
             {["R","G","B"].map((elm,key)=>{
                 return <Grid key={key}>
 
-                    <Label textcolor={States.textColor?1:0}>{elm}:</Label>
+                    <Label textcolor={textColor?1:0}>{elm}:</Label>
                     <Range>
                         
-                        <RGB_RangeBG bg={elm} rangebg={States.rangeBG}/>
+                        <RGB_RangeBG bg={elm} rangebg={rangeBG}/>
                         <input className={`input_${elm}`} type="range" min="0" max="255"
                         onChange={(e)=>{RGB_inputChange(e)}}
                         onInput={(e)=>{RGB_inputChange(e)}}
@@ -48,7 +48,7 @@ const RGB=()=>{
                             />
 
                     </Range>
-                    <InputNumber className={`input_${elm}`} textcolor={States.textColor?1:0} min="0" max="255" step="1"
+                    <InputNumber className={`input_${elm}`} textcolor={textColor?1:0} min="0" max="255" step="1"
                     onChange={(e)=>{RGB_inputChange(e)}}
                     onInput={(e)=>{RGB_inputChange(e)}}
                         value={ColorCodes[elm]? Math.round(ColorCodes[elm]):0}

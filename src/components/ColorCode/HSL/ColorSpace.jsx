@@ -3,10 +3,12 @@ import { Cntxt } from "../../../App.jsx"
 import { ColorSpaceDiv } from '../../../StyledComponents.jsx'
 import custom_pointer from "../../../../public/pointer.png";
 import transparent from "../../../../public/transparent.png";
+import {HSLContext} from './HSL.jsx'
 
 const ColorSpace=()=>{
 
-    const { ColorCodes,dispatch,States }= useContext(Cntxt)
+    const { ColorCodes,dispatch,pointerPosition, setPointerPosition}= useContext(Cntxt)
+    const { HSLtoggle }= useContext(HSLContext)
 
     const movePointer=(val)=>{
 
@@ -33,9 +35,9 @@ const ColorSpace=()=>{
                 const L=Math.abs(top/2-100)
                 const V=100*(L/100+(LS/100)*Math.min(1-(L/100), L/100))
                 const VS = V==0?
-                0 : 200*(1-L/parseFloat(V))
+                0 : 200*(1-L/V)
 
-                States.setPointerPosition({...States.pointerPosition,
+                setPointerPosition({...pointerPosition,
                 
                     HSL_top: top-12+"px",
                     HSL_left: left-12+"px",
@@ -55,16 +57,16 @@ const ColorSpace=()=>{
                 const VS= top==200? 0 : left*100/360
                 const V=Math.abs(top/2-100)
 
-                const L=100*((parseFloat(V)/100)*(1-((parseFloat(VS)/100)/2)))
+                const L=100*((V/100)*(1-((VS/100)/2)))
 
                 let LS;
                 if(L==0 || L==100){
                     LS=0
                 }else{
-                    LS=100*(((parseFloat(V)/100)-(L/100))/Math.min(L/100, 1-L/100))
+                    LS=100*(((V/100)-(L/100))/Math.min(L/100, 1-L/100))
                 }
 
-                States.setPointerPosition({...States.pointerPosition,
+                setPointerPosition({...pointerPosition,
                 
                     HSL_top: Math.abs(L*2-200)-12+"px",
                     HSL_left: LS*3.6-12+"px",
@@ -90,10 +92,10 @@ const ColorSpace=()=>{
                 return (
 
                     <ColorSpaceDiv
-                    pointerposition={States.pointerPosition}
+                    pointerposition={pointerPosition}
                     // csbg={States.CSBG}
                     hue={ColorCodes.H}
-                    toggle={key==0?States.toggle:!States.toggle}
+                    toggle={key==0?HSLtoggle:!HSLtoggle}
                     bg={key==0?1:0}
                     key={key}
                     >

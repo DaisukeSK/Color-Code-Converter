@@ -1,12 +1,16 @@
 import { useContext } from "react"
 import { Cntxt } from "../App.jsx"
 import { Aside } from '../StyledComponents'
-
+import json from "../builtInColors.json"
 import logo from "../../public/logo_letter.svg";
 
-const SideBar=()=>{
+export const builtInColors={...json}
+
+export const SideBar=()=>{
+
+    // aa={a:1,b:2}
     
-    const {dispatch, States, showColor_Ref}=useContext(Cntxt)
+    const {dispatch, showColor_Ref,aside,setAside}=useContext(Cntxt)
 
     const LiClick=(e)=>{
 
@@ -15,7 +19,8 @@ const SideBar=()=>{
             showColor_Ref.current.style.transition="none"
         },700)
 
-        States.setOpacity(1)
+        // States.setOpacity(1)
+        dispatch({type:'opacity',payload:1})
     
         dispatch({type:'Hexa',payload:"#"+e.target.closest("li").id.replace("h","")})
 
@@ -28,12 +33,12 @@ const SideBar=()=>{
 
     return (
 
-        <Aside aside={States.aside?1:0}>
+        <Aside aside={aside?1:0}>
         <div>
             <div
             className='close'
             onClick={()=>{
-                States.setAside(false)
+                setAside(false)
             }}
             >
                 <svg width="20" height="20">
@@ -58,17 +63,17 @@ const SideBar=()=>{
 
         {
         
-        Object.keys(States.builtInColors).map((val,key)=>{
+        Object.keys(builtInColors).map((val,key)=>{
             return (
-            <li key={key} id={"h"+States.builtInColors[val]["hexa"].replace("#","")}
+            <li key={key} id={"h"+builtInColors[val]["hexa"].replace("#","")}
             onClick={(e)=>LiClick(e)}
             style={{
-                backgroundColor: States.builtInColors[val]["hexa"],
-                color:States.builtInColors[val]["letterColor"]?States.builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
+                backgroundColor: builtInColors[val]["hexa"],
+                color:builtInColors[val]["letterColor"]?builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
             }}
             >
                 <div>{val}</div>
-                <div>{States.builtInColors[val]["hexa"]}</div>
+                <div>{builtInColors[val]["hexa"]}</div>
                 
             </li>)
             
@@ -81,5 +86,3 @@ const SideBar=()=>{
     </Aside>
     )
 }
-
-export default SideBar

@@ -33,7 +33,9 @@ export const HSLtoPointer=(ColorCodes,setPointerPosition)=>{
 ///////////////////////////// text color /////////////////////////////
 export const textColorChange=(ColorCodes,setTextColor)=>{
 
-  parseFloat(ColorCodes.L)<=50? setTextColor(true) : setTextColor(false)
+  // console.log("ColorCodes.L",ColorCodes?.L);
+
+  ColorCodes.L<=50? setTextColor(true) : setTextColor(false)
 }
 
 ///////////////////////////// BuiltIn color /////////////////////////////
@@ -49,9 +51,9 @@ export const check_Built_In_Color=(ColorCodes,builtInColors,setBuiltInColor)=>{
 
 
 ///////////////////////////// output color /////////////////////////////
-export const updateOutput=(ColorCodes, opacity, showcolorRef,setter)=>{
+export const updateOutput=(ColorCodes, showcolorRef,setter)=>{
 
-  const hsl=`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${opacity})`
+  const hsl=`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${ColorCodes.opacity})`
 
   showcolorRef.current.style.background=hsl
 
@@ -88,7 +90,7 @@ if(k==100){
 
 c==100 && m==100 && y==100? k=0:null
 
-if(opacity==1){
+if(ColorCodes.opacity==1){
 
   setter({
     HSL:`hsl(${h}, ${sl}%, ${l}%)`,
@@ -103,7 +105,7 @@ if(opacity==1){
 
   let hexa=""
   let quotient,remainder;
-  let a=Math.round(opacity*255)
+  let a=Math.round(ColorCodes.opacity*255)
 
     let arr=[]
 
@@ -129,11 +131,11 @@ if(opacity==1){
         hexa=="undefinedundefined" && (hexa="00")
 
   setter({
-    HSL:`hsla(${h}, ${sl}%, ${l}%, ${opacity})`,
-    HSV:`hsva(${h}, ${sv}%, ${v}%, ${opacity})`,
+    HSL:`hsla(${h}, ${sl}%, ${l}%, ${ColorCodes.opacity})`,
+    HSV:`hsva(${h}, ${sv}%, ${v}%, ${ColorCodes.opacity})`,
     // Hexa:`${ColorCodes.Hexa.toUpperCase()}${hexa}`,
     Hexa:`${ColorCodes.Hexa}${hexa}`,
-    RGB:`rgba(${r}, ${g}, ${b}, ${opacity})`,
+    RGB:`rgba(${r}, ${g}, ${b}, ${ColorCodes.opacity})`,
     CMYK:`cmyk(${c}%, ${m}%, ${y}%, ${k}%)`
   })
 }
@@ -251,11 +253,13 @@ export const reducer=(state,action)=>{
 
 
     case 'HSVtoHSL':// Wikipedia is the only source.
+
+    console.log("parseFloat:",parseFloat(state.V),state.V)
     
-      const L2=100*((parseFloat(state.V)/100)*(1-((parseFloat(state.VS)/100)/2)))
+      const L2=100*((state.V/100)*(1-((state.VS/100)/2)))
 
       let LS=(L2==0 || L2==100)?
-      0:100*(((parseFloat(state.V)/100)-(L2/100))/Math.min(L2/100, 1-L2/100))
+      0:100*(((state.V/100)-(L2/100))/Math.min(L2/100, 1-L2/100))
 
       return {...state, LS:LS,L:L2}
 
@@ -266,8 +270,8 @@ export const reducer=(state,action)=>{
       let L,H,fx,r,g,b;
 
       L=state.L<50? state.L:100-state.L
-      const max=2.55*(parseFloat(state.L)+(L*state.LS/100))
-      const min=2.55*(parseFloat(state.L)-(L*state.LS/100))
+      const max=2.55*(state.L+(L*state.LS/100))
+      const min=2.55*(state.L-(L*state.LS/100))
 
       if(0<=state.H && state.H<60){
           
@@ -351,9 +355,9 @@ export const reducer=(state,action)=>{
   
   // Using Math.round to avoid problem mentioned on the top of code.  ??
 
-      const rr=Math.round(parseFloat(state.R))/255
-      const gg=Math.round(parseFloat(state.G))/255
-      const bb=Math.round(parseFloat(state.B))/255
+      const rr=Math.round(state.R)/255
+      const gg=Math.round(state.G)/255
+      const bb=Math.round(state.B)/255
 
       let K=1-Math.max(rr,gg,bb)
       let C=(1-rr-K)*100/(1-K)
@@ -432,9 +436,9 @@ console.log("hexa Confirmation:",hexa2)
     case 'RGBtoHSL':
       //source1: https://www.rapidtables.com/convert/color/rgb-to-hsl.html
   //source2: Wikipedia
-      const R=parseFloat(state.R)/255
-      const G=parseFloat(state.G)/255
-      const B=parseFloat(state.B)/255
+      const R=state.R/255
+      const G=state.G/255
+      const B=state.B/255
 
       const max2=Math.max(R,G,B)
       const min2=Math.min(R,G,B)
@@ -458,12 +462,15 @@ console.log("hexa Confirmation:",hexa2)
 
     case 'CMYKtoRGB':
       //source: https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
-      const R2=255*(1-parseFloat(state.C)/100)*(1-parseFloat(state.K)/100)
-      const G2=255*(1-parseFloat(state.M)/100)*(1-parseFloat(state.K)/100)
-      const B2=255*(1-parseFloat(state.Y)/100)*(1-parseFloat(state.K)/100)
+      const R2=255*(1-state.C/100)*(1-state.K/100)
+      const G2=255*(1-state.M/100)*(1-state.K/100)
+      const B2=255*(1-state.Y/100)*(1-state.K/100)
       return {...state, R:R2,G:G2,B:B2}
 
-      case 'trigger':
+    case 'opacity':
+      return {...state, opacity:action.payload}
+
+    case 'trigger':
 
       return {...state, trigger:(!state.trigger || state.trigger>100)?1:state.trigger+1,boolean:action.payload}
 

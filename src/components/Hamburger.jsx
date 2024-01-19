@@ -4,14 +4,14 @@ import { HamburgerDiv } from '../StyledComponents'
 
 const Hamburger=()=>{
     
-    const {States}=useContext(Cntxt)
+    const {textColor,setAside}=useContext(Cntxt)
     
     return(
         
         <HamburgerDiv
-        textcolor={States.textColor?1:0}
+        textcolor={textColor?1:0}
         onClick={()=>{
-            States.setAside(true)
+            setAside(true)
             }}>
         
                 <svg width="100%" height="100%" style={{overflow:"visible"}}>
