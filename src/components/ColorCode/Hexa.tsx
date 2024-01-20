@@ -1,28 +1,30 @@
 import { useContext,useState,useEffect,useRef } from "react"
-import { Cntxt } from "../../App.jsx"
-import { Frame,CN_Label,Hexainput } from '../../StyledComponents.jsx'
+import { AppContext } from "../../App.tsx"
+import { Frame,CN_Label,Hexainput } from '../../StyledComponents.tsx'
 
 const Hexa=()=>{
 
-    const { ColorCodes, dispatch, textColor}= useContext(Cntxt)
+    const { ColorCodes, dispatch, textColor}= useContext(AppContext)
 
     const [validHexaCode, setValidHexaCode]=useState(true)
 
-    const Hexa_Ref=useRef()
+    const Hexa_Ref=useRef<HTMLInputElement>(null)
 
     //////////////////////////// Hexa ////////////////////////////
-  const Hexa_inputChange=(e)=>{
+  const Hexa_inputChange=(e:React.FormEvent<HTMLInputElement>)=>{
+
+    const target=e.target as HTMLInputElement
 
     const str="0123456789abcdefABCDEF"
-    if(e.target.value.length==7 && e.target.value[0]=="#"){
+    if(target.value.length==7 && target.value[0]=="#"){
         let sum=0;
-        for(let i=1; i<e.target.value.length; i++){
+        for(let i=1; i<target.value.length; i++){
             
-          !str.includes(e.target.value[i]) && (sum+=1)
+          !str.includes(target.value[i]) && (sum+=1)
         }
         if(sum==0){
             setValidHexaCode(true)
-            dispatch({type:'Hexa', payload:e.target.value})
+            dispatch({type:'Hexa', payload:target.value})
 
             dispatch({type:'HexaToRGB', payload:null})
             dispatch({type:'RGBtoCMYK', payload:null})
@@ -41,11 +43,11 @@ const Hexa=()=>{
 
 }
 useEffect(()=>{
-    Hexa_Ref.current.value=ColorCodes.Hexa
+    Hexa_Ref.current!.value=ColorCodes.Hexa
 },[ColorCodes.Hexa])
 
 useEffect(()=>{
-console.log("useEffect running");
+
 (Hexa_Ref.current?.value.length==7 && Hexa_Ref.current?.value[0]=='#') &&
 setValidHexaCode(true)
 },[Hexa_Ref.current?.value])
@@ -56,7 +58,7 @@ setValidHexaCode(true)
             
            <CN_Label textcolor={textColor?1:0}>Hexa</CN_Label>
             
-            <Hexainput textcolor={textColor?1:0} type="text" onInput={Hexa_inputChange} ref={Hexa_Ref}/>
+            <Hexainput textcolor={textColor?1:0} type="text" onInput={(e)=>Hexa_inputChange(e)} ref={Hexa_Ref}/>
             <p>{validHexaCode?"":"*Incorrect input format"}</p>
         </Frame>
     )

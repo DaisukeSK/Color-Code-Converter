@@ -1,28 +1,31 @@
 import { useContext } from "react"
-import { Cntxt } from "../App.jsx"
-import { Aside } from '../StyledComponents'
+import { AppContext } from "../App.tsx"
+import { Aside } from '../StyledComponents.tsx'
 import json from "../builtInColors.json"
 import logo from "../../public/logo_letter.svg";
 
-export const builtInColors={...json}
+import {builtInColorsType} from '../type.tsx'
+
+export const builtInColors:builtInColorsType={...json}
 
 export const SideBar=()=>{
 
     // aa={a:1,b:2}
     
-    const {dispatch, showColor_Ref,aside,setAside}=useContext(Cntxt)
+    const {dispatch, showColor_Ref,aside,setAside}=useContext(AppContext)
 
-    const LiClick=(e)=>{
+    const LiClick=(e:React.MouseEvent<HTMLLIElement>)=>{
 
-        showColor_Ref.current.style.transition="all .7s"
+        const target =e.target as HTMLLIElement
+
+        showColor_Ref.current!.style.transition="all .7s"
         setTimeout(()=>{
-            showColor_Ref.current.style.transition="none"
+            showColor_Ref.current!.style.transition="none"
         },700)
 
-        // States.setOpacity(1)
         dispatch({type:'opacity',payload:1})
     
-        dispatch({type:'Hexa',payload:"#"+e.target.closest("li").id.replace("h","")})
+        dispatch({type:'Hexa',payload:"#"+target.closest("li")!.id.replace("h","")})
 
         dispatch({type:'HexaToRGB',payload:null})
         dispatch({type:'RGBtoCMYK',payload:null})
@@ -30,6 +33,11 @@ export const SideBar=()=>{
         dispatch({type:'HSLtoHSV',payload:null})
         dispatch({type:'trigger', payload:true})
     }
+
+    for(const key in builtInColors){
+        console.log(`${key}:${builtInColors[key]['letterColor']}`)
+    }
+
 
     return (
 
@@ -63,13 +71,13 @@ export const SideBar=()=>{
 
         {
         
-        Object.keys(builtInColors).map((val,key)=>{
+        Object.keys(builtInColors).map((val:string,key:number)=>{
             return (
             <li key={key} id={"h"+builtInColors[val]["hexa"].replace("#","")}
             onClick={(e)=>LiClick(e)}
             style={{
                 backgroundColor: builtInColors[val]["hexa"],
-                color:builtInColors[val]["letterColor"]?builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
+                color:builtInColors[val].letterColor?builtInColors[val]["letterColor"]:"hsla(0, 0%, 100%, 0.7)"
             }}
             >
                 <div>{val}</div>

@@ -1,30 +1,32 @@
 import { useContext } from "react"
-import { Cntxt } from "../../../App.jsx"
-import { ColorSpaceDiv } from '../../../StyledComponents.jsx'
+import { AppContext } from "../../../App.tsx"
+import { ColorSpaceDiv } from '../../../StyledComponents.tsx'
 import custom_pointer from "../../../../public/pointer.png";
-import transparent from "../../../../public/transparent.png";
-import {HSLContext} from './HSL.jsx'
+// import transparent from "../../../../public/transparent.png";
+import {HSLContext} from './HSL.tsx'
 
 const ColorSpace=()=>{
 
-    const { ColorCodes,dispatch,pointerPosition, setPointerPosition}= useContext(Cntxt)
+    const { ColorCodes,dispatch,pointerPosition, setPointerPosition}= useContext(AppContext)
     const { HSLtoggle }= useContext(HSLContext)
 
-    const movePointer=(val)=>{
+    const movePointer=(val: React.DragEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>)=>{
+
+        const target=val.target as HTMLDivElement
 
         if(val.pageX && val.pageY){// Is this if necessary?
 
-            let top=val.pageY-window.pageYOffset-val.target.getBoundingClientRect().top
+            let top=val.pageY-window.pageYOffset-target.getBoundingClientRect().top
         
             top<=0 && (top=0)
             top>=200 && (top=200)
 
-            let left=val.pageX-window.pageXOffset-val.target.getBoundingClientRect().left
+            let left=val.pageX-window.pageXOffset-target.getBoundingClientRect().left
             
             left<=0 && (left=0)
             left>=360 && (left=360)
 
-            if(val.target.id=="CS_HSL"){
+            if(target.id=="CS_HSL"){
 
                 dispatch({type:'LS', payload:(top==200 || top==0)? 0 : left*100/360})
                 dispatch({type:'L', payload:Math.abs(top/2-100)})
@@ -47,7 +49,7 @@ const ColorSpace=()=>{
                 })
                 
 
-            }else if(val.target.id=="CS_HSV"){
+            }else if(target.id=="CS_HSV"){
 
                 dispatch({type:'VS', payload:top==200? 0 : left*100/360})
                 dispatch({type:'V', payload:Math.abs(top/2-100)})
@@ -104,8 +106,8 @@ const ColorSpace=()=>{
                         draggable="true"
                         id={"CS_"+elm}
                         onDragStart={(e)=>{
-                            const img = document.createElement("img");
-                            img.src = {transparent};
+                            const img = new Image();
+                            // img.src = {transparent};
                             e.dataTransfer.setDragImage(img, 0, 0);
                         }}
                         onClick={(e)=>{movePointer(e)}}

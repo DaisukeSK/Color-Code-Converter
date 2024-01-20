@@ -1,8 +1,9 @@
 
 import Styled from "styled-components";
 import { css,keyframes } from "styled-components";
+import { ppType,rangeBGType } from './type'
 
-export const Section=Styled.section`
+export const Section=Styled.section<{aside:number}>`
     position:relative;
 
     left:${props=>props.aside? css`250px`:css`0`};
@@ -12,7 +13,7 @@ export const Section=Styled.section`
     box-sizing: border-box;
 `;
 
-export const HamburgerDiv=Styled.div`
+export const HamburgerDiv=Styled.div<{textcolor:number}>`
     position:absolute;
     top:15px;
     left:15px;
@@ -44,7 +45,7 @@ export const HamburgerDiv=Styled.div`
         }
 `;
 
-export const Frame=Styled.div`
+export const Frame=Styled.div<{textcolor:number}>`
     background: rgba(200, 200, 200, 0.5);
     padding: 7px 0;
     border-radius: 5px;
@@ -53,7 +54,7 @@ export const Frame=Styled.div`
     box-sizing: border-box;
 `;
 
-export const HSLFrame=Styled(Frame)`
+export const HSLFrame=Styled(Frame)<{aside:number}>`
     margin-right: ${props=>props.aside? css`20px`:css`40px`};
     transition: margin-right .5s;
     padding-bottom: 15px;
@@ -87,7 +88,7 @@ export const OutputFrame=Styled(Frame)`
 `;
 
 
-export const Aside=Styled.aside`
+export const Aside=Styled.aside<{aside:number}>`
     position: absolute;
     left:${props=>props.aside? css`0`:css`-500px`};
     top:0;
@@ -128,9 +129,9 @@ export const Aside=Styled.aside`
         .logo {
             margin: 0 auto;
             width: 80%;
-            height: 100px;
+            height: 150px;
             // background-color: #0F0F0F;
-            // border: 1px #242424 solid;
+            border: 1px #242424 solid;
 
             img {
                 width: 100%;
@@ -155,7 +156,7 @@ export const Aside=Styled.aside`
         padding: 0;
         margin: 0;
         overflow:auto;
-        height: ${window.innerHeight-200-10+"px"}; // If change height sibling div, don't forget to change this too.
+        height: ${window.innerHeight-250-10+"px"}; // If change height sibling div, don't forget to change this too.
         
         &>li{
             margin: 7px 0;
@@ -236,7 +237,7 @@ const toLeft=keyframes`
 //     animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
 // `;
 
-export const ToggleDiv=Styled.div`
+export const ToggleDiv=Styled.div<{toggle:number}>`
     position: absolute;
     width: 48px;
     height: 100%;
@@ -258,7 +259,7 @@ export const ToggleDiv=Styled.div`
     // animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
 `;
 
-export const InputNumber=Styled.input.attrs({type:"number"})`
+export const InputNumber=Styled.input.attrs({type:"number"})<{textcolor:number}>`
     width: 40px;
     background: rgba(255, 255, 255, 0);
     outline: none;
@@ -266,13 +267,13 @@ export const InputNumber=Styled.input.attrs({type:"number"})`
     color:  ${(props)=>props.textcolor ? css`white`: css`black`}
 `;
 
-export const CN_Label=Styled.h4`
+export const CN_Label=Styled.h4<{textcolor:number}>`
     margin: 0;
     text-align:center;
     color:  ${(props)=>props.textcolor ? css`white`: css`black`}
 `;
 
-export const CN_Label4HSL_HSV=Styled(CN_Label)`
+export const CN_Label4HSL_HSV=Styled(CN_Label)<{toggle:number}>`
     padding-top: 2px;
     z-index:1;
     color:  ${(props)=>props.toggle ? css`white`: css`#888888`};
@@ -283,20 +284,20 @@ export const CN_Label4Output=Styled(CN_Label)`
     text-align:left;
 `;
 
-export const Hr=Styled.hr`
+export const Hr=Styled.hr<{textcolor:number}>`
     border-bottom: none;
     border-top: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
 `;
 
 
-export const Label=Styled.label`
+export const Label=Styled.label<{textcolor:number}>`
     color:  ${(props)=>props.textcolor ? css`white`: css`black`};
     font-size: 0.9rem;
     margin-left: auto;
     font-size: 97%;
 `;
 
-export const OutputText=Styled.input.attrs({type:"text", readOnly:true})`
+export const OutputText=Styled.input.attrs({type:"text", readOnly:true})<{textcolor:number}>`
     background: none;
     margin: 0;
     padding: 0;
@@ -305,8 +306,8 @@ export const OutputText=Styled.input.attrs({type:"text", readOnly:true})`
     color:  ${(props)=>props.textcolor ? css`white`: css`black`}  
 `;
 
-export const ColorSpaceDiv=Styled.div`
-    display: ${(props)=>props.toggle ? css`block`: css`none`};
+export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, bg:number, pointerposition:ppType}>`
+    display: ${(props)=>props.toggle? css`block`: css`none`};
     position: relative;
     width: 360px;
     height: 200px; 
@@ -365,7 +366,7 @@ export const Grid=Styled.div`
     grid-template-rows: 20px;
 `;
 
-export const OpacityGrid=Styled(Grid)`
+export const OpacityGrid=Styled(Grid)<{textcolor:number}>`
     grid-template-columns: 55px 150px 45px;
     margin: 7px auto;
     width: fit-content;
@@ -381,11 +382,11 @@ export const HGrid=Styled(Grid)`
     grid-template-columns: 40px 360px 40px;
 `;
 
-export const HSLGrid=Styled(HGrid)`
+export const HSLGrid=Styled(HGrid)<{toggle:boolean}>`
     display: ${(props)=>props.toggle ? css`grid`: css`none`};
 `;
 
-export const Hexainput=Styled.input`
+export const Hexainput=Styled.input<{textcolor:number}>`
     display: block;
     margin: 7px auto 0;
     width: 75px;
@@ -400,13 +401,13 @@ export const Hexainput=Styled.input`
     }
 `;
 
-export const SVG=Styled.svg`
+export const SVG=Styled.svg<{textcolor:number}>`
     path, rect{
         stroke: ${(props)=>props.textcolor ? css`white`: css`black`};
     }
 `;
 
-export const CopyBox=Styled.div`
+export const CopyBox=Styled.div<{textcolor:number}>`
     width: 16px;
     height: 16px;
     position: relative;
@@ -443,34 +444,22 @@ export const CopyBox=Styled.div`
     }
 `;
 
-export const TEST=Styled.div`
-color:${(props)=>props.bultin[0] ? css`blue`: css`red`};
-background-color:${(props)=>props.bultin[1]};
-
-`
-
-export const TEST2=Styled.div`
-width:10px;
-height:10px;
-background-color:${(props)=>props.pro=="R"? css`blue`: css`red`};
-`
-
-export const HSL_RangeBG=Styled.div`
+export const HSL_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
     background:${(props)=>props.bg=="LS"? css`${props.rangebg.LS}`: props.bg=="L"? css`${props.rangebg.L}`: props.bg=="VS"? css`${props.rangebg.VS}`:css`${props.rangebg.V}`};
 `
 
-export const RGB_RangeBG=Styled.div`
+export const RGB_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
     background:${(props)=>props.bg=="R"? css`${props.rangebg.R}`: props.bg=="G"? css`${props.rangebg.G}`:css`${props.rangebg.B}`};
 
 `
 
-export const CMYK_RangeBG=Styled.div`
+export const CMYK_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
     background:${(props)=>props.bg=="C"? css`${props.rangebg.C}`: props.bg=="M"? css`${props.rangebg.M}`: props.bg=="Y"? css`${props.rangebg.Y}`:css`${props.rangebg.K}`};
 
 `
 
 
-export const OutputCN_Label=Styled.div`
+export const OutputCN_Label=Styled.div<{textcolor:number, bultin:Array<string | null>}>`
     display: flex;
     justify-content: center;
     align-items: center;

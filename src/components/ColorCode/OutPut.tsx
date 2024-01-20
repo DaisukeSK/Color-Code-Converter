@@ -1,22 +1,27 @@
 import { useContext, Fragment  } from "react"
-import { Cntxt } from "../../App.jsx"
-import { OutputFrame,OutputCN_Label,CN_Label,Hr,Label,CN_Label4Output,OutputText,CopyBox,Range,InputNumber,OpacityGrid } from '../../StyledComponents.jsx'
+import { AppContext } from "../../App.tsx"
+import { OutputFrame,OutputCN_Label,CN_Label,Hr,Label,CN_Label4Output,OutputText,CopyBox,Range,InputNumber,OpacityGrid } from '../../StyledComponents.js'
 
 const OutPut=()=>{
 
-    const {ColorCodes,dispatch,textColor,builtInColor,output}= useContext(Cntxt)
+    const {ColorCodes,dispatch,textColor,builtInColor,output}= useContext(AppContext)
 
     //////////////////////////// OpacityChange ////////////////////////////
-  const OpacityChange=(e)=>{
+  const OpacityChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     // States.setOpacity(+e.target.value)
     dispatch({type:'opacity',payload:+e.target.value})
     }
 
      //////////////////////////// copyCode ////////////////////////////
- const copyCode=(e)=>{
-    e.target.closest("div").previousElementSibling.select()
+ const copyCode=(e:React.MouseEvent<HTMLDivElement>)=>{
+
+    const target =e.target as HTMLDivElement
+    const inputElement=target.closest("div")!.previousElementSibling as HTMLInputElement
+    inputElement.select()
     document.execCommand("copy")
   }
+
+  const outPutArray=[output.HSL, output.HSV, output.Hexa, output.RGB, output.CMYK ]
 
     return(
 
@@ -39,7 +44,8 @@ const OutPut=()=>{
                     <CN_Label4Output textcolor={textColor?1:0} key={key}>{elm}:</CN_Label4Output>
                     <OutputText
                         textcolor={textColor?1:0}
-                        value={output[elm]}
+                        // value={output[elm]}
+                        value={outPutArray[key]}
                     />
                     <CopyBox textcolor={textColor?1:0} onClick={(e)=>copyCode(e)}>
                         <span></span>
@@ -57,14 +63,14 @@ const OutPut=()=>{
                     <div></div>
                     <input type="range" min="0" max="1" step="0.01"
                     onChange={(e)=>OpacityChange(e)}
-                    onInput={(e)=>OpacityChange(e)}
+                    // onInput={(e)=>OpacityChange(e)}
                     value={ColorCodes.opacity}
                     />
 
                 </Range>
                 <InputNumber textcolor={textColor?1:0} style={{width:"45px"}} min="0" max="1" step="0.01"
                 onChange={(e)=>OpacityChange(e)}
-                onInput={(e)=>OpacityChange(e)}
+                // onInput={(e)=>OpacityChange(e)}
                 value={ColorCodes.opacity}/>
             </OpacityGrid>
 

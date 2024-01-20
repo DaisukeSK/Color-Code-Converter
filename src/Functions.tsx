@@ -1,9 +1,37 @@
+// import {CCs,ppType,outputType,rangeBGType} from './App'
+import {builtInColorsType} from './type'
+
+import {actionType,CCs,ppType,outputType,rangeBGType} from './type'
+
 
 ///////////////////////////// input change /////////////////////////////
-export const sync_Input=(val)=>{
-  val.type=="range"?
-  val.parentElement.nextSibling.value=val.value :
-  val.previousSibling.querySelector('input[type="range"]').value=val.value
+// export const sync_Input=(val)=>{
+//   val.type=="range"?
+//   val.parentElement.nextSibling.value=val.value :
+//   val.previousSibling.querySelector('input[type="range"]').value=val.value
+// }
+
+export const sync_Input=(e: React.ChangeEvent<HTMLInputElement>)=>{
+
+  const target=e.target as HTMLInputElement
+  // const NumInput=target.parentNode!.nextSibling as HTMLInputElement
+  // const RangeInput=target.previousSibling as HTMLDivElement
+  // const range=RangeInput!.querySelector('input[type="range"]') as HTMLInputElement
+
+  // target.type=="range"?
+  // NumInput!.value=target.value :
+  // range!.value=target.value
+
+  if(target.type=="range"){
+    const NumInput=target.parentNode!.nextSibling as HTMLInputElement
+    NumInput!.value=target.value
+
+
+  }else{
+    const RangeInput=target.previousSibling as HTMLDivElement
+    const range=RangeInput!.querySelector('input[type="range"]') as HTMLInputElement
+    range!.value=target.value
+  }
 }
 
 ///////////////////////////// Hue /////////////////////////////
@@ -20,7 +48,7 @@ export const sync_Input=(val)=>{
 
 
 ///////////////////////////// HSL to pointer /////////////////////////////
-export const HSLtoPointer=(ColorCodes,setPointerPosition)=>{
+export const HSLtoPointer=(ColorCodes:CCs,setPointerPosition:(pp:ppType)=>void)=>{
 
   setPointerPosition({
     HSL_top:Math.abs(ColorCodes.L*2-200)-12+"px",
@@ -31,7 +59,7 @@ export const HSLtoPointer=(ColorCodes,setPointerPosition)=>{
 }
 
 ///////////////////////////// text color /////////////////////////////
-export const textColorChange=(ColorCodes,setTextColor)=>{
+export const textColorChange=(ColorCodes:CCs,setTextColor:(tc:boolean)=>void)=>{
 
   // console.log("ColorCodes.L",ColorCodes?.L);
 
@@ -40,7 +68,7 @@ export const textColorChange=(ColorCodes,setTextColor)=>{
 
 ///////////////////////////// BuiltIn color /////////////////////////////
 
-export const check_Built_In_Color=(ColorCodes,builtInColors,setBuiltInColor)=>{
+export const check_Built_In_Color=(ColorCodes:CCs,builtInColors:builtInColorsType,setBuiltInColor:(bc:Array<string|null>)=>void)=>{
   setBuiltInColor(["--",null])
   Object.keys(builtInColors).forEach((val)=>{
       
@@ -51,11 +79,11 @@ export const check_Built_In_Color=(ColorCodes,builtInColors,setBuiltInColor)=>{
 
 
 ///////////////////////////// output color /////////////////////////////
-export const updateOutput=(ColorCodes, showcolorRef,setter)=>{
+export const updateOutput=(ColorCodes:CCs, showcolorRef:React.RefObject<HTMLDivElement>,setOutput:(op:outputType)=>void)=>{
 
   const hsl=`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${ColorCodes.opacity})`
 
-  showcolorRef.current.style.background=hsl
+  showcolorRef.current!.style.background=hsl
 
 let h=Math.round(ColorCodes.H);
 let sl=Math.round(ColorCodes.LS);
@@ -92,7 +120,7 @@ c==100 && m==100 && y==100? k=0:null
 
 if(ColorCodes.opacity==1){
 
-  setter({
+  setOutput({
     HSL:`hsl(${h}, ${sl}%, ${l}%)`,
     HSV:`hsv(${h}, ${sv}%, ${v}%)`,
     // Hexa:`${ColorCodes.Hexa.toUpperCase()}`,
@@ -130,7 +158,7 @@ if(ColorCodes.opacity==1){
         
         hexa=="undefinedundefined" && (hexa="00")
 
-  setter({
+        setOutput({
     HSL:`hsla(${h}, ${sl}%, ${l}%, ${ColorCodes.opacity})`,
     HSV:`hsva(${h}, ${sv}%, ${v}%, ${ColorCodes.opacity})`,
     // Hexa:`${ColorCodes.Hexa.toUpperCase()}${hexa}`,
@@ -144,14 +172,14 @@ if(ColorCodes.opacity==1){
 
 ///////////////////////////// input range background /////////////////////////////
   
-const SandLforSv=(Sv,ob)=>{ // Function to get bgcolor of Sv range input
+const SandLforSv=(Sv:number,ob:CCs)=>{ // Function to get bgcolor of Sv range input
   const L=100*(((ob.V)/100)*(1-((Sv/100)/2)))
   let S;
       S= (L==0 || L==100)? 0 : 100*((((ob.V)/100)-(L/100))/Math.min(L/100, 1-L/100))
       return [S,L]
 }
 
-const SandLforV=(V,ob)=>{ // Function to get bgcolor of V range input
+const SandLforV=(V:number,ob:CCs)=>{ // Function to get bgcolor of V range input
   const L=100*((V/100)*(1-(((ob.VS)/100)/2)))
   let S;
 
@@ -160,11 +188,11 @@ const SandLforV=(V,ob)=>{ // Function to get bgcolor of V range input
   return [S,L]
   
 }
-const CMYKbgColor=(c,m,y,k)=>{
+const CMYKbgColor=(c:number,m:number,y:number,k:number)=>{
   return `rgb(${Math.round(255*(1-c/100)*(1-k/100))},${Math.round(255*(1-m/100)*(1-k/100))},${Math.round(255*(1-y/100)*(1-k/100))})`
 }
 
-export const inputRangeBG=(ColorCodes,setRangeBG)=>{ //Main function
+export const inputRangeBG=(ColorCodes:CCs,setRangeBG:(Rbg:rangeBGType)=>void)=>{ //Main function
 
   const LS_left=`hsl(0,0%,${Math.round(ColorCodes.L)}%)`
   const LS_right=`hsl(${Math.round(ColorCodes.H)},100%,${Math.round(ColorCodes.L)}%)`
@@ -223,7 +251,8 @@ export const inputRangeBG=(ColorCodes,setRangeBG)=>{ //Main function
   
 }
 
-export const reducer=(state,action)=>{
+// export const reducer=(state:CCs,action:actionType):CCs | undefined=>{
+export const reducer=(state:CCs,action:actionType):CCs=>{
 
   switch(action.type){
 
@@ -254,7 +283,7 @@ export const reducer=(state,action)=>{
 
     case 'HSVtoHSL':// Wikipedia is the only source.
 
-    console.log("parseFloat:",parseFloat(state.V),state.V)
+    // console.log("parseFloat:",parseFloat(state.V),state.V)
     
       const L2=100*((state.V/100)*(1-((state.VS/100)/2)))
 
@@ -317,11 +346,12 @@ export const reducer=(state,action)=>{
           b=fx
       }
 
-      return {...state,R:r,G:g,B:b}
+      return {...state,R:r!,G:g!,B:b!}
 
     case 'RGBtoHexa':
 
-      let rgb=[Math.round(state.R).toString(), Math.round(state.G).toString(), Math.round(state.B).toString()]
+    // let rgb=[Math.round(state.R).toString(), Math.round(state.G).toString(), Math.round(state.B).toString()]
+    let rgb=[Math.round(state.R), Math.round(state.G), Math.round(state.B)]
 
       let hexa="#";
     
@@ -344,8 +374,10 @@ export const reducer=(state,action)=>{
             arr.push(remainder)
             a=quotient
             a==0 && arr.length==1 ? arr.push(a) : null
-        }
-        let code=String(arr[1])+arr[0]
+          }
+          let code=String(arr[1])+arr[0]
+          arr.length==0 && (code='00')// it means a=0
+          console.log("code",arr)
       hexa+=code
     })
       return {...state, Hexa:hexa}
@@ -377,7 +409,7 @@ export const reducer=(state,action)=>{
     console.log("state.Hexa",state.Hexa)
       let newArray=[];
       let a;
-      for(let key in state.Hexa){
+      for(let key in state.Hexa.split('')){
 
           switch(state.Hexa[key]){
 
@@ -397,39 +429,8 @@ export const reducer=(state,action)=>{
 
           }
 
-          newArray.push(parseInt(a))
+          newArray.push(+a)
       }
-
-      //////////////// For comfirmation ////////////////
-
-  let rgb2=[parseFloat(newArray[1]*16+newArray[2]).toString(), parseFloat(newArray[3]*16+newArray[4]).toString(), parseFloat(newArray[5]*16+newArray[6]).toString()]
-  let hexa2="#";
-  rgb2.forEach((elm)=>{
-  let quotient, remainder;
-  let a=elm;
-  let arr=[]
-  while(a!==0){
-  quotient=Math.floor(a/16)
-  remainder=a%16
-
-  switch(remainder){
-    case 10:remainder="A"; break;
-    case 11:remainder="B"; break;
-    case 12:remainder="C"; break;
-    case 13:remainder="D"; break;
-    case 14:remainder="E"; break;
-    case 15:remainder="F"
-  }
-  arr.push(remainder)
-  a=quotient
-  a==0 && arr.length==1 ? arr.push(a) : null
-  }
-  let code=String(arr[1])+arr[0]
-  hexa2+=code
-  })
-
-console.log("hexa Confirmation:",hexa2)
-
 
       return {...state, R:newArray[1]*16+newArray[2], G:newArray[3]*16+newArray[4] ,B:newArray[5]*16+newArray[6]}
       
@@ -456,9 +457,9 @@ console.log("hexa Confirmation:",hexa2)
           H2=(((R-G)/c)+4)*60
       }
 
-      H2<0 && (H2+=360)
+      H2!<0 && (H2!+=360)
       
-      return {...state, H:H2, LS:c==0? 0 : c*100/(1-Math.abs(2*parseFloat((max2+min2)*100/2)/100-1)), L:(max2+min2)*100/2}
+      return {...state, H:H2!, LS:c==0? 0 : c*100/(1-Math.abs(2*((max2+min2)*100/2)/100-1)), L:(max2+min2)*100/2}
 
     case 'CMYKtoRGB':
       //source: https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
@@ -474,6 +475,9 @@ console.log("hexa Confirmation:",hexa2)
 
       return {...state, trigger:(!state.trigger || state.trigger>100)?1:state.trigger+1,boolean:action.payload}
 
+    default: return {...state}
   }
 
 }
+
+

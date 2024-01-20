@@ -1,17 +1,17 @@
 import { useContext } from "react"
-import { Cntxt } from "../../App.jsx"
-import { Frame,CN_Label,Grid,Label,Range,InputNumber,CMYK_RangeBG } from '../../StyledComponents.jsx'
-import { sync_Input } from '../../Functions.jsx'
+import { AppContext } from "../../App.tsx"
+import { Frame,CN_Label,Grid,Label,Range,InputNumber,CMYK_RangeBG } from '../../StyledComponents.tsx'
+import { sync_Input } from '../../Functions.tsx'
 
 
 const CMYK=()=>{
 
-    const { ColorCodes,dispatch, textColor,rangeBG}= useContext(Cntxt)
+    const { ColorCodes,dispatch, textColor,rangeBG}= useContext(AppContext)
 
     //////////////////////////// CMYK ////////////////////////////
-  const CMYK_inputChange=(e)=>{
+  const CMYK_inputChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
       
-    sync_Input(e.target)
+    sync_Input(e)
 
     if(e.target.className.includes("input_C")){
         dispatch({type:'C',payload:+e.target.value})
@@ -31,6 +31,7 @@ const CMYK=()=>{
 
   }
 
+  const CCarray=[ColorCodes.C, ColorCodes.M, ColorCodes.Y, ColorCodes.K]
     return(
 
     <Frame textcolor={textColor?1:0}>
@@ -49,15 +50,15 @@ const CMYK=()=>{
                         <input className={`input_${elm}`} type="range" min="0" max="100"
 
                         onChange={(e)=>{CMYK_inputChange(e)}}
-                            onInput={(e)=>{CMYK_inputChange(e)}}
-                            value={ColorCodes[elm]? Math.round(ColorCodes[elm]):0}
+                            // onInput={(e)=>{CMYK_inputChange(e)}}
+                            value={Math.round(CCarray[key])}
                             />
 
                     </Range>
                     <InputNumber className={`input_${elm}`} textcolor={textColor?1:0} min="0" max="100" step="1"
                     onChange={(e)=>{CMYK_inputChange(e)}}
-                        onInput={(e)=>{CMYK_inputChange(e)}}
-                            value={ColorCodes[elm]? Math.round(ColorCodes[elm]):0}
+                        // onInput={(e)=>{CMYK_inputChange(e)}}
+                            value={Math.round(CCarray[key])}
                             />
                     
                     </Grid>

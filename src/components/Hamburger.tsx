@@ -1,10 +1,10 @@
 import { useContext } from "react"
-import { Cntxt } from "../App.jsx"
-import { HamburgerDiv } from '../StyledComponents'
+import { AppContext } from "../App.tsx"
+import { HamburgerDiv } from '../StyledComponents.tsx'
 
 const Hamburger=()=>{
     
-    const {textColor,setAside}=useContext(Cntxt)
+    const {textColor,setAside}=useContext(AppContext)
     
     return(
         
