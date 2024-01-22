@@ -11,7 +11,9 @@ import {actionType,CCs,ppType,outputType,rangeBGType} from './type'
 //   val.previousSibling.querySelector('input[type="range"]').value=val.value
 // }
 
-export const sync_Input=(e: React.ChangeEvent<HTMLInputElement>)=>{
+export const sync_Input=(e: React.ChangeEvent<HTMLInputElement>, setAside:(aside:boolean)=>void)=>{
+
+  setAside(false)
 
   const target=e.target as HTMLInputElement
   // const NumInput=target.parentNode!.nextSibling as HTMLInputElement
@@ -73,17 +75,21 @@ export const check_Built_In_Color=(ColorCodes:CCs,builtInColors:builtInColorsTyp
   Object.keys(builtInColors).forEach((val)=>{
       
       ColorCodes.Hexa==builtInColors[val]["hexa"] &&
-      setBuiltInColor([val,builtInColors[val]["hexa"]])
+      setBuiltInColor(
+        builtInColors[val]["hexa"]=='#00FFFF'?
+        ['Aqua/Cyan',builtInColors[val]["hexa"]]:
+        [val,builtInColors[val]["hexa"]]
+        )
   })
 }
 
 
 ///////////////////////////// output color /////////////////////////////
-export const updateOutput=(ColorCodes:CCs, showcolorRef:React.RefObject<HTMLDivElement>,setOutput:(op:outputType)=>void)=>{
+export const updateOutput=(ColorCodes:CCs, setOutput:(op:outputType)=>void)=>{
 
-  const hsl=`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${ColorCodes.opacity})`
+  // const hsl=`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${ColorCodes.opacity})`
 
-  showcolorRef.current!.style.background=hsl
+  // showcolorRef.current!.style.background=hsl
 
 let h=Math.round(ColorCodes.H);
 let sl=Math.round(ColorCodes.LS);
@@ -377,7 +383,7 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
           }
           let code=String(arr[1])+arr[0]
           arr.length==0 && (code='00')// it means a=0
-          console.log("code",arr)
+          // console.log("code",arr)
       hexa+=code
     })
       return {...state, Hexa:hexa}
@@ -406,7 +412,7 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
 
     case 'HexaToRGB':
 
-    console.log("state.Hexa",state.Hexa)
+    // console.log("state.Hexa",state.Hexa)
       let newArray=[];
       let a;
       for(let key in state.Hexa.split('')){

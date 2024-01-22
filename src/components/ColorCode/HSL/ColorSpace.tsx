@@ -7,11 +7,12 @@ import {HSLContext} from './HSL.tsx'
 
 const ColorSpace=()=>{
 
-    const { ColorCodes,dispatch,pointerPosition, setPointerPosition}= useContext(AppContext)
+    const { ColorCodes,dispatch,pointerPosition, setPointerPosition,aside}= useContext(AppContext)
     const { HSLtoggle }= useContext(HSLContext)
 
     const movePointer=(val: React.DragEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>)=>{
 
+        console.log("clicked")
         const target=val.target as HTMLDivElement
 
         if(val.pageX && val.pageY){// Is this if necessary?
@@ -98,7 +99,8 @@ const ColorSpace=()=>{
                     // csbg={States.CSBG}
                     hue={ColorCodes.H}
                     toggle={key==0?HSLtoggle:!HSLtoggle}
-                    bg={key==0?1:0}
+                    hsl={key==0?1:0}
+                    aside={aside?1:0}
                     key={key}
                     >
                         <img src={custom_pointer} alt="pointer"/>

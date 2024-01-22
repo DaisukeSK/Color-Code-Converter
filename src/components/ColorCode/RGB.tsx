@@ -5,11 +5,11 @@ import { sync_Input } from '../../Functions.tsx'
 
 const RGB=()=>{
     
-    const {ColorCodes,dispatch,textColor,rangeBG}= useContext(AppContext)
+    const {ColorCodes,dispatch,setAside,textColor,rangeBG}= useContext(AppContext)
 
      //////////////////////////// RGB ////////////////////////////
   const RGB_inputChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
-    sync_Input(e)
+    sync_Input(e,setAside)
 
     if(e.target.className.includes("input_R")){
         dispatch({type:'R',payload:+e.target.value})

@@ -22,7 +22,7 @@ export type CCs= {H:number,LS:number,L:number,VS:number,V:number,Hexa:string,R:n
 export type Context={
     ColorCodes:CCs,
     dispatch:(cc:actionType)=>void,
-    showColor_Ref:React.RefObject<HTMLDivElement>,
+    // showColor_Ref:React.RefObject<HTMLDivElement>,
     textColor:boolean,
     rangeBG:rangeBGType,
     builtInColor:Array<string | null>,

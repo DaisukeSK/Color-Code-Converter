@@ -12,16 +12,16 @@ export const SideBar=()=>{
 
     // aa={a:1,b:2}
     
-    const {dispatch, showColor_Ref,aside,setAside}=useContext(AppContext)
+    const {dispatch, aside,setAside}=useContext(AppContext)
 
     const LiClick=(e:React.MouseEvent<HTMLLIElement>)=>{
 
         const target =e.target as HTMLLIElement
 
-        showColor_Ref.current!.style.transition="all .7s"
-        setTimeout(()=>{
-            showColor_Ref.current!.style.transition="none"
-        },700)
+        // showColor_Ref.current!.style.transition="all .7s"
+        // setTimeout(()=>{
+        //     showColor_Ref.current!.style.transition="none"
+        // },700)
 
         dispatch({type:'opacity',payload:1})
     
@@ -34,9 +34,9 @@ export const SideBar=()=>{
         dispatch({type:'trigger', payload:true})
     }
 
-    for(const key in builtInColors){
-        console.log(`${key}:${builtInColors[key]['letterColor']}`)
-    }
+    // for(const key in builtInColors){
+    //     console.log(`${key}:${builtInColors[key]['letterColor']}`)
+    // }
 
 
     return (

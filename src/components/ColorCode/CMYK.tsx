@@ -6,12 +6,12 @@ import { sync_Input } from '../../Functions.tsx'
 
 const CMYK=()=>{
 
-    const { ColorCodes,dispatch, textColor,rangeBG}= useContext(AppContext)
+    const { ColorCodes,dispatch,setAside, textColor,rangeBG}= useContext(AppContext)
 
     //////////////////////////// CMYK ////////////////////////////
   const CMYK_inputChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
       
-    sync_Input(e)
+    sync_Input(e,setAside)
 
     if(e.target.className.includes("input_C")){
         dispatch({type:'C',payload:+e.target.value})

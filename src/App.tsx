@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef, useReducer, createContext } from 'react'
+import { useState, useEffect, useReducer, createContext } from 'react'
 import { Section } from './StyledComponents.tsx'
 import {HSLtoPointer,textColorChange,check_Built_In_Color,updateOutput,inputRangeBG,reducer} from "./Functions.tsx"
 import Hamburger from './components/Hamburger.tsx'
 import {SideBar,builtInColors} from './components/Aside.tsx'
 import {HSL} from './components/ColorCode/HSL/HSL.tsx'
+import {BG} from './StyledComponents.tsx'
 import CMYK from './components/ColorCode/CMYK.tsx'
 import RGB from './components/ColorCode/RGB.tsx'
 import Hexa from './components/ColorCode/Hexa.tsx'
@@ -28,7 +29,7 @@ const [output, setOutput] = useState<outputType>({HSL:'',HSV:'',Hexa:'',RGB:'',C
 const [pointerPosition, setPointerPosition] = useState<ppType>({HSL_top:'',HSL_left:'',HSV_top:'',HSV_left:''})
 const [rangeBG, setRangeBG] = useState<rangeBGType>({LS:'',L:'',VS:'',V:'',R:'',G:'',B:'',C:'',M:'',Y:'',K:''})
 
-const showColor_Ref=useRef<HTMLDivElement>(null)
+// const showColor_Ref=useRef<HTMLDivElement>(null)
 
 useEffect(()=>{
 
@@ -53,7 +54,7 @@ const sectionOnClick=()=>{
 
 
 useEffect(()=>{
-    updateOutput(ColorCodes, showColor_Ref,setOutput)
+    updateOutput(ColorCodes, setOutput)
     textColorChange(ColorCodes,setTextColor)
 },[ColorCodes.opacity])
 
@@ -64,7 +65,7 @@ useEffect(()=>{
         HSLtoPointer(ColorCodes,setPointerPosition)
 
     }
-    updateOutput(ColorCodes, showColor_Ref,setOutput)
+    updateOutput(ColorCodes, setOutput)
     textColorChange(ColorCodes,setTextColor)
     inputRangeBG(ColorCodes,setRangeBG)
     check_Built_In_Color(ColorCodes,builtInColors,setBuiltInColor)
@@ -73,17 +74,26 @@ useEffect(()=>{
 
   return (
     
-    <AppContext.Provider value={{ ColorCodes,dispatch, showColor_Ref,textColor,rangeBG,builtInColor,output,aside,pointerPosition,setAside, setPointerPosition}}>
+    <AppContext.Provider value={{ ColorCodes,dispatch, textColor,rangeBG,builtInColor,output,aside,pointerPosition,setAside, setPointerPosition}}>
     
-    <div className="bgDiv" ref={showColor_Ref}>
+    {/* <div
+    className="bgDiv"
+    style={{
+        transition:aside?'all 1s ease-out':'none',
+        backgroundColor:`hsla(${Math.round(ColorCodes.H)},${Math.round(ColorCodes.LS)}%,${Math.round(ColorCodes.L)}%,${ColorCodes.opacity})`
+    
+    }}
+    // ref={showColor_Ref}
+    >
 
-    </div>
+    </div> */}
+    <BG aside={aside?1:0} colorcodes={ColorCodes}/>
 
     <Hamburger/>
     <SideBar/>
-        <div style={{position:"absolute",top:0,right:0}}>Test: 1/20 ts</div>
+        {/* <div style={{position:"absolute",top:0,right:0}}>1/22</div> */}
 
-    <Section aside={aside?1:0} onClick={sectionOnClick}>
+    <Section aside={aside?1:0} onClick={sectionOnClick} onDrag={()=>{console.log("drag")}}>
 
     {/* <!------------------------Output------------------------> */}
     <div className="top"

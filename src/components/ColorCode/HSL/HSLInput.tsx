@@ -6,13 +6,13 @@ import {HSLContext} from './HSL.tsx'
 
 const HSLInput=()=>{
 
-    const { ColorCodes,dispatch,textColor,rangeBG}= useContext(AppContext)
+    const { ColorCodes,dispatch,textColor,rangeBG,setAside}= useContext(AppContext)
     const { HSLtoggle }= useContext(HSLContext)
 
     //////////////////////////// HSL, HSV ////////////////////////////
 
   const HSL_inputChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
-    sync_Input(e)
+    sync_Input(e,setAside)
 
   if(e.target.className.includes("input_H")){
 

@@ -1,7 +1,7 @@
 
 import Styled from "styled-components";
 import { css,keyframes } from "styled-components";
-import { ppType,rangeBGType } from './type'
+import { ppType,rangeBGType,CCs } from './type'
 
 export const Section=Styled.section<{aside:number}>`
     position:relative;
@@ -95,7 +95,7 @@ export const Aside=Styled.aside<{aside:number}>`
     height: 100vh;
     width:500px;
     background-color: #161616;
-    z-index:1;
+    z-index:2; //should be higher than pointer.
     transition: left .5s;
 
 
@@ -306,17 +306,15 @@ export const OutputText=Styled.input.attrs({type:"text", readOnly:true})<{textco
     color:  ${(props)=>props.textcolor ? css`white`: css`black`}  
 `;
 
-export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, bg:number, pointerposition:ppType}>`
+export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, pointerposition:ppType, aside:number}>`
     display: ${(props)=>props.toggle? css`block`: css`none`};
     position: relative;
     width: 360px;
     height: 200px; 
     overflow: hidden;
     margin-bottom: 15px;
-    background: ${(props)=>props.bg?
-        css`linear-gradient(90deg, hsl(${props.hue},0%,50%),hsl(${props.hue},100%,50%))`:
-        css`linear-gradient(90deg, white,hsl(${props.hue},100%,50%))`
-    };
+    transition: ${(prop)=>prop.aside?css`all 1s ease-out`:css`none`};
+    background: ${(props)=>css`hsl(${props.hue},100%,50%)`};
     
     &::before {
         position: absolute;
@@ -325,14 +323,31 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, bg:number, po
         content: "";
         width: 100%;
         height: 100%;
-        background: ${(props)=>props.bg?css`linear-gradient(white, rgba(0, 0, 0, 0),black)`:css`linear-gradient(rgba(0, 0, 0, 0),black)`};
-
+        background: ${(props)=>props.hsl?
+            css`linear-gradient(90deg, hsl(0,0%,50%),transparent)`:
+            css`linear-gradient(90deg, white,transparent)`
+            // css`linear-gradient(90deg, hsl(${props.hue},0%,50%),transparent)`:
+            // css`linear-gradient(90deg, white,transparent)`
+        };
+        
+    }
+    &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 100%;
+        
+        background: ${(props)=>props.hsl?
+            css`linear-gradient(white, transparent,black)`:
+            css`linear-gradient(transparent,black)`};
     }
     img {
         position: absolute;
-        top: ${(props)=>props.bg?css`${props.pointerposition.HSL_top}`:css`${props.pointerposition.HSV_top}`};
-        left: ${(props)=>props.bg?css`${props.pointerposition.HSL_left}`:css`${props.pointerposition.HSV_left}`};
-        
+        top: ${(props)=>props.hsl?css`${props.pointerposition.HSL_top}`:css`${props.pointerposition.HSV_top}`};
+        left: ${(props)=>props.hsl?css`${props.pointerposition.HSL_left}`:css`${props.pointerposition.HSV_left}`};
+        z-index:1;
     }
     div {
         position: absolute;
@@ -341,6 +356,7 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, bg:number, po
         content: "";
         width: 100%;
         height: 100%;
+        z-index:1;
     }
 `;
 
@@ -479,4 +495,13 @@ div {
     display: ${(props)=>props.bultin[1] ? css`block`: css`none`};
 }
 
+`
+export const BG=Styled.div<{aside:number,colorcodes:CCs}>`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color:${(props)=>css`hsla(${Math.round(props.colorcodes.H)},${Math.round(props.colorcodes.LS)}%,${Math.round(props.colorcodes.L)}%,${props.colorcodes.opacity})`};
+    transition:${(props)=>props.aside?css`all 1s ease-out`:`none`}
 `
