@@ -4,11 +4,16 @@ import { css,keyframes } from "styled-components";
 import { ppType,rangeBGType,CCs } from './type'
 
 export const Section=Styled.section<{aside:number}>`
-    position:relative;
+    // position:relative;
+
+    display :flex;
+    flex-direction: column;
+    justify-content: center;
 
     left:${props=>props.aside? css`250px`:css`0`};
     transition: left .5s;
     width: fit-content;
+    min-height: 100vh;
     margin: 0 auto;
     box-sizing: border-box;
 `;
@@ -129,9 +134,9 @@ export const Aside=Styled.aside<{aside:number}>`
         .logo {
             margin: 0 auto;
             width: 80%;
-            height: 100px;
+            height: 150px;
             // background-color: #0F0F0F;
-            // border: 1px #242424 solid;
+            border: 1px #242424 solid;
 
             img {
                 width: 100%;
@@ -156,7 +161,7 @@ export const Aside=Styled.aside<{aside:number}>`
         padding: 0;
         margin: 0;
         overflow:auto;
-        height: ${window.innerHeight-200-10+"px"}; // If change height sibling div, don't forget to change this too.
+        height: ${window.innerHeight-250-10+"px"}; // If change height sibling div, don't forget to change this too.
         
         &>li{
             margin: 7px 0;

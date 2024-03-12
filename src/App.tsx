@@ -24,7 +24,7 @@ export function App() {
 const [textColor, setTextColor] = useState<boolean>(true)
 const [aside, setAside] = useState<boolean>(false)
 const [builtInColor, setBuiltInColor] = useState<Array<string | null>>([])
-const [marginTop, setMarginTop] = useState<number>()
+// const [marginTop, setMarginTop] = useState<number>()
 const [output, setOutput] = useState<outputType>({HSL:'',HSV:'',Hexa:'',RGB:'',CMYK:''})
 const [pointerPosition, setPointerPosition] = useState<ppType>({HSL_top:'',HSL_left:'',HSV_top:'',HSV_left:''})
 const [rangeBG, setRangeBG] = useState<rangeBGType>({LS:'',L:'',VS:'',V:'',R:'',G:'',B:'',C:'',M:'',Y:'',K:''})
@@ -33,9 +33,9 @@ const [rangeBG, setRangeBG] = useState<rangeBGType>({LS:'',L:'',VS:'',V:'',R:'',
 
 useEffect(()=>{
 
-    const topHeight:number=217
-    const HSLheight:number=351
-    setMarginTop((window.innerHeight-topHeight-HSLheight)/3)
+    // const topHeight:number=217
+    // const HSLheight:number=351
+    // setMarginTop((window.innerHeight-topHeight-HSLheight)/3)
 
     dispatch({type:'HSLtoHSV',payload:null})
     dispatch({type:'HSLtoRGB',payload:null})
@@ -97,7 +97,7 @@ useEffect(()=>{
 
     {/* <!------------------------Output------------------------> */}
     <div className="top"
-    style={{margin:`${marginTop}px auto`}}
+    // style={{margin:`${marginTop}px auto`}}
     >
     {/* <!-- No need now but keeping it because styles collapse somehow if remove it--> */}
 

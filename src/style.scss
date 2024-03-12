@@ -356,13 +356,14 @@ body {
 
 // div.top{
 
-div.top{
+.top{
     // margin: 15px auto;
     // display: flex;
     // justify-content: center;
     // margin: 0 auto;
-    width: fit-content;
+    // width: fit-content;
     position: relative;
+    margin: 0 auto 20px;
     
 
     .showState {
@@ -479,8 +480,9 @@ div.top{
 .flex {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    // margin: 20px 0;
     margin: 0;
+    position: relative;
     
 
     div{

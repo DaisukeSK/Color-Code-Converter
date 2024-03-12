@@ -27,16 +27,15 @@ body .bgDiv {
   /* border: 1px solid black; */
 }
 
-div.top {
-  width: -moz-fit-content;
-  width: fit-content;
+.top {
   position: relative;
+  margin: 0 auto 20px;
 }
 .flex {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
   margin: 0;
+  position: relative;
 }
 .flex div div.HSLHSVLabel {
   margin: 0 auto 7px;
