@@ -23,14 +23,12 @@ body {
   background-position-y: 50px;
   background-repeat: no-repeat;
 }
-body .bgDiv {
-  /* border: 1px solid black; */
-}
 
 .top {
   position: relative;
   margin: 0 auto 20px;
 }
+
 .flex {
   display: flex;
   justify-content: center;

@@ -1,19 +1,17 @@
 import { useContext } from "react"
 import { AppContext } from "../../../App.tsx"
 import { ColorSpaceDiv } from '../../../StyledComponents.tsx'
+import { HSLContext } from './HSL.tsx'
 import custom_pointer from "../../../../public/pointer.png";
-// import transparent from "../../../../public/transparent.png";
-import {HSLContext} from './HSL.tsx'
 
 const ColorSpace=()=>{
 
-    const { ColorCodes,dispatch,pointerPosition, setPointerPosition,aside}= useContext(AppContext)
+    const { ColorCodes, dispatch, pointerPosition, setPointerPosition, aside }= useContext(AppContext)
     const { HSLtoggle }= useContext(HSLContext)
 
-    const movePointer=(val: React.DragEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>)=>{
+    const movePointer=(val: React.DragEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>):void=>{
 
-        console.log("clicked")
-        const target=val.target as HTMLDivElement
+        const target: HTMLDivElement = val.target as HTMLDivElement
 
         if(val.pageX && val.pageY){// Is this if necessary?
 
@@ -41,15 +39,12 @@ const ColorSpace=()=>{
                 0 : 200*(1-L/V)
 
                 setPointerPosition({...pointerPosition,
-                
                     HSL_top: top-12+"px",
                     HSL_left: left-12+"px",
                     HSV_top: Math.abs(V*2-200)-12+"px",
                     HSV_left: VS*3.6-12+"px"
-
                 })
                 
-
             }else if(target.id=="CS_HSV"){
 
                 dispatch({type:'VS', payload:top==200? 0 : left*100/360})
@@ -70,12 +65,10 @@ const ColorSpace=()=>{
                 }
 
                 setPointerPosition({...pointerPosition,
-                
                     HSL_top: Math.abs(L*2-200)-12+"px",
                     HSL_left: LS*3.6-12+"px",
                     HSV_top: top-12+"px",
                     HSV_left: left-12+"px"
-
                 })
             
             }
@@ -88,41 +81,33 @@ const ColorSpace=()=>{
     }
 
     return(
-        
         <div className="colorSpace">
-
             {["HSL","HSV"].map((elm,key)=>{
                 return (
-
                     <ColorSpaceDiv
-                    pointerposition={pointerPosition}
-                    // csbg={States.CSBG}
-                    hue={ColorCodes.H}
-                    toggle={key==0?HSLtoggle:!HSLtoggle}
-                    hsl={key==0?1:0}
-                    aside={aside?1:0}
-                    key={key}
+                        pointerposition={pointerPosition}
+                        hue={ColorCodes.H}
+                        toggle={key==0?HSLtoggle:!HSLtoggle}
+                        hsl={key==0?1:0}
+                        aside={aside?1:0}
+                        key={key}
                     >
                         <img src={custom_pointer} alt="pointer"/>
                         <div
-                        draggable="true"
-                        id={"CS_"+elm}
-                        onDragStart={(e)=>{
-                            const img = new Image();
-                            // img.src = {transparent};
-                            e.dataTransfer.setDragImage(img, 0, 0);
-                        }}
-                        onClick={(e)=>{movePointer(e)}}
-                        onDrag={(e)=>movePointer(e)}
-                        onDragEnd={(e)=>movePointer(e)}
+                            draggable="true"
+                            id={"CS_"+elm}
+                            onDragStart={(e)=>{
+                                const img = new Image();
+                                e.dataTransfer.setDragImage(img, 0, 0);
+                            }}
+                            onClick={(e)=>{movePointer(e)}}
+                            onDrag={(e)=>movePointer(e)}
+                            onDragEnd={(e)=>movePointer(e)}
                         ></div>
                     </ColorSpaceDiv>
                 )
-                
             })}
-
         </div>
-
     )
 }
 
