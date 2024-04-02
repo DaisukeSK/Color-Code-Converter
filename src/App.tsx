@@ -35,7 +35,7 @@ export function App() {
         dispatch({type:'RGBtoCMYK',payload:null})
         dispatch({type:'trigger', payload:true})
 
-        document.body.style.background = `url(${imgPath})`;
+        // document.body.style.background = `url(${imgPath})`;
 
     }, [])
 

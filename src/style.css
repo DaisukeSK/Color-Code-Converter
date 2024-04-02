@@ -19,7 +19,8 @@ body {
   margin: 0;
   position: relative;
   font-family: Helvetica, "Times New Roman", Times, Arial, serif;
-  background-position-x: 50px;
+  background-image: url("../public/tree_2.png");
+  background-position-x: 100px;
   background-position-y: 50px;
   background-repeat: no-repeat;
 }
