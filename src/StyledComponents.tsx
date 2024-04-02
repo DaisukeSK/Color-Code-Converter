@@ -1,15 +1,13 @@
 
 import Styled from "styled-components";
-import { css,keyframes } from "styled-components";
+import { css } from "styled-components";
 import { ppType,rangeBGType,CCs } from './type'
 
 export const Section=Styled.section<{aside:number}>`
-    position:relative; //it is necessary for aside menu.
-
+    position:relative; // for aside menu.
     display :flex;
     flex-direction: column;
     justify-content: center;
-
     left:${props=>props.aside? css`250px`:css`0`};
     transition: left .5s;
     width: fit-content;
@@ -32,22 +30,15 @@ export const HamburgerDiv=Styled.div<{textcolor:number}>`
             }
         }
     }
-        // div {
-        //     position:absolute;
-        //     top:0;
-        //     left:0;
-        //     width: 100%;
-        //     height: 100%;
-        //     z-index:1;
-        // }
-        svg {
-            path {
-                fill:  ${(props)=>props.textcolor ? css`white`: css`black`}
-            }
-            .blurPath {
-                display:  none;
-            }
+        
+    svg {
+        path {
+            fill:  ${(props)=>props.textcolor ? css`white`: css`black`}
         }
+        .blurPath {
+            display:  none;
+        }
+    }
 `;
 
 export const Frame=Styled.div<{textcolor:number}>`
@@ -72,7 +63,6 @@ export const OutputFrame=Styled(Frame)`
         grid-template-columns: 75px 210px 15px;
         grid-template-rows: repeat(5, 22px);
         gap: 2px 0;
-        // width: fit-content;
         margin: 10px 45px;
         align-items: center;
         
@@ -87,8 +77,6 @@ export const OutputFrame=Styled(Frame)`
             background: none;
             
         }
-        
-
     }
 `;
 
@@ -102,7 +90,6 @@ export const Aside=Styled.aside<{aside:number}>`
     background-color: #161616;
     z-index:2; //should be higher than pointer.
     transition: left .5s;
-
 
     &>div { // If change this height, don't forget to change height of sibling ul too.
         position: relative;
@@ -135,8 +122,6 @@ export const Aside=Styled.aside<{aside:number}>`
             margin: 0 auto;
             width: 80%;
             height: 100px;
-            // background-color: #0F0F0F;
-            // outline: 1px #242424 solid;
 
             img {
                 width: 100%;
@@ -204,44 +189,6 @@ export const Aside=Styled.aside<{aside:number}>`
     }//ul
 `;
 
-const toRight=keyframes`
-    from{
-        left: 0;
-        transform: translateX(0);
-    }
-    to{
-        left: 100%;
-        transform: translateX(-100%);
-    }
-`;
-const toLeft=keyframes`
-    from{
-        left: 100%;
-        transform: translateX(-100%);
-    }
-    to{
-        left: 0;
-        transform: translateX(0);
-    }
-`;
-
-// export const ToggleDiv=Styled.div`
-//     position: absolute;
-//     width: 48px;
-//     height: 100%;
-//     top: 0;
-//     left: 0;
-//     background-color: hsl(0, 0%, 30%);
-//     border-radius: 7px;
-//     // z-index: -1;
-
-//     animation-duration: .3s;
-//     animation-timing-function: ease-out;
-//     animation-iteration-count:1;/*can be "infinite"*/
-//     animation-fill-mode: both;
-//     animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
-// `;
-
 export const ToggleDiv=Styled.div<{toggle:number}>`
     position: absolute;
     width: 48px;
@@ -252,16 +199,8 @@ export const ToggleDiv=Styled.div<{toggle:number}>`
     transform: ${(props) => props.toggle? css`none`: css`translateX(-100%);`};
     transition: all .3s ease-out;
 
-
     background-color: hsl(0, 0%, 30%);
     border-radius: 7px;
-    // z-index: -1;
-
-    // animation-duration: .3s;
-    // animation-timing-function: ease-out;
-    // animation-iteration-count:1;/*can be "infinite"*/
-    // animation-fill-mode: both;
-    // animation-name:${(props) => props.toggle? css`${toLeft}`: css`${toRight}`};
 `;
 
 export const InputNumber=Styled.input.attrs({type:"number"})<{textcolor:number}>`
@@ -293,7 +232,6 @@ export const Hr=Styled.hr<{textcolor:number}>`
     border-bottom: none;
     border-top: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
 `;
-
 
 export const Label=Styled.label<{textcolor:number}>`
     color:  ${(props)=>props.textcolor ? css`white`: css`black`};
@@ -331,8 +269,6 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
         background: ${(props)=>props.hsl?
             css`linear-gradient(90deg, hsl(0,0%,50%),transparent)`:
             css`linear-gradient(90deg, white,transparent)`
-            // css`linear-gradient(90deg, hsl(${props.hue},0%,50%),transparent)`:
-            // css`linear-gradient(90deg, white,transparent)`
         };
         
     }
@@ -417,7 +353,6 @@ export const Hexainput=Styled.input<{textcolor:number}>`
     color: ${(props)=>props.textcolor ? css`white`: css`black`};
 
     &:focus {
-        
         outline: none;
     }
 `;
@@ -467,40 +402,35 @@ export const CopyBox=Styled.div<{textcolor:number}>`
 
 export const HSL_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
     background:${(props)=>props.bg=="LS"? css`${props.rangebg.LS}`: props.bg=="L"? css`${props.rangebg.L}`: props.bg=="VS"? css`${props.rangebg.VS}`:css`${props.rangebg.V}`};
-`
+`;
 
 export const RGB_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
     background:${(props)=>props.bg=="R"? css`${props.rangebg.R}`: props.bg=="G"? css`${props.rangebg.G}`:css`${props.rangebg.B}`};
-
-`
+`;
 
 export const CMYK_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
     background:${(props)=>props.bg=="C"? css`${props.rangebg.C}`: props.bg=="M"? css`${props.rangebg.M}`: props.bg=="Y"? css`${props.rangebg.Y}`:css`${props.rangebg.K}`};
-
-`
-
+`;
 
 export const OutputCN_Label=Styled.div<{textcolor:number, bultin:Array<string | null>}>`
     display: flex;
     justify-content: center;
     align-items: center;
-span {
-    color: ${(props)=>props.textcolor ? css`white`: css`black`};
-    margin: 0 0 0 5px;
-}
+    span {
+        color: ${(props)=>props.textcolor ? css`white`: css`black`};
+        margin: 0 0 0 5px;
+    }
 
-div {
-    width: 30px;
-    height: 15px;
-    border: 1px solid grey;
-    margin: 0 0 0 5px;
+    div {
+        width: 30px;
+        height: 15px;
+        border: 1px solid grey;
+        margin: 0 0 0 5px;
+        background-color:${(props)=>props.bultin[1]};
+        display: ${(props)=>props.bultin[1] ? css`block`: css`none`};
+    }
+`;
 
-
-    background-color:${(props)=>props.bultin[1]};
-    display: ${(props)=>props.bultin[1] ? css`block`: css`none`};
-}
-
-`
 export const BG=Styled.div<{aside:number,colorcodes:CCs}>`
     position: absolute;
     top: 0;
@@ -509,4 +439,4 @@ export const BG=Styled.div<{aside:number,colorcodes:CCs}>`
     height: 100vh;
     background-color:${(props)=>css`hsla(${Math.round(props.colorcodes.H)},${Math.round(props.colorcodes.LS)}%,${Math.round(props.colorcodes.L)}%,${props.colorcodes.opacity})`};
     transition:${(props)=>props.aside?css`all 1s ease-out`:`none`}
-`
+`;

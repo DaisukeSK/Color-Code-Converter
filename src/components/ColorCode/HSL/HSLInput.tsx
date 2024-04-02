@@ -12,32 +12,6 @@ const HSLInput=()=>{
 	const HSL_inputChange=(e: React.ChangeEvent<HTMLInputElement>):void=>{
 		sync_Input(e,setAside)
 
-		// if(e.target.className.includes("input_H")){
-
-		// 	dispatch({type:'H', payload:+e.target.value})
-		// 	dispatch({type:'HSLtoHSV', payload:null})
-			
-		// 	}else if(e.target.className.includes("input_LS")){
-
-		// 	dispatch({type:'LS', payload:+e.target.value})
-		// 	dispatch({type:'HSLtoHSV', payload:null})
-			
-		// 	}else if(e.target.className.includes("input_L")){
-
-		// 	dispatch({type:'L', payload:+e.target.value})
-		// 	dispatch({type:'HSLtoHSV', payload:null})
-
-		// 	}else if(e.target.className.includes("input_VS")){
-
-		// 	dispatch({type:'VS', payload:+e.target.value})
-		// 	dispatch({type:'HSVtoHSL', payload:null})
-			
-		// 	}else if(e.target.className.includes("input_V")){
-
-		// 	dispatch({type:'V', payload:+e.target.value})
-		// 	dispatch({type:'HSVtoHSL', payload:null})
-		// }
-
 		switch(true){
 			case e.target.className.includes("input_H"):
 				dispatch({type:'H', payload:+e.target.value});

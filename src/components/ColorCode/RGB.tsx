@@ -10,13 +10,6 @@ const RGB=()=>{
     const RGB_inputChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         sync_Input(e,setAside)
 
-        // if(e.target.className.includes("input_R")){
-        //     dispatch({type:'R',payload:+e.target.value})
-        // }else if(e.target.className.includes("input_G")){
-        //     dispatch({type:'G',payload:+e.target.value})
-        // }else if(e.target.className.includes("input_B")){
-        //     dispatch({type:'B',payload:+e.target.value})
-        // }
         switch(true){
             case e.target.className.includes("input_R"):
                 dispatch({type:'R',payload:+e.target.value});

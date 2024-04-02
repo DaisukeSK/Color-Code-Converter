@@ -11,16 +11,6 @@ const CMYK=()=>{
       
         sync_Input(e,setAside)
 
-        // if(e.target.className.includes("input_C")){
-        //     dispatch({type:'C',payload:+e.target.value})
-        // }else if(e.target.className.includes("input_M")){
-        //     dispatch({type:'M',payload:+e.target.value})
-        // }else if(e.target.className.includes("input_Y")){
-        //     dispatch({type:'Y',payload:+e.target.value})
-        // }else if(e.target.className.includes("input_K")){
-        //     dispatch({type:'K',payload:+e.target.value})
-        // }
-
         switch(true){
             case e.target.className.includes("input_C"):
                 dispatch({type:'C',payload:+e.target.value});
@@ -37,7 +27,6 @@ const CMYK=()=>{
             case e.target.className.includes("input_K"):
                 dispatch({type:'K',payload:+e.target.value});
         }
-
 
         dispatch({type:'CMYKtoRGB',payload:null})
         dispatch({type:'RGBtoHexa',payload:null})

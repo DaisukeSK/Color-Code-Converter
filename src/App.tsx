@@ -1,15 +1,15 @@
 import { useState, useEffect, useReducer, createContext } from 'react'
 import { Section } from './StyledComponents.tsx'
-import {HSLtoPointer,textColorChange,check_Built_In_Color,updateOutput,inputRangeBG,reducer} from "./Functions.tsx"
+import { HSLtoPointer, textColorChange, check_Built_In_Color, updateOutput, inputRangeBG, reducer } from "./Functions.tsx"
 import Hamburger from './components/Hamburger.tsx'
-import {SideBar,builtInColors} from './components/Aside.tsx'
-import {HSL} from './components/ColorCode/HSL/HSL.tsx'
-import {BG} from './StyledComponents.tsx'
+import { SideBar,builtInColors } from './components/Aside.tsx'
+import { HSL } from './components/ColorCode/HSL/HSL.tsx'
+import { BG } from './StyledComponents.tsx'
 import CMYK from './components/ColorCode/CMYK.tsx'
 import RGB from './components/ColorCode/RGB.tsx'
 import Hexa from './components/ColorCode/Hexa.tsx'
 import OutPut from './components/ColorCode/OutPut.tsx'
-// import imgPath from '../public/tree_2.png'
+import imgPath from '../public/tree.png'
 
 import {outputType,ppType,rangeBGType,Context} from './type'
 
@@ -35,7 +35,11 @@ export function App() {
         dispatch({type:'RGBtoCMYK',payload:null})
         dispatch({type:'trigger', payload:true})
 
-        // document.body.style.background = `url(${imgPath})`;
+        // If put them in css, tree img shows up when loading page.
+        document.body.style.background = `url(${imgPath})`;
+        document.body.style.backgroundPositionX = `100px`;
+        document.body.style.backgroundPositionY = `50px`;
+        document.body.style.backgroundRepeat = `no-repeat`;
 
     }, [])
 

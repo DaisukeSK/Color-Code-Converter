@@ -1,58 +1,8 @@
-$shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-$bgTop: rgba(0, 11, 83, 0.774);
-$bg: rgba(200, 200, 200, 0.5);
-$bannerBG1: conic-gradient(from 90deg at 30% 50%,
-            rgb(255, 0, 0),
-            rgb(255, 0, 191), 
-            rgb(128, 0, 255), 
-            rgb(0, 64, 255), 
-            rgb(0, 255, 255), 
-            rgb(0, 255, 64), 
-            rgb(128, 255, 0), 
-            rgb(255, 191, 0), 
-            rgb(255, 0, 0));
-
-$bannerBG2: conic-gradient(from 90deg at 30% 50%,
-            rgb(255, 255, 255) 5deg,
-            rgb(51, 51, 51) 10deg,
-            rgb(158, 158, 158) 50deg,
-            rgb(22, 22, 22) 75deg,
-            rgb(235, 235, 235) 110deg,
-            rgb(194, 194, 194) 150deg,
-            rgb(39, 39, 39) 220deg,
-            rgb(235, 235, 235) 330deg,
-            rgb(51, 51, 51) 350deg,
-            rgb(255, 255, 255) 360deg);
-
-@mixin topLabelPosition(){
-    position: absolute;
-    top: 2px;
-    margin-left: 15px;
-}
-
-@mixin topLabelStyle(){
-    color: white;
-    font-size: 1em;
-}
-
-@mixin topLabelStyle2(){
-    color: white;
-    font-size: 1em;
-}
-
-@mixin grid() {
-    display: grid;
-    gap: 5px;
-    margin: 10px auto;
-    align-items: center;
-}
-
 //////////////////////////// Top ////////////////////////////
-
-html,#root {
+html, body, #root {
     padding: 0;
     margin: 0;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 aside {
@@ -68,17 +18,8 @@ input[type="text"],input[type="number"] {
 body {
     width: 100%;
     height: 100vh;
-    padding: 0;
-    margin: 0;
-    
     position: relative;// For output_color element
     font-family: Helvetica, 'Times New Roman', Times, Arial, serif;
-
-    background-image: url("../public/tree_2.png");
-    background-position-x: 100px;//It's not working
-    background-position-y: 50px;//It's not working
-    background-repeat: no-repeat;//It's not working
-
 }
 
 .top{
@@ -107,7 +48,6 @@ body {
             border: 1px solid rgba(184, 184, 184, 0.459);
             box-sizing: border-box;
             border-radius: 9px;
-            
         }
         .colorSpace {
             width: fit-content;
@@ -135,7 +75,6 @@ body {
     }
 }
 
-
 /*---------------------------- input range ----------------------------*/
 
 /* #HSL label.HSL input.colorH_HSL[type="range"] {
@@ -150,7 +89,6 @@ input[type="range"] {
     position: relative;
     // top: 3px;
     margin: 0;
-   
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -163,7 +101,7 @@ input[type="range"]::-moz-range-track {
     // background:#ff000060;
     background:transparent;
     height: 15px;
-  }
+}
 
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
@@ -221,11 +159,4 @@ input.input_H[type="range"]::-moz-range-track {
     #FF0000,#FFFF00,#00FF00,
         #00FFFF,#0000FF,#FF00FF,#FF0000
     );
-  }
-  /*-----------------------------------------------------------------*/
-
-/* 
-  #right label {
-      display: block;
-  } */
-
+}
