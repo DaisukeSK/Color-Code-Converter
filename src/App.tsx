@@ -9,7 +9,7 @@ import CMYK from './components/ColorCode/CMYK.tsx'
 import RGB from './components/ColorCode/RGB.tsx'
 import Hexa from './components/ColorCode/Hexa.tsx'
 import OutPut from './components/ColorCode/OutPut.tsx'
-import imgPath from '../public/tree_2.png'
+// import imgPath from '../public/tree_2.png'
 
 import {outputType,ppType,rangeBGType,Context} from './type'
 
