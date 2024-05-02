@@ -1,30 +1,12 @@
-# React + TypeScript + Vite
+-----Color Code Converter-----
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Color Code Converter.
+This is an app made with React.js + TypeScript.
+It provides you multiple kinds of color codes of any color.(HSL, HSV, Hexa, RGB and CYMK)
 
-Currently, two official plugins are available:
+On the lower side, you can pick up any color from color space on the left side, input bars or input field of Hexa color, and it gives you color codes of the picked color on the upper side.
+You can also copy those color codes by clicking copy icons on the right side, and change opacity too.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The humburger menu on the top left allows you to pick up built-in colors.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+I hope you like it!!

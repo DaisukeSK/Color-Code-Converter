@@ -18,7 +18,10 @@ export const AppContext= createContext<Context>({} as Context)
 
 export function App() {
 
-    const [ColorCodes, dispatch]=useReducer(reducer,{H:210,LS:50,L:50,VS:0,V:0,Hexa:'',R:0,G:0,B:0,C:0,M:0,Y:0,K:0,opacity:1,trigger:0,boolean:true})
+    const [ColorCodes, dispatch]=useReducer(
+        reducer,
+        {H:210, LS:50, L:50, VS:0, V:0, Hexa:'', R:0, G:0, B:0, C:0, M:0, Y:0, K:0, opacity:1, trigger:0, boolean:true}
+    )
 
     const [textColor, setTextColor] = useState<boolean>(true)
     const [aside, setAside] = useState<boolean>(false)

@@ -239,14 +239,14 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
         case 'Y': return {...state, Y:action.payload}
         case 'K': return {...state, K:action.payload}
         
-        case 'HSLtoHSV':// Wikipedia is the only source.
+        case 'HSLtoHSV':
         
         const V: number = 100*(state.L/100+(state.LS/100)*Math.min(1-(state.L/100), state.L/100))
         const VS = V==0?
         0 : 200*(1-state.L/V)
         return {...state,VS:VS,V:V}
 
-        case 'HSVtoHSL':// Wikipedia is the only source.
+        case 'HSVtoHSL':
         
         const L2: number = 100*((state.V/100)*(1-((state.VS/100)/2)))
 
@@ -256,8 +256,6 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
         return {...state, LS:LS,L:L2}
 
         case 'HSLtoRGB':
-        // source1: https://www.peko-step.com/tool/hslrgb.html#ppick3
-        // source2: https://yanohirota.com/color-converter/
 
         let L,H,fx,r,g,b: number;
 
@@ -342,9 +340,7 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
 
         return {...state, Hexa:hexa}
 
-        case 'RGBtoCMYK':
-        //source: https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
-    
+        case 'RGBtoCMYK':    
         // Using Math.round to avoid problem mentioned on the top of code.  ??
 
         const rr: number = Math.round(state.R)/255
@@ -392,8 +388,7 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
         return {...state, R:newArray[1]*16+newArray[2], G:newArray[3]*16+newArray[4] ,B:newArray[5]*16+newArray[6]}
         
         case 'RGBtoHSL':
-        //source1: https://www.rapidtables.com/convert/color/rgb-to-hsl.html
-        //source2: Wikipedia
+
         const R: number = state.R/255
         const G: number = state.G/255
         const B: number = state.B/255
@@ -419,7 +414,7 @@ export const reducer=(state:CCs,action:actionType):CCs=>{
         return {...state, H:H2!, LS:c==0? 0 : c*100/(1-Math.abs(2*((max2+min2)*100/2)/100-1)), L:(max2+min2)*100/2}
 
         case 'CMYKtoRGB':
-        //source: https://www.rapidtables.com/convert/color/cmyk-to-rgb.html
+
         const R2: number = 255*(1-state.C/100)*(1-state.K/100)
         const G2: number = 255*(1-state.M/100)*(1-state.K/100)
         const B2: number = 255*(1-state.Y/100)*(1-state.K/100)
