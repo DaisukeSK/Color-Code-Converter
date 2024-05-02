@@ -1,4 +1,5 @@
------[Color Code Converter](https://color-code-converter.vercel.app/){:target="_blank"}-----<br/>
+-----[Color Code Converter](https://color-code-converter.vercel.app/)-----<br/>
+[Link Text](URL "https://color-code-converter.vercel.app/" target="_blank")
 
 Welcome to Color Code Converter.<br/>
 
