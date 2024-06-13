@@ -12,25 +12,16 @@ const Hexa=()=>{
 
         const target: HTMLInputElement = e.target as HTMLInputElement
 
-        const str="0123456789abcdefABCDEF"
+        if(target.value.match(/^#([a-fA-F0-9]){6}$/)){
+            
+            setValidHexaCode(true)
+            dispatch({type:'Hexa', payload:target.value})
+            dispatch({type:'HexaToRGB', payload:null})
+            dispatch({type:'RGBtoCMYK', payload:null})
+            dispatch({type:'RGBtoHSL', payload:null})
+            dispatch({type:'HSLtoHSV', payload:null})
+            dispatch({type:'trigger', payload:true})
 
-        if(target.value.length==7 && target.value[0]=="#"){
-            let sum=0;
-            for(let i=1; i<target.value.length; i++){
-                !str.includes(target.value[i]) && (sum+=1)
-            }
-
-            if(sum==0){
-                setValidHexaCode(true)
-                dispatch({type:'Hexa', payload:target.value})
-                dispatch({type:'HexaToRGB', payload:null})
-                dispatch({type:'RGBtoCMYK', payload:null})
-                dispatch({type:'RGBtoHSL', payload:null})
-                dispatch({type:'HSLtoHSV', payload:null})
-                dispatch({type:'trigger', payload:true})
-            }else{
-                setValidHexaCode(false)
-            }
         }else{
             setValidHexaCode(false)
         }
