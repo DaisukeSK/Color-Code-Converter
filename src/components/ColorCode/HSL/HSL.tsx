@@ -22,14 +22,12 @@ export const HSL=()=>{
                 <div className="HSLHSVLabel">
 
                     <CN_Label4HSL_HSV
-                        textcolor={textColor?1:0}
                         toggle={HSLtoggle?1:0}
                         onClick={()=>setHSLtoggle(true)}
                     >HSL
                     </CN_Label4HSL_HSV>
 
                     <CN_Label4HSL_HSV
-                        textcolor={textColor?1:0}
                         toggle={!HSLtoggle?1:0}
                         onClick={()=>setHSLtoggle(false)}
                     >HSV

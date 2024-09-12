@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AppContext } from "../../App.tsx"
-import { Frame,CN_Label,Grid,Label,Range,InputNumber,CMYK_RangeBG } from '../../StyledComponents.tsx'
+import { Frame,Grid,CMYK_RangeBG } from '../../StyledComponents.tsx'
 import { sync_Input } from '../../Functions.tsx'
 
 const CMYK=()=>{
@@ -40,13 +40,13 @@ const CMYK=()=>{
     return(
         <Frame textcolor={textColor?1:0}>
 
-            <CN_Label textcolor={textColor?1:0}>CMYK</CN_Label>
+            <h4>CMYK</h4>
             <div>
                 {["C","M","Y","K"].map((elm:string, key:number)=>{
                     return (
                         <Grid key={key}>
-                            <Label textcolor={textColor?1:0}>{elm}:</Label>
-                            <Range>
+                            <label>{elm}:</label>
+                            <div className='range'>
                                 <CMYK_RangeBG bg={elm} rangebg={rangeBG}/>
                                 <input
                                     className={`input_${elm}`}
@@ -56,11 +56,10 @@ const CMYK=()=>{
                                     onChange={(e)=>{CMYK_inputChange(e)}}
                                     value={Math.round(CCarray[key])}
                                 />
-                            </Range>
+                            </div>
 
-                            <InputNumber
+                            <input type='number'
                                 className={`input_${elm}`}
-                                textcolor={textColor?1:0}
                                 min="0"
                                 max="100"
                                 step="1"

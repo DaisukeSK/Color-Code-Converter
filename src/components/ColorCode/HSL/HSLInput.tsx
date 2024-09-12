@@ -1,12 +1,12 @@
 import { useContext } from "react"
 import { AppContext } from "../../../App.tsx"
-import { Label,Range,InputNumber,HGrid,HSLGrid,HSL_RangeBG } from '../../../StyledComponents.tsx'
+import { HSLGrid,HSL_RangeBG } from '../../../StyledComponents.tsx'
 import { sync_Input } from '../../../Functions.tsx'
 import { HSLContext } from './HSL.tsx'
 
 const HSLInput=()=>{
 
-	const { ColorCodes, dispatch, textColor, rangeBG, setAside }= useContext(AppContext)
+	const { ColorCodes, dispatch, rangeBG, setAside }= useContext(AppContext)
 	const { HSLtoggle }= useContext(HSLContext)
 
 	const HSL_inputChange=(e: React.ChangeEvent<HTMLInputElement>):void=>{
@@ -44,9 +44,9 @@ const HSLInput=()=>{
 
     return(
         <div>
-            <HGrid>
-                <Label textcolor={textColor?1:0}>H:</Label>
-                <Range>
+            <HSLGrid toggle={true}>
+                <label>H:</label>
+                <div className='range'>
                     <input
 						className="input_H"
 						type="range"
@@ -55,9 +55,8 @@ const HSLInput=()=>{
                         onChange={(e)=>{HSL_inputChange(e)}}
                         value={Math.round(ColorCodes.H)}
                     />
-                </Range>
-                <InputNumber
-					textcolor={textColor?1:0}
+                </div>
+                <input type='number'
 					className="input_H"
 					min="0"
 					max="359"
@@ -65,13 +64,14 @@ const HSLInput=()=>{
                     onChange={(e)=>{HSL_inputChange(e)}}
                     value={Math.round(ColorCodes.H)}
                 />
-            </HGrid>
+            </HSLGrid>
 
             {["LS","L","VS","V"].map((elm:string, key:number)=>{
                 return (
+					
 					<HSLGrid toggle={key==0 || key==1?HSLtoggle:!HSLtoggle} key={key}>
-						<Label textcolor={textColor?1:0}>{elm.split("")[elm.length-1]}:</Label>
-						<Range>
+						<label>{elm.split("")[elm.length-1]}:</label>
+						<div className='range'>
 							<HSL_RangeBG bg={elm} rangebg={rangeBG}/>
 							<input
 								className={`input_${elm}`}
@@ -81,10 +81,9 @@ const HSLInput=()=>{
 								onChange={(e)=>{HSL_inputChange(e)}}
 								value={Math.round(CCarray[key])}
 							/>
-						</Range>
+						</div>
 
-						<InputNumber
-							textcolor={textColor?1:0}
+						<input type='number'
 							className={`input_${elm}`}
 							min="0"
 							max="100"

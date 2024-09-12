@@ -1,6 +1,6 @@
 import { useContext, Fragment  } from "react"
 import { AppContext } from "../../App.tsx"
-import { OutputFrame,OutputCN_Label,CN_Label,Hr,Label,CN_Label4Output,OutputText,CopyBox,Range,InputNumber,OpacityGrid } from '../../StyledComponents.js'
+import { OutputFrame,OutputCN_Label,Hr,CopyBox,OpacityGrid } from '../../StyledComponents.js'
 
 const OutPut=()=>{
 
@@ -22,7 +22,7 @@ const OutPut=()=>{
     return(
         <OutputFrame textcolor={textColor?1:0}>
             <OutputCN_Label textcolor={textColor?1:0} bultin={builtInColor}>
-                <CN_Label textcolor={textColor?1:0}>Color Name:</CN_Label>
+                <h4>Color Name:</h4>
                 <span>{builtInColor[0]}</span>
                 <div></div>
             </OutputCN_Label>
@@ -34,8 +34,9 @@ const OutPut=()=>{
                 {["HSL", "HSV", "Hexa", "RGB", "CMYK" ].map((elm:string, key:number)=>{
                     return (
                         <Fragment key={key}>
-                            <CN_Label4Output textcolor={textColor?1:0} key={key}>{elm}:</CN_Label4Output>
-                            <OutputText textcolor={textColor?1:0} value={outPutArray[key]}/>
+                            <h4 key={key}>{elm}:</h4>
+                            {/* <OutputText textcolor={textColor?1:0} value={outPutArray[key]}/> */}
+                            <input type='text' readOnly value={outPutArray[key]}/>
                             <CopyBox textcolor={textColor?1:0} onClick={(e)=>copyCode(e)}>
                                 <span></span>
                                 <span></span>
@@ -49,8 +50,8 @@ const OutPut=()=>{
             <Hr textcolor={textColor?1:0}/>
 
             <OpacityGrid textcolor={textColor?1:0}>
-                <Label textcolor={textColor?1:0}>Opacity:</Label>
-                <Range>
+                <label>Opacity:</label>
+                <div className='range'>
                     <div></div>
                     <input
                         type="range"
@@ -60,9 +61,8 @@ const OutPut=()=>{
                         onChange={(e)=>OpacityChange(e)}
                         value={ColorCodes.opacity}
                     />
-                </Range>
-                <InputNumber
-                    textcolor={textColor?1:0}
+                </div>
+                <input type='number'
                     style={{width:"45px"}}
                     min="0"
                     max="1"

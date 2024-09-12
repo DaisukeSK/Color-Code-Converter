@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AppContext } from "../../App.tsx"
-import { Frame,CN_Label,Grid,Label,Range,InputNumber,RGB_RangeBG } from '../../StyledComponents.tsx'
+import { Frame,Grid,RGB_RangeBG } from '../../StyledComponents.tsx'
 import { sync_Input } from '../../Functions.tsx'
 
 const RGB=()=>{
@@ -35,16 +35,16 @@ const RGB=()=>{
 
         <Frame textcolor={textColor?1:0}>
 
-            <CN_Label textcolor={textColor?1:0}>RGB</CN_Label>
+            <h4>RGB</h4>
 
             <div>
                 {["R","G","B"].map((elm:string,key:number)=>{
                     return (
                         <Grid key={key}>
 
-                            <Label textcolor={textColor?1:0}>{elm}:</Label>
+                            <label>{elm}:</label>
 
-                            <Range>
+                            <div className='range'>
                                 <RGB_RangeBG bg={elm} rangebg={rangeBG}/>
                                 <input
                                     className={`input_${elm}`}
@@ -54,11 +54,10 @@ const RGB=()=>{
                                     onChange={(e)=>{RGB_inputChange(e)}}
                                     value={Math.round(CCarray[key])}
                                 />
-                            </Range>
+                            </div>
 
-                            <InputNumber
+                            <input type='number'
                                 className={`input_${elm}`}
-                                textcolor={textColor?1:0}
                                 min="0"
                                 max="255"
                                 step="1"

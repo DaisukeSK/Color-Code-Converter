@@ -48,6 +48,44 @@ export const Frame=Styled.div<{textcolor:number}>`
     overflow: hidden;
     border: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
     box-sizing: border-box;
+
+    h4 {
+        margin: 0;
+        text-align:center;
+    
+    }
+
+    // label {
+    //     font-size: 0.9rem;
+    //     margin-left: auto;
+    //     font-size: 97%;
+    // }
+
+    // .range {
+    //     position:relative;
+    //     height: 15px;
+    //     div, input{
+    //         position: absolute;
+    //         top: 0;
+    //         left: 0;
+    //         height: 100%;
+    //         width: 100%;
+    //         margin: 0;
+    //     }
+    // }
+
+    // input[type='number'] {
+    //     width: 40px;
+    //     background: transparent;
+    //     outline: none;
+    //     border: none;
+    // }
+
+    color: ${(props)=>props.textcolor ? css`white`: css`black`};
+
+    input {
+        color: ${(props)=>props.textcolor ? css`white`: css`black`};
+    }
 `;
 
 export const HSLFrame=Styled(Frame)<{aside:number}>`
@@ -65,6 +103,17 @@ export const OutputFrame=Styled(Frame)`
         gap: 2px 0;
         margin: 10px 45px;
         align-items: center;
+
+        h4 {
+            text-align: left;
+        }
+
+        input[type="text"] {
+            background: none;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
         
         input[type="text"]:focus {
             outline: none;
@@ -203,50 +252,16 @@ export const ToggleDiv=Styled.div<{toggle:number}>`
     border-radius: 7px;
 `;
 
-export const InputNumber=Styled.input.attrs({type:"number"})<{textcolor:number}>`
-    width: 40px;
-    background: rgba(255, 255, 255, 0);
-    outline: none;
-    border: none;
-    color:  ${(props)=>props.textcolor ? css`white`: css`black`}
-`;
-
-export const CN_Label=Styled.h4<{textcolor:number}>`
-    margin: 0;
-    text-align:center;
-    color:  ${(props)=>props.textcolor ? css`white`: css`black`}
-`;
-
-export const CN_Label4HSL_HSV=Styled(CN_Label)<{toggle:number}>`
+export const CN_Label4HSL_HSV=Styled.h4<{toggle:number}>`
     padding-top: 2px;
     z-index:1;
     color:  ${(props)=>props.toggle ? css`white`: css`#888888`};
 
 `;
 
-export const CN_Label4Output=Styled(CN_Label)`
-    text-align:left;
-`;
-
 export const Hr=Styled.hr<{textcolor:number}>`
     border-bottom: none;
     border-top: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
-`;
-
-export const Label=Styled.label<{textcolor:number}>`
-    color:  ${(props)=>props.textcolor ? css`white`: css`black`};
-    font-size: 0.9rem;
-    margin-left: auto;
-    font-size: 97%;
-`;
-
-export const OutputText=Styled.input.attrs({type:"text", readOnly:true})<{textcolor:number}>`
-    background: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-    font-size: 0.9rem;
-    color:  ${(props)=>props.textcolor ? css`white`: css`black`}  
 `;
 
 export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, pointerposition:ppType, aside:number}>`
@@ -301,19 +316,6 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
     }
 `;
 
-export const Range=Styled.div`
-    position:relative;
-    height: 15px;
-    div, input{
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        margin: 0;
-    }
-`;
-
 export const Grid=Styled.div`
     display: grid;
     gap: 5px;
@@ -321,6 +323,33 @@ export const Grid=Styled.div`
     align-items: center;
     grid-template-columns: 40px 255px 40px;
     grid-template-rows: 20px;
+
+    
+    label {
+        font-size: 0.9rem;
+        margin-left: auto;
+        font-size: 97%;
+    }
+
+    .range {
+        position:relative;
+        height: 15px;
+        div, input{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    input[type='number'] {
+        width: 40px;
+        background: transparent;
+        outline: none;
+        border: none;
+    }
 `;
 
 export const OpacityGrid=Styled(Grid)<{textcolor:number}>`
@@ -335,12 +364,10 @@ export const OpacityGrid=Styled(Grid)<{textcolor:number}>`
     }
 `;
 
-export const HGrid=Styled(Grid)`
+export const HSLGrid=Styled(Grid)<{toggle:boolean}>`
     grid-template-columns: 40px 360px 40px;
-`;
-
-export const HSLGrid=Styled(HGrid)<{toggle:boolean}>`
     display: ${(props)=>props.toggle ? css`grid`: css`none`};
+
 `;
 
 export const Hexainput=Styled.input<{textcolor:number}>`
@@ -417,7 +444,7 @@ export const OutputCN_Label=Styled.div<{textcolor:number, bultin:Array<string | 
     justify-content: center;
     align-items: center;
     span {
-        color: ${(props)=>props.textcolor ? css`white`: css`black`};
+        // color: ${(props)=>props.textcolor ? css`white`: css`black`};
         margin: 0 0 0 5px;
     }
 
