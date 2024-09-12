@@ -1,7 +1,6 @@
-
 import Styled from "styled-components";
 import { css } from "styled-components";
-import { ppType,rangeBGType,CCs } from './type'
+import { ppType, rangeBGType, CCs } from './type'
 
 export const Section=Styled.section<{aside:number}>`
     position:relative; // for aside menu.
@@ -52,34 +51,7 @@ export const Frame=Styled.div<{textcolor:number}>`
     h4 {
         margin: 0;
         text-align:center;
-    
     }
-
-    // label {
-    //     font-size: 0.9rem;
-    //     margin-left: auto;
-    //     font-size: 97%;
-    // }
-
-    // .range {
-    //     position:relative;
-    //     height: 15px;
-    //     div, input{
-    //         position: absolute;
-    //         top: 0;
-    //         left: 0;
-    //         height: 100%;
-    //         width: 100%;
-    //         margin: 0;
-    //     }
-    // }
-
-    // input[type='number'] {
-    //     width: 40px;
-    //     background: transparent;
-    //     outline: none;
-    //     border: none;
-    // }
 
     color: ${(props)=>props.textcolor ? css`white`: css`black`};
 
@@ -95,6 +67,11 @@ export const HSLFrame=Styled(Frame)<{aside:number}>`
 `;
 
 export const OutputFrame=Styled(Frame)`
+
+    hr {
+        border: none;
+        border-top: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
+    }
 
     .grid {
         display: grid;
@@ -125,6 +102,13 @@ export const OutputFrame=Styled(Frame)`
         input[type="text"]::-moz-selection {
             background: none;
             
+        }
+    }
+
+    .range {
+        input {
+            background: linear-gradient(90deg, #00000000,#ffffff);
+            border: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid #888888`};
         }
     }
 `;
@@ -259,11 +243,6 @@ export const CN_Label4HSL_HSV=Styled.h4<{toggle:number}>`
 
 `;
 
-export const Hr=Styled.hr<{textcolor:number}>`
-    border-bottom: none;
-    border-top: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
-`;
-
 export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, pointerposition:ppType, aside:number}>`
     display: ${(props)=>props.toggle? css`block`: css`none`};
     position: relative;
@@ -316,7 +295,7 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
     }
 `;
 
-export const Grid=Styled.div`
+export const Grid=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
     display: grid;
     gap: 5px;
     margin: 7px auto;
@@ -324,7 +303,6 @@ export const Grid=Styled.div`
     grid-template-columns: 40px 255px 40px;
     grid-template-rows: 20px;
 
-    
     label {
         font-size: 0.9rem;
         margin-left: auto;
@@ -332,6 +310,21 @@ export const Grid=Styled.div`
     }
 
     .range {
+        background:${(props)=>
+            props.bg=="LS"? css`${props.rangebg?.LS}`:
+            props.bg=="L"? css`${props.rangebg?.L}`:
+            props.bg=="VS"? css`${props.rangebg?.VS}`:
+            props.bg=="V"? css`${props.rangebg?.V}`:
+
+            props.bg=="R"? css`${props.rangebg?.R}`:
+            props.bg=="G"? css`${props.rangebg?.G}`:
+            props.bg=="B"? css`${props.rangebg?.B}`:
+
+            props.bg=="C"? css`${props.rangebg?.C}`:
+            props.bg=="M"? css`${props.rangebg?.M}`:
+            props.bg=="Y"? css`${props.rangebg?.Y}`:
+            css`${props.rangebg?.K}`
+        };
         position:relative;
         height: 15px;
         div, input{
@@ -352,22 +345,15 @@ export const Grid=Styled.div`
     }
 `;
 
-export const OpacityGrid=Styled(Grid)<{textcolor:number}>`
+export const OpacityGrid=Styled(Grid)`
     grid-template-columns: 55px 150px 45px;
     margin: 7px auto;
     width: fit-content;
-    div {
-        input {
-            background: linear-gradient(90deg, #00000000,#ffffff);
-            border: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid #888888`};
-        }
-    }
 `;
 
 export const HSLGrid=Styled(Grid)<{toggle:boolean}>`
     grid-template-columns: 40px 360px 40px;
     display: ${(props)=>props.toggle ? css`grid`: css`none`};
-
 `;
 
 export const Hexainput=Styled.input<{textcolor:number}>`
@@ -425,18 +411,6 @@ export const CopyBox=Styled.div<{textcolor:number}>`
             background:white;
         }
     }
-`;
-
-export const HSL_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
-    background:${(props)=>props.bg=="LS"? css`${props.rangebg.LS}`: props.bg=="L"? css`${props.rangebg.L}`: props.bg=="VS"? css`${props.rangebg.VS}`:css`${props.rangebg.V}`};
-`;
-
-export const RGB_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
-    background:${(props)=>props.bg=="R"? css`${props.rangebg.R}`: props.bg=="G"? css`${props.rangebg.G}`:css`${props.rangebg.B}`};
-`;
-
-export const CMYK_RangeBG=Styled.div<{bg:string,rangebg:rangeBGType}>`
-    background:${(props)=>props.bg=="C"? css`${props.rangebg.C}`: props.bg=="M"? css`${props.rangebg.M}`: props.bg=="Y"? css`${props.rangebg.Y}`:css`${props.rangebg.K}`};
 `;
 
 export const OutputCN_Label=Styled.div<{textcolor:number, bultin:Array<string | null>}>`

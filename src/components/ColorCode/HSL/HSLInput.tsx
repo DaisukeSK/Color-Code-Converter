@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AppContext } from "../../../App.tsx"
-import { HSLGrid,HSL_RangeBG } from '../../../StyledComponents.tsx'
+import { HSLGrid } from '../../../StyledComponents.tsx'
 import { sync_Input } from '../../../Functions.tsx'
 import { HSLContext } from './HSL.tsx'
 
@@ -69,10 +69,9 @@ const HSLInput=()=>{
             {["LS","L","VS","V"].map((elm:string, key:number)=>{
                 return (
 					
-					<HSLGrid toggle={key==0 || key==1?HSLtoggle:!HSLtoggle} key={key}>
+					<HSLGrid bg={elm} rangebg={rangeBG} toggle={key==0 || key==1?HSLtoggle:!HSLtoggle} key={key}>
 						<label>{elm.split("")[elm.length-1]}:</label>
 						<div className='range'>
-							<HSL_RangeBG bg={elm} rangebg={rangeBG}/>
 							<input
 								className={`input_${elm}`}
 								type="range"

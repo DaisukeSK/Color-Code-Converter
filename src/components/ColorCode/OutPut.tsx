@@ -1,6 +1,6 @@
 import { useContext, Fragment  } from "react"
 import { AppContext } from "../../App.tsx"
-import { OutputFrame,OutputCN_Label,Hr,CopyBox,OpacityGrid } from '../../StyledComponents.js'
+import { OutputFrame,OutputCN_Label,CopyBox,OpacityGrid } from '../../StyledComponents.js'
 
 const OutPut=()=>{
 
@@ -27,7 +27,7 @@ const OutPut=()=>{
                 <div></div>
             </OutputCN_Label>
 
-            <Hr textcolor={textColor?1:0}/>
+            <hr/>
             
             <div className="grid">
 
@@ -35,7 +35,6 @@ const OutPut=()=>{
                     return (
                         <Fragment key={key}>
                             <h4 key={key}>{elm}:</h4>
-                            {/* <OutputText textcolor={textColor?1:0} value={outPutArray[key]}/> */}
                             <input type='text' readOnly value={outPutArray[key]}/>
                             <CopyBox textcolor={textColor?1:0} onClick={(e)=>copyCode(e)}>
                                 <span></span>
@@ -47,12 +46,11 @@ const OutPut=()=>{
                 
             </div>
 
-            <Hr textcolor={textColor?1:0}/>
+            <hr/>
 
-            <OpacityGrid textcolor={textColor?1:0}>
+            <OpacityGrid>
                 <label>Opacity:</label>
                 <div className='range'>
-                    <div></div>
                     <input
                         type="range"
                         min="0"

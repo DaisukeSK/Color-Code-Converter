@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AppContext } from "../../App.tsx"
-import { Frame,Grid,RGB_RangeBG } from '../../StyledComponents.tsx'
+import { Frame,Grid } from '../../StyledComponents.tsx'
 import { sync_Input } from '../../Functions.tsx'
 
 const RGB=()=>{
@@ -40,12 +40,11 @@ const RGB=()=>{
             <div>
                 {["R","G","B"].map((elm:string,key:number)=>{
                     return (
-                        <Grid key={key}>
+                        <Grid bg={elm} rangebg={rangeBG} key={key}>
 
                             <label>{elm}:</label>
 
                             <div className='range'>
-                                <RGB_RangeBG bg={elm} rangebg={rangeBG}/>
                                 <input
                                     className={`input_${elm}`}
                                     type="range"
