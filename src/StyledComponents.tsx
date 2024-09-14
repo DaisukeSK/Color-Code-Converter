@@ -2,6 +2,8 @@ import Styled from "styled-components";
 import { css } from "styled-components";
 import { ppType, rangeBGType, CCs } from './type'
 
+const maxWidth:number=500
+
 export const Main=Styled.main<{aside:number}>`
     position:relative; // for aside menu.
     display :flex;
@@ -48,12 +50,20 @@ export const Frame=Styled.section<{textcolor:number}>`
             outline: none;
         }
     }
+
+    @media only screen and (max-width: ${maxWidth}px){
+        margin: 10px 0;
+    }
 `;
 
 export const HSLFrame=Styled(Frame)<{aside:number}>`
     margin-right: ${props=>props.aside? css`20px`:css`40px`};
     transition: margin-right .5s;
     padding-bottom: 15px;
+
+    @media only screen and (max-width: ${maxWidth}px){
+        margin-right: 0;
+    }
 `;
 
 export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
@@ -156,6 +166,12 @@ export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
         input {
             background: linear-gradient(90deg, #00000000,#ffffff);
             border: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid #888888`};
+        }
+    }
+
+    @media only screen and (max-width: ${maxWidth}px){
+        .grid {
+            margin: 10px 30px;
         }
     }
 `;
@@ -317,7 +333,7 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
     width: 360px;
     height: 200px; 
     overflow: hidden;
-    margin-bottom: 15px;
+    margin: 0 auto 15px;
     transition: ${(prop)=>prop.aside?css`all 1s ease-out`:css`none`};
     background: ${(props)=>css`hsl(${props.hue},100%,50%)`};
     
@@ -361,6 +377,10 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
         height: 100%;
         z-index:1;
     }
+
+    @media only screen and (max-width: ${maxWidth}px){
+        display: none;
+    }
 `;
 
 export const ColorRange=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
@@ -373,7 +393,7 @@ export const ColorRange=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
         width: 35px;
         text-align: right;
         font-size: 0.9rem;
-        margin-left: auto;
+        // margin-left: auto;
         font-size: 97%;
     }
 
@@ -427,6 +447,13 @@ export const HSLColorRange=Styled(ColorRange)<{toggle:boolean}>`
             width: 360px;
         }
     }
+    @media only screen and (max-width: ${maxWidth}px){
+        .range {
+            input {
+                width: 255px;
+            }
+        }
+    }
 `;
 
 export const BG=Styled.div<{aside:number,colorcodes:CCs}>`
@@ -434,7 +461,7 @@ export const BG=Styled.div<{aside:number,colorcodes:CCs}>`
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color:${(props)=>css`hsla(${Math.round(props.colorcodes.H)},${Math.round(props.colorcodes.LS)}%,${Math.round(props.colorcodes.L)}%,${props.colorcodes.opacity})`};
     transition:${(props)=>props.aside?css`all 1s ease-out`:`none`}
 `;

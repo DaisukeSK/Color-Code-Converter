@@ -10,6 +10,7 @@ html, body, #root {
     position:absolute;
     top:15px;
     left:15px;
+    z-index: 1;
     // width:35px;
     // height:25px;
 
@@ -61,8 +62,8 @@ input[type="text"],input[type="number"] {
 }
 
 body {
-    width: 100%;
-    height: 100vh;
+    // width: 100%;
+    // min-height: 100vh;
     position: relative;// For output_color element
     font-family: Helvetica, 'Times New Roman', Times, Arial, serif;
 }
@@ -79,35 +80,18 @@ body {
     margin: 0;
     position: relative;
     
-    div{
-        // div.HSLHSVLabel {
-        
-        //     margin: 0 auto 7px;
-        //     position: relative;
-        //     height: 24px;
-        //     background: #bbbbbb;
-        //     background: #ee0a0a;
-        //     width: 100px;
-        //     display: flex;
-        //     justify-content: space-between;
-        //     padding: 0 7px;
-        //     border: 1px solid rgba(184, 184, 184, 0.459);
-        //     box-sizing: border-box;
-        //     border-radius: 9px;
-        // }
-    }
-    .colorSpace {
-        width: fit-content;
-        padding: 0;
-        margin: 0 auto;
-    }
+    // .colorSpace {
+    //     width: fit-content;
+    //     padding: 0;
+    //     margin: 0 auto;
+    // }
     
     .right {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
-        div.hexa {
+        .hexa {
             position: relative;
             p {
                 position: absolute;
@@ -223,4 +207,18 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 input[type="number"] { 
     -moz-appearance:textfield; 
-} 
+}
+
+
+@media only screen and (max-width: 500px){
+
+    .hamburger {
+        display: none;
+    }
+
+    .flex {
+        display: block;
+        
+    }
+
+}

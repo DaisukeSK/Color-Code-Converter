@@ -7,6 +7,7 @@ html, body, #root {
   position: absolute;
   top: 15px;
   left: 15px;
+  z-index: 1;
   cursor: pointer;
 }
 
@@ -19,8 +20,6 @@ input[type=text], input[type=number] {
 }
 
 body {
-  width: 100%;
-  height: 100vh;
   position: relative;
   font-family: Helvetica, "Times New Roman", Times, Arial, serif;
 }
@@ -31,21 +30,15 @@ body {
   margin: 0;
   position: relative;
 }
-.flex .colorSpace {
-  width: -moz-fit-content;
-  width: fit-content;
-  padding: 0;
-  margin: 0 auto;
-}
 .flex .right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.flex .right div.hexa {
+.flex .right .hexa {
   position: relative;
 }
-.flex .right div.hexa p {
+.flex .right .hexa p {
   position: absolute;
   margin: 0;
   right: 5px;
@@ -139,4 +132,13 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+@media only screen and (max-width: 500px) {
+  .hamburger {
+    display: none;
+  }
+  .flex {
+    display: block;
+  }
 }/*# sourceMappingURL=style.css.map */

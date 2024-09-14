@@ -79,7 +79,7 @@ const ColorSpace=()=>{
     }
 
     return(
-        <div className="colorSpace">
+        <>
             {["HSL","HSV"].map((elm,key)=>{
                 return (
                     <ColorSpaceDiv
@@ -105,7 +105,7 @@ const ColorSpace=()=>{
                     </ColorSpaceDiv>
                 )
             })}
-        </div>
+        </>
     )
 }
 
