@@ -1,8 +1,7 @@
 import { useState, useEffect, useReducer, createContext } from 'react'
-import { Section } from './StyledComponents.tsx'
+import { Main } from './StyledComponents.tsx'
 import { HSLtoPointer, textColorChange, check_Built_In_Color, updateOutput, inputRangeBG, reducer } from "./Functions.tsx"
-import Hamburger from './components/Hamburger.tsx'
-import { SideBar,builtInColors } from './components/Aside.tsx'
+import { SideBar } from './components/Aside.tsx'
 import { HSL } from './components/ColorCode/HSL/HSL.tsx'
 import { BG } from './StyledComponents.tsx'
 import CMYK from './components/ColorCode/CMYK.tsx'
@@ -11,8 +10,11 @@ import Hexa from './components/ColorCode/Hexa.tsx'
 import OutPut from './components/ColorCode/OutPut.tsx'
 import imgPath from '../public/tree.png'
 
-import {outputType,ppType,rangeBGType,Context} from './type'
+import { outputType,ppType,rangeBGType,Context, builtInColorsType } from './type'
 
+import json from "./builtInColors.json"
+
+export const builtInColors:builtInColorsType={...json}
 
 export const AppContext= createContext<Context>({} as Context)
 
@@ -25,6 +27,7 @@ export function App() {
 
     const [textColor, setTextColor] = useState<boolean>(true)
     const [aside, setAside] = useState<boolean>(false)
+    const [HSLtoggle, setHSLtoggle]=useState<boolean>(true)
     const [builtInColor, setBuiltInColor] = useState<Array<string | null>>([])
     const [output, setOutput] = useState<outputType>({HSL:'',HSV:'',Hexa:'',RGB:'',CMYK:''})
     const [pointerPosition, setPointerPosition] = useState<ppType>({HSL_top:'',HSL_left:'',HSV_top:'',HSV_left:''})
@@ -46,16 +49,10 @@ export function App() {
 
     }, [])
 
-
-    const sectionOnClick=()=>{
-        aside && setAside(false)
-    }
-
     useEffect(()=>{
         updateOutput(ColorCodes, setOutput)
         textColorChange(ColorCodes,setTextColor)
     },[ColorCodes.opacity])
-
 
     useEffect(()=>{
 
@@ -72,28 +69,37 @@ export function App() {
 
     return (
         
-        <AppContext.Provider value={{ ColorCodes,dispatch, textColor,rangeBG,builtInColor,output,aside,pointerPosition,setAside, setPointerPosition}}>
+        <AppContext.Provider value={{ ColorCodes,dispatch, textColor,rangeBG,builtInColor,output,aside,pointerPosition,setAside, setPointerPosition, HSLtoggle, setHSLtoggle}}>
         
             <BG aside={aside?1:0} colorcodes={ColorCodes}/>
-            <Hamburger/>
+            <svg
+                className='hamburger'
+                width='35'
+                height='22'
+                fill={textColor? '#ffffff': '#000000'}
+                onClick={()=>{setAside(true)}}
+            >
+                <path d="M0 0 h35 v4 h-35 Z"/>
+                <path d="M0 9 h35 v4 h-35 Z"/>
+                <path d="M0 18 h35 v4 h-35 Z"/>
+            </svg>
+            
             <SideBar/>
 
-            <Section aside={aside?1:0} onClick={sectionOnClick}>
+            <Main aside={aside?1:0} onClick={()=>aside && setAside(false)}>
 
-                <div className="top">
-                    <OutPut/>
-                </div>
+                <OutPut/>
 
                 <div className="flex">
                     <HSL/>
-                    <div id="right">
+                    <div className="right">
                         <Hexa/>
                         <RGB/>
                         <CMYK/>
                     </div>
                 </div>
 
-            </Section>
+            </Main>
 
         </AppContext.Provider>
     )

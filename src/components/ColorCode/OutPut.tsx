@@ -1,6 +1,6 @@
 import { useContext, Fragment  } from "react"
 import { AppContext } from "../../App.tsx"
-import { OutputFrame,OutputCN_Label,CopyBox,OpacityGrid } from '../../StyledComponents.js'
+import { OutputFrame, OpacityColorRange } from '../../StyledComponents.js'
 
 const OutPut=()=>{
 
@@ -20,12 +20,12 @@ const OutPut=()=>{
     const outPutArray=[output.HSL, output.HSV, output.Hexa, output.RGB, output.CMYK ]
 
     return(
-        <OutputFrame textcolor={textColor?1:0}>
-            <OutputCN_Label textcolor={textColor?1:0} bultin={builtInColor}>
+        <OutputFrame textcolor={textColor?1:0} bultin={builtInColor}>
+            <div className='colorName'>
                 <h4>Color Name:</h4>
                 <span>{builtInColor[0]}</span>
                 <div></div>
-            </OutputCN_Label>
+            </div>
 
             <hr/>
             
@@ -36,10 +36,10 @@ const OutPut=()=>{
                         <Fragment key={key}>
                             <h4 key={key}>{elm}:</h4>
                             <input type='text' readOnly value={outPutArray[key]}/>
-                            <CopyBox textcolor={textColor?1:0} onClick={(e)=>copyCode(e)}>
+                            <div className='copyBox' onClick={(e)=>copyCode(e)}>
                                 <span></span>
                                 <span></span>
-                            </CopyBox>
+                            </div>
                         </Fragment>
                     )
                 })}
@@ -48,7 +48,7 @@ const OutPut=()=>{
 
             <hr/>
 
-            <OpacityGrid>
+            <OpacityColorRange>
                 <label>Opacity:</label>
                 <div className='range'>
                     <input
@@ -61,14 +61,13 @@ const OutPut=()=>{
                     />
                 </div>
                 <input type='number'
-                    style={{width:"45px"}}
                     min="0"
                     max="1"
                     step="0.01"
                     onChange={(e)=>OpacityChange(e)}
                     value={ColorCodes.opacity}
                 />
-            </OpacityGrid>
+            </OpacityColorRange>
 
         </OutputFrame>
     )

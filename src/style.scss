@@ -5,6 +5,51 @@ html, body, #root {
     // overflow: hidden;
 }
 
+.hamburger {
+
+    position:absolute;
+    top:15px;
+    left:15px;
+    // width:35px;
+    // height:25px;
+
+    // overflow: visible;
+    
+    // background-color: #FF0000;
+
+    cursor: pointer;
+    
+        
+}
+
+// .hamburger {
+
+//     position:absolute;
+//     top:15px;
+//     left:15px;
+//     width:35px;
+//     height:25px;
+
+//     &:hover {
+//         svg {
+//             .blurPath {
+//                 display:  block;
+//             }
+//         }
+//     }
+        
+//     svg {
+//         overflow: visible;
+
+//         background-color: #FF0000;
+//         path {
+//         }
+//         .blurPath {
+//             display:  none;
+//         }
+//     }
+// }
+
 aside {
     #hFAFAD2,#h66CDAA,#h00FA9A {
         font-size: 0.8em;
@@ -22,10 +67,10 @@ body {
     font-family: Helvetica, 'Times New Roman', Times, Arial, serif;
 }
 
-.top{
-    position: relative;
-    margin: 0 auto 20px;
-}
+// .top{
+//     position: relative;
+//     // margin: 0 auto 20px;
+// }
 
 //////////////////////////// Main ////////////////////////////
 .flex {
@@ -35,28 +80,29 @@ body {
     position: relative;
     
     div{
-        div.HSLHSVLabel {
+        // div.HSLHSVLabel {
         
-            margin: 0 auto 7px;
-            position: relative;
-            height: 24px;
-            background: #bbbbbb;
-            width: 100px;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 7px;
-            border: 1px solid rgba(184, 184, 184, 0.459);
-            box-sizing: border-box;
-            border-radius: 9px;
-        }
-        .colorSpace {
-            width: fit-content;
-            padding: 0;
-            margin: 0 auto;
-        }
+        //     margin: 0 auto 7px;
+        //     position: relative;
+        //     height: 24px;
+        //     background: #bbbbbb;
+        //     background: #ee0a0a;
+        //     width: 100px;
+        //     display: flex;
+        //     justify-content: space-between;
+        //     padding: 0 7px;
+        //     border: 1px solid rgba(184, 184, 184, 0.459);
+        //     box-sizing: border-box;
+        //     border-radius: 9px;
+        // }
+    }
+    .colorSpace {
+        width: fit-content;
+        padding: 0;
+        margin: 0 auto;
     }
     
-    #right {
+    .right {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -160,3 +206,21 @@ input.input_H[type="range"]::-moz-range-track {
         #00FFFF,#0000FF,#FF00FF,#FF0000
     );
 }
+
+
+input[type='number'] {
+    width: 35px;
+    background: transparent;
+    // background-color: red;
+    outline: none;
+    border: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] { 
+    -moz-appearance:textfield; 
+} 

@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AppContext } from "../../App.tsx"
-import { Frame,Grid } from '../../StyledComponents.tsx'
+import { Frame,ColorRange } from '../../StyledComponents.tsx'
 import { sync_Input } from '../../Functions.tsx'
 
 const RGB=()=>{
@@ -37,37 +37,34 @@ const RGB=()=>{
 
             <h4>RGB</h4>
 
-            <div>
-                {["R","G","B"].map((elm:string,key:number)=>{
-                    return (
-                        <Grid bg={elm} rangebg={rangeBG} key={key}>
+            {["R","G","B"].map((elm:string,key:number)=>{
+                return (
+                    <ColorRange bg={elm} rangebg={rangeBG} key={key}>
 
-                            <label>{elm}:</label>
+                        <label>{elm}:</label>
 
-                            <div className='range'>
-                                <input
-                                    className={`input_${elm}`}
-                                    type="range"
-                                    min="0"
-                                    max="255"
-                                    onChange={(e)=>{RGB_inputChange(e)}}
-                                    value={Math.round(CCarray[key])}
-                                />
-                            </div>
-
-                            <input type='number'
+                        <div className='range'>
+                            <input
                                 className={`input_${elm}`}
+                                type="range"
                                 min="0"
                                 max="255"
-                                step="1"
                                 onChange={(e)=>{RGB_inputChange(e)}}
                                 value={Math.round(CCarray[key])}
                             />
-                        </Grid>
-                    )
-                })}
-                
-            </div>
+                        </div>
+
+                        <input type='number'
+                            className={`input_${elm}`}
+                            min="0"
+                            max="255"
+                            step="1"
+                            onChange={(e)=>{RGB_inputChange(e)}}
+                            value={Math.round(CCarray[key])}
+                        />
+                    </ColorRange>
+                )
+            })}
 
         </Frame>
     )

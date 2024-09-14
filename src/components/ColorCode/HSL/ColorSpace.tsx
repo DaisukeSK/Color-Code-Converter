@@ -1,14 +1,12 @@
 import { useContext } from "react"
 import { AppContext } from "../../../App.tsx"
 import { ColorSpaceDiv } from '../../../StyledComponents.tsx'
-import { HSLContext } from './HSL.tsx'
 import custom_pointer from "../../../../public/pointer.png";
 
 const ColorSpace=()=>{
 
-    const { ColorCodes, dispatch, pointerPosition, setPointerPosition, aside }= useContext(AppContext)
-    const { HSLtoggle }= useContext(HSLContext)
-
+    const { ColorCodes, dispatch, pointerPosition, setPointerPosition, aside, HSLtoggle }= useContext(AppContext)
+    
     const movePointer=(val: React.DragEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>):void=>{
 
         const target: HTMLDivElement = val.target as HTMLDivElement

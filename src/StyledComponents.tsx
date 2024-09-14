@@ -2,45 +2,21 @@ import Styled from "styled-components";
 import { css } from "styled-components";
 import { ppType, rangeBGType, CCs } from './type'
 
-export const Section=Styled.section<{aside:number}>`
+export const Main=Styled.main<{aside:number}>`
     position:relative; // for aside menu.
     display :flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
     left:${props=>props.aside? css`250px`:css`0`};
     transition: left .5s;
     width: fit-content;
     min-height: 100vh;
     margin: 0 auto;
-    box-sizing: border-box;
+    // background: blue;
 `;
 
-export const HamburgerDiv=Styled.div<{textcolor:number}>`
-    position:absolute;
-    top:15px;
-    left:15px;
-    width:35px;
-    height:25px;
-
-    &:hover {
-        svg {
-            .blurPath {
-                display:  block;
-            }
-        }
-    }
-        
-    svg {
-        path {
-            fill:  ${(props)=>props.textcolor ? css`white`: css`black`}
-        }
-        .blurPath {
-            display:  none;
-        }
-    }
-`;
-
-export const Frame=Styled.div<{textcolor:number}>`
+export const Frame=Styled.section<{textcolor:number}>`
     background: rgba(200, 200, 200, 0.5);
     padding: 7px 0;
     border-radius: 5px;
@@ -58,6 +34,20 @@ export const Frame=Styled.div<{textcolor:number}>`
     input {
         color: ${(props)=>props.textcolor ? css`white`: css`black`};
     }
+
+    .textInput {
+        display: block;
+        margin: 7px auto 0;
+        width: 75px;
+        border: none;
+        border-bottom: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid black`};
+        background: transparent;
+        color: ${(props)=>props.textcolor ? css`white`: css`black`};
+
+        &:focus {
+            outline: none;
+        }
+    }
 `;
 
 export const HSLFrame=Styled(Frame)<{aside:number}>`
@@ -66,7 +56,26 @@ export const HSLFrame=Styled(Frame)<{aside:number}>`
     padding-bottom: 15px;
 `;
 
-export const OutputFrame=Styled(Frame)`
+export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
+
+    .colorName {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+            margin: 0 0 0 5px;
+        }
+
+        div {
+            width: 30px;
+            height: 15px;
+            border: 1px solid grey;
+            margin: 0 0 0 5px;
+            background-color:${(props)=>props.bultin[1]};
+            display: ${(props)=>props.bultin[1] ? css`block`: css`none`};
+        }
+
+    }
 
     hr {
         border: none;
@@ -103,6 +112,44 @@ export const OutputFrame=Styled(Frame)`
             background: none;
             
         }
+
+        .copyBox {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            cursor: pointer;
+            & > * {
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                box-sizing: border-box;
+                top: 0;
+                left: 0;
+                border-left: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
+                border-top: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
+            }
+            & :first-child{
+                top:auto;
+                left:auto;
+                bottom: 0;
+                right: 0;
+                border: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
+            }
+
+            &:hover {
+                & :first-child{
+                    background:#FFFFFF77;
+                }
+            }
+
+            &:active {
+                top:1px;
+                left:1px;
+                & :first-child{
+                    background:white;
+                }
+            }
+        }
     }
 
     .range {
@@ -135,6 +182,7 @@ export const Aside=Styled.aside<{aside:number}>`
             left: 10px;
             width: 20px;
             height: 20px;
+            cursor: pointer;
             svg {
                 path,rect {
                     stroke: #717171;
@@ -182,6 +230,7 @@ export const Aside=Styled.aside<{aside:number}>`
         height: ${window.innerHeight-200-10+"px"}; // If change height sibling div, don't forget to change this too.
         
         &>li{
+            cursor: pointer;
             margin: 7px 0;
             width: 150px;
             height:60px;
@@ -223,24 +272,43 @@ export const Aside=Styled.aside<{aside:number}>`
 `;
 
 export const ToggleDiv=Styled.div<{toggle:number}>`
-    position: absolute;
-    width: 48px;
-    height: 100%;
-    top: 0;
+    margin: 0 auto 7px;
+    position: relative;
+    height: 24px;
+    background: #bbbbbb;
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 7px;
+    border: 1px solid rgba(184, 184, 184, 0.459);
+    box-sizing: border-box;
+    border-radius: 9px;
+    h4 {
+        padding-top: 2px;
+        z-index:1;
+        cursor: pointer;
+        &:nth-of-type(1) {
+            color: ${(props)=>props.toggle ? css`#ffffff`: css`#888888`};
+            pointer-events: ${(props)=>props.toggle ? css`none`: css`auto`};
+        }
+        &:nth-of-type(2) {
+            color: ${(props)=>props.toggle ? css`#888888`: css`#ffffff`};
+            pointer-events: ${(props)=>props.toggle ? css`auto`: css`none`};
+        }
+    }
+    div {
+        position: absolute;
+        width: 48px;
+        height: 100%;
+        top: 0;
 
-    left: ${(props) => props.toggle? css`0`: css`100%`};
-    transform: ${(props) => props.toggle? css`none`: css`translateX(-100%);`};
-    transition: all .3s ease-out;
+        left: ${(props) => props.toggle? css`0`: css`100%`};
+        transform: ${(props) => props.toggle? css`none`: css`translateX(-100%);`};
+        transition: all .3s ease-out;
 
-    background-color: hsl(0, 0%, 30%);
-    border-radius: 7px;
-`;
-
-export const CN_Label4HSL_HSV=Styled.h4<{toggle:number}>`
-    padding-top: 2px;
-    z-index:1;
-    color:  ${(props)=>props.toggle ? css`white`: css`#888888`};
-
+        background-color: hsl(0, 0%, 30%);
+        border-radius: 7px;
+    }
 `;
 
 export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, pointerposition:ppType, aside:number}>`
@@ -295,15 +363,15 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
     }
 `;
 
-export const Grid=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
-    display: grid;
-    gap: 5px;
+export const ColorRange=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
+
     margin: 7px auto;
+    display: flex;
     align-items: center;
-    grid-template-columns: 40px 255px 40px;
-    grid-template-rows: 20px;
 
     label {
+        width: 35px;
+        text-align: right;
         font-size: 0.9rem;
         margin-left: auto;
         font-size: 97%;
@@ -325,110 +393,39 @@ export const Grid=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
             props.bg=="Y"? css`${props.rangebg?.Y}`:
             css`${props.rangebg?.K}`
         };
-        position:relative;
         height: 15px;
-        div, input{
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
+        margin: 0 5px;
+        
+        input{
+            width: 255px;
             margin: 0;
+            padding: 0;
         }
     }
 
-    input[type='number'] {
-        width: 40px;
-        background: transparent;
-        outline: none;
-        border: none;
-    }
 `;
 
-export const OpacityGrid=Styled(Grid)`
-    grid-template-columns: 55px 150px 45px;
+export const OpacityColorRange=Styled(ColorRange)`
     margin: 7px auto;
     width: fit-content;
-`;
-
-export const HSLGrid=Styled(Grid)<{toggle:boolean}>`
-    grid-template-columns: 40px 360px 40px;
-    display: ${(props)=>props.toggle ? css`grid`: css`none`};
-`;
-
-export const Hexainput=Styled.input<{textcolor:number}>`
-    display: block;
-    margin: 7px auto 0;
-    width: 75px;
-    border: none;
-    border-bottom: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid black`};
-    background: transparent;
-    color: ${(props)=>props.textcolor ? css`white`: css`black`};
-
-    &:focus {
-        outline: none;
+    label {
+        width: fit-content;
     }
-`;
-
-export const SVG=Styled.svg<{textcolor:number}>`
-    path, rect{
-        stroke: ${(props)=>props.textcolor ? css`white`: css`black`};
-    }
-`;
-
-export const CopyBox=Styled.div<{textcolor:number}>`
-    width: 16px;
-    height: 16px;
-    position: relative;
-    & > * {
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        box-sizing: border-box;
-        top: 0;
-        left: 0;
-        border-left: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
-        border-top: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
-    }
-    & :first-child{
-        top:auto;
-        left:auto;
-        bottom: 0;
-        right: 0;
-        border: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
-    }
-
-    &:hover {
-        & :first-child{
-            background:#FFFFFF77;
-        }
-    }
-
-    &:active {
-        top:1px;
-        left:1px;
-        & :first-child{
-            background:white;
+    .range {
+        input {
+            width: 150px;
+            height: 100%;
+            box-sizing: border-box;
         }
     }
 `;
 
-export const OutputCN_Label=Styled.div<{textcolor:number, bultin:Array<string | null>}>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span {
-        // color: ${(props)=>props.textcolor ? css`white`: css`black`};
-        margin: 0 0 0 5px;
-    }
-
-    div {
-        width: 30px;
-        height: 15px;
-        border: 1px solid grey;
-        margin: 0 0 0 5px;
-        background-color:${(props)=>props.bultin[1]};
-        display: ${(props)=>props.bultin[1] ? css`block`: css`none`};
+export const HSLColorRange=Styled(ColorRange)<{toggle:boolean}>`
+    display: ${(props)=>props.toggle ? css`flex`: css`none`};
+    .range {
+        input {
+            width: 360px;
+        }
     }
 `;
 

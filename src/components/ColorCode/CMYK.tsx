@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AppContext } from "../../App.tsx"
-import { Frame,Grid } from '../../StyledComponents.tsx'
+import { Frame, ColorRange } from '../../StyledComponents.tsx'
 import { sync_Input } from '../../Functions.tsx'
 
 const CMYK=()=>{
@@ -41,34 +41,33 @@ const CMYK=()=>{
         <Frame textcolor={textColor?1:0}>
 
             <h4>CMYK</h4>
-            <div>
-                {["C","M","Y","K"].map((elm:string, key:number)=>{
-                    return (
-                        <Grid bg={elm} rangebg={rangeBG} key={key}>
-                            <label>{elm}:</label>
-                            <div className='range'>
-                                <input
-                                    className={`input_${elm}`}
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    onChange={(e)=>{CMYK_inputChange(e)}}
-                                    value={Math.round(CCarray[key])}
-                                />
-                            </div>
-
-                            <input type='number'
+            {["C","M","Y","K"].map((elm:string, key:number)=>{
+                return (
+                    <ColorRange bg={elm} rangebg={rangeBG} key={key}>
+                        <label>{elm}:</label>
+                        <div className='range'>
+                            <input
                                 className={`input_${elm}`}
+                                type="range"
                                 min="0"
                                 max="100"
-                                step="1"
                                 onChange={(e)=>{CMYK_inputChange(e)}}
                                 value={Math.round(CCarray[key])}
                             />
-                        </Grid>
-                    )
-                })}
-            </div>
+                        </div>
+
+                        <input type='number'
+                            className={`input_${elm}`}
+                            min="0"
+                            max="100"
+                            step="1"
+                            onChange={(e)=>{CMYK_inputChange(e)}}
+                            value={Math.round(CCarray[key])}
+                        />
+                    </ColorRange>
+                )
+            })}
+
         </Frame>
     )
 }

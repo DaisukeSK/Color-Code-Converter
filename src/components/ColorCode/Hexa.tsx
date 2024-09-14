@@ -1,6 +1,6 @@
 import { useContext,useState,useEffect,useRef } from "react"
 import { AppContext } from "../../App.tsx"
-import { Frame,Hexainput } from '../../StyledComponents.tsx'
+import { Frame } from '../../StyledComponents.tsx'
 
 const Hexa=()=>{
 
@@ -39,8 +39,8 @@ const Hexa=()=>{
     return(
         <Frame className="hexa" textcolor={textColor?1:0}>
             <h4>Hexa</h4>
-            <Hexainput textcolor={textColor?1:0} type="text" onInput={(e)=>Hexa_inputChange(e)} ref={Hexa_Ref}/>
-            <p>{validHexaCode?"":"*Incorrect input format"}</p>
+            <input className='textInput' type="text" onInput={(e)=>Hexa_inputChange(e)} ref={Hexa_Ref}/>
+            {!validHexaCode && <p>*Incorrect input format</p>}
         </Frame>
     )
 }

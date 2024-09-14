@@ -3,6 +3,13 @@ html, body, #root {
   margin: 0;
 }
 
+.hamburger {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+}
+
 aside #hFAFAD2, aside #h66CDAA, aside #h00FA9A {
   font-size: 0.8em;
 }
@@ -18,45 +25,27 @@ body {
   font-family: Helvetica, "Times New Roman", Times, Arial, serif;
 }
 
-.top {
-  position: relative;
-  margin: 0 auto 20px;
-}
-
 .flex {
   display: flex;
   justify-content: center;
   margin: 0;
   position: relative;
 }
-.flex div div.HSLHSVLabel {
-  margin: 0 auto 7px;
-  position: relative;
-  height: 24px;
-  background: #bbbbbb;
-  width: 100px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 7px;
-  border: 1px solid rgba(184, 184, 184, 0.459);
-  box-sizing: border-box;
-  border-radius: 9px;
-}
-.flex div .colorSpace {
+.flex .colorSpace {
   width: -moz-fit-content;
   width: fit-content;
   padding: 0;
   margin: 0 auto;
 }
-.flex #right {
+.flex .right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.flex #right div.hexa {
+.flex .right div.hexa {
   position: relative;
 }
-.flex #right div.hexa p {
+.flex .right div.hexa p {
   position: absolute;
   margin: 0;
   right: 5px;
@@ -133,4 +122,21 @@ input.input_H[type=range]::-webkit-slider-runnable-track {
 
 input.input_H[type=range]::-moz-range-track {
   background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000);
+}
+
+input[type=number] {
+  width: 35px;
+  background: transparent;
+  outline: none;
+  border: none;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }/*# sourceMappingURL=style.css.map */

@@ -1,11 +1,7 @@
 import { useContext } from "react"
-import { AppContext } from "../App.tsx"
+import { AppContext, builtInColors } from "../App.tsx"
 import { Aside } from '../StyledComponents.tsx'
-import { builtInColorsType } from '../type.tsx'
-import json from "../builtInColors.json"
 import logo from "../../public/logo_letter.svg";
-
-export const builtInColors:builtInColorsType={...json}
 
 export const SideBar=()=>{
     

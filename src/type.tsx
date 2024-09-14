@@ -26,7 +26,9 @@ export type Context = {
     aside:boolean,
     pointerPosition:ppType,
     setAside:(aside:boolean)=>void,
-    setPointerPosition:(pp:ppType)=>void
+    setPointerPosition:(pp:ppType)=>void,
+    HSLtoggle: boolean,
+    setHSLtoggle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export type actionType = {

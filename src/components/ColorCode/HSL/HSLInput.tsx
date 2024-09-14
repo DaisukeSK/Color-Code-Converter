@@ -1,13 +1,11 @@
 import { useContext } from "react"
 import { AppContext } from "../../../App.tsx"
-import { HSLGrid } from '../../../StyledComponents.tsx'
+import { HSLColorRange } from '../../../StyledComponents.tsx'
 import { sync_Input } from '../../../Functions.tsx'
-import { HSLContext } from './HSL.tsx'
 
 const HSLInput=()=>{
 
-	const { ColorCodes, dispatch, rangeBG, setAside }= useContext(AppContext)
-	const { HSLtoggle }= useContext(HSLContext)
+	const { ColorCodes, dispatch, rangeBG, setAside, HSLtoggle }= useContext(AppContext)
 
 	const HSL_inputChange=(e: React.ChangeEvent<HTMLInputElement>):void=>{
 		sync_Input(e,setAside)
@@ -43,8 +41,8 @@ const HSLInput=()=>{
 	const CCarray=[ ColorCodes.LS, ColorCodes.L, ColorCodes.VS, ColorCodes.V ]
 
     return(
-        <div>
-            <HSLGrid toggle={true}>
+        <>
+            <HSLColorRange toggle={true}>
                 <label>H:</label>
                 <div className='range'>
                     <input
@@ -64,12 +62,12 @@ const HSLInput=()=>{
                     onChange={(e)=>{HSL_inputChange(e)}}
                     value={Math.round(ColorCodes.H)}
                 />
-            </HSLGrid>
+            </HSLColorRange>
 
             {["LS","L","VS","V"].map((elm:string, key:number)=>{
                 return (
 					
-					<HSLGrid bg={elm} rangebg={rangeBG} toggle={key==0 || key==1?HSLtoggle:!HSLtoggle} key={key}>
+					<HSLColorRange bg={elm} rangebg={rangeBG} toggle={key==0 || key==1?HSLtoggle:!HSLtoggle} key={key}>
 						<label>{elm.split("")[elm.length-1]}:</label>
 						<div className='range'>
 							<input
@@ -90,10 +88,10 @@ const HSLInput=()=>{
 							onChange={(e)=>{HSL_inputChange(e)}}
 							value={Math.round(CCarray[key])}
 						/>
-					</HSLGrid>
+					</HSLColorRange>
 				)
             })}
-        </div>
+        </>
     )
 }
 
