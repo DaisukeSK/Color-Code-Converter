@@ -187,93 +187,101 @@ export const Aside=Styled.aside<{aside:number}>`
     z-index:2; //should be higher than pointer.
     transition: left .5s;
 
-    &>div { // If change this height, don't forget to change height of sibling ul too.
+    .top { // If change this height, don't forget to change height of sibling ul too.
         position: relative;
-        padding: 30px 0;
-        box-sizing:border-box;
+        padding-top: 20px;
+        box-sizing: border-box;
+        height: 200px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
         .close {
             position: absolute;
             top: 10px;
             left: 10px;
-            width: 20px;
-            height: 20px;
             cursor: pointer;
-            svg {
-                path,rect {
-                    stroke: #717171;
-                    stroke-width:2;
-                    fill: none;
-                }
+            path, rect {
+                stroke: #717171;
             }
             &:hover {
-                svg {
-                    path,rect {
-                        stroke: #cccccc;
-                    }
+                path, rect {
+                    stroke: #cccccc;
                 }
             }
-        }// .close
+        }
         
-        .logo {
-            margin: 0 auto;
+        img {
             width: 80%;
-            height: 100px;
-
-            img {
-                width: 100%;
-            }
-            .presentedBy{
-                color: white;
-                text-align: center;
+            display: block;
+        }
+        hr {
+            width: 90%;
+            border: none;
+            border-bottom: 1px solid #ffffff22;
+        }
+        .presentedBy{
+            color: #cccccc;
+            margin: 10px 0;
+        }
+        .links {
+            svg {
+                width: 30px;
+                margin: 0 5px;
+                fill: #cccccc;
+                transition: fill .3s;
+                &:hover {
+                    fill: orange;
+                }
             }
         }
-        &>h4 {
-            text-align:center;
-            margin: 20px auto 0;
-            color: white;
-        }
-    }//div
+    }
 
-    &>ul {
-        display:flex;
-        flex-wrap:wrap;
+    ul {
+        display: flex;
+        flex-wrap: wrap;
         justify-content: space-evenly;
-        list-style:none;
+        list-style: none;
         padding: 0;
         margin: 0;
-        overflow:auto;
-        height: ${window.innerHeight-200-10+"px"}; // If change height sibling div, don't forget to change this too.
+        overflow: auto;
+        height: ${window.innerHeight-200+"px"}; // If change height sibling div, don't forget to change this too.
         
-        &>li{
+        li{
+            position: relative;
             cursor: pointer;
             margin: 7px 0;
             width: 150px;
-            height:60px;
-            padding-top:12px;
+            height: 60px;
+            padding-top: 12px;
             box-sizing: border-box;
-            border-radius:5px;
-            &>div{
-                width: fit-content;
-                margin: 0 auto;
-                font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            &: hover {
+                top: 2px;
+                left: 2px;
             }
         }
 
         /* width */
         &::-webkit-scrollbar {
-        width: 8px;
+            width: 8px;
         }
     
         /* Track */
         &::-webkit-scrollbar-track {
-        background-color: #999999;
+            cursor: pointer;
+            background-color: #999999;
         }
     
         /* Handle */
         &::-webkit-scrollbar-thumb {
-        background-color: #eeeeee;
-        outline: none;
+            cursor: pointer;
+            background-color: #eeeeee;
+            outline: none;
 
             &:hover {
                 background-color: #ffffff;
