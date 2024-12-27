@@ -1,26 +1,25 @@
 //////////////////////////// Top ////////////////////////////
-html, body, #root {
-    padding: 0;
-    margin: 0;
-    overflow: hidden; //for aside menu
+html,
+body,
+#root {
+  padding: 0;
+  margin: 0;
+  overflow: hidden; //for aside menu
 }
 
 .hamburger {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  // width:35px;
+  // height:25px;
 
-    position:absolute;
-    top:15px;
-    left:15px;
-    z-index: 1;
-    // width:35px;
-    // height:25px;
+  // overflow: visible;
 
-    // overflow: visible;
-    
-    // background-color: #FF0000;
+  // background-color: #FF0000;
 
-    cursor: pointer;
-    
-        
+  cursor: pointer;
 }
 
 // .hamburger {
@@ -38,7 +37,7 @@ html, body, #root {
 //             }
 //         }
 //     }
-        
+
 //     svg {
 //         overflow: visible;
 
@@ -52,20 +51,23 @@ html, body, #root {
 // }
 
 aside {
-    #hFAFAD2,#h66CDAA,#h00FA9A {
-        font-size: 0.8em;
-    }
+  #hFAFAD2,
+  #h66CDAA,
+  #h00FA9A {
+    font-size: 0.8em;
+  }
 }
 
-input[type="text"],input[type="number"] {
-    font-size: 95%;
+input[type="text"],
+input[type="number"] {
+  font-size: 95%;
 }
 
 body {
-    // width: 100%;
-    // min-height: 100vh;
-    position: relative;// For output_color element
-    font-family: Helvetica, 'Times New Roman', Times, Arial, serif;
+  // width: 100%;
+  // min-height: 100vh;
+  position: relative; // For output_color element
+  font-family: Helvetica, "Times New Roman", Times, Arial, serif;
 }
 
 // .top{
@@ -75,34 +77,34 @@ body {
 
 //////////////////////////// Main ////////////////////////////
 .flex {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    position: relative;
-    
-    // .colorSpace {
-    //     width: fit-content;
-    //     padding: 0;
-    //     margin: 0 auto;
-    // }
-    
-    .right {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  position: relative;
 
-        .hexa {
-            position: relative;
-            p {
-                position: absolute;
-                margin: 0;
-                right: 5px;
-                top:7px;
-                color: red;
-                font-size: 0.9em;
-            }
-        }
+  // .colorSpace {
+  //     width: fit-content;
+  //     padding: 0;
+  //     margin: 0 auto;
+  // }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .hexa {
+      position: relative;
+      p {
+        position: absolute;
+        margin: 0;
+        right: 5px;
+        top: 7px;
+        color: red;
+        font-size: 0.9em;
+      }
     }
+  }
 }
 
 /*---------------------------- input range ----------------------------*/
@@ -112,113 +114,117 @@ body {
 } */
 
 input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
-    // top: 3px;
-    margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  // top: 3px;
+  margin: 0;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
-    // background:#ff000060;
-    background:transparent;
-    height: 15px;
+  // background:#ff000060;
+  background: transparent;
+  height: 15px;
 }
 
 input[type="range"]::-moz-range-track {
-    // background:#ff000060;
-    background:transparent;
-    height: 15px;
+  // background:#ff000060;
+  background: transparent;
+  height: 15px;
 }
 
 input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    /*margin-top: -12px;  Centers thumb on the track */
-    /*margin-top = (track height in pixels / 2) - (thumb height in pixels /2)*/
-    background:white;
-    // background-size: contain;
-    background-repeat: no-repeat;
-    height: 15px;
-    width: 1px;
-    // border: 2px solid rgba(0, 0, 0, 0.5); /* */
-    // border-radius: 3px;
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  /*margin-top: -12px;  Centers thumb on the track */
+  /*margin-top = (track height in pixels / 2) - (thumb height in pixels /2)*/
+  background: white;
+  // background-size: contain;
+  background-repeat: no-repeat;
+  height: 15px;
+  width: 1px;
+  // border: 2px solid rgba(0, 0, 0, 0.5); /* */
+  // border-radius: 3px;
 }
 
 input[type="range"]::-moz-range-thumb {
-    border: none; /*Removes extra border that FF applies*/
-    border-radius: 0; /*Removes default border-radius that FF applies*/
-    background-color: #ffffff;
-    height: 15px;
-    width: 1px;
-    /* color: hsl(167, 66%, 8%); */
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+  background-color: #ffffff;
+  height: 15px;
+  width: 1px;
+  /* color: hsl(167, 66%, 8%); */
 }
 
 input[type="range"]:focus {
-    outline: none;
+  outline: none;
 }
-  
-  /***** Chrome, Safari, Opera, and Edge Chromium *****/
+
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
 input[type="range"]:focus::-webkit-slider-thumb {
-    /* border: 1px solid #053a5f; */
-    outline: 1px solid #444444;
-    outline-offset: 1px;
+  /* border: 1px solid #053a5f; */
+  outline: 1px solid #444444;
+  outline-offset: 1px;
 }
-  
-    /******** Firefox ********/
+
+/******** Firefox ********/
 input[type="range"]:focus::-moz-range-thumb {
-    /* border: 1px solid #053a5f; */
-    outline: 1px solid #444444;
-    outline-offset: 1px;  
+  /* border: 1px solid #053a5f; */
+  outline: 1px solid #444444;
+  outline-offset: 1px;
 }
-  
 
 input.input_H[type="range"]::-webkit-slider-runnable-track {
-    
-    background: linear-gradient(90deg,
-        #FF0000,#FFFF00,#00FF00,
-        #00FFFF,#0000FF,#FF00FF,#ff0000
-    );
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #ff00ff,
+    #ff0000
+  );
 }
 
 input.input_H[type="range"]::-moz-range-track {
-    
-    background: linear-gradient(90deg,
-    #FF0000,#FFFF00,#00FF00,
-        #00FFFF,#0000FF,#FF00FF,#FF0000
-    );
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #ff00ff,
+    #ff0000
+  );
 }
 
-
-input[type='number'] {
-    width: 35px;
-    background: transparent;
-    // background-color: red;
-    outline: none;
-    border: none;
+input[type="number"] {
+  width: 35px;
+  background: transparent;
+  // background-color: red;
+  outline: none;
+  border: none;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
-input[type="number"] { 
-    -moz-appearance:textfield; 
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
+@media only screen and (max-width: 500px) {
+  .hamburger {
+    display: none;
+  }
 
-@media only screen and (max-width: 500px){
-
-    .hamburger {
-        display: none;
-    }
-
-    .flex {
-        display: block;
-        
-    }
-
+  .flex {
+    display: block;
+  }
 }

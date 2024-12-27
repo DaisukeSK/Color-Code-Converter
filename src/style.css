@@ -1,4 +1,6 @@
-html, body, #root {
+html,
+body,
+#root {
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -12,11 +14,14 @@ html, body, #root {
   cursor: pointer;
 }
 
-aside #hFAFAD2, aside #h66CDAA, aside #h00FA9A {
+aside #hFAFAD2,
+aside #h66CDAA,
+aside #h00FA9A {
   font-size: 0.8em;
 }
 
-input[type=text], input[type=number] {
+input[type=text],
+input[type=number] {
   font-size: 95%;
 }
 
@@ -111,11 +116,11 @@ input[type=range]:focus::-moz-range-thumb {
 }
 
 input.input_H[type=range]::-webkit-slider-runnable-track {
-  background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #ff0000);
+  background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
 }
 
 input.input_H[type=range]::-moz-range-track {
-  background: linear-gradient(90deg, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000);
+  background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
 }
 
 input[type=number] {
