@@ -1,16 +1,17 @@
 import Styled from "styled-components";
 import { css } from "styled-components";
-import { ppType, rangeBGType, CCs } from './type'
+import { rangeBGType, positionType } from "./type";
+import { colorCodeType } from "./features/colorCode/colorCodeSlice";
 
-const maxWidth:number=500
+const maxWidth: number = 500;
 
-export const Main=Styled.main<{aside:number}>`
+export const Main = Styled.main<{ aside: number }>`
     position:relative; // for aside menu.
     display :flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    left:${props=>props.aside? css`250px`:css`0`};
+    left:${(props) => (props.aside ? css`250px` : css`0`)};
     transition: left .5s;
     width: fit-content;
     min-height: 100vh;
@@ -18,12 +19,13 @@ export const Main=Styled.main<{aside:number}>`
     // background: blue;
 `;
 
-export const Frame=Styled.section<{textcolor:number}>`
+export const Frame = Styled.section<{ textcolor: number }>`
     background: rgba(200, 200, 200, 0.5);
     padding: 7px 0;
     border-radius: 5px;
     overflow: hidden;
-    border: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
+    border: ${(props) =>
+      props.textcolor ? css`1px solid white;` : css`1px solid grey;`};
     box-sizing: border-box;
 
     h4 {
@@ -31,10 +33,10 @@ export const Frame=Styled.section<{textcolor:number}>`
         text-align:center;
     }
 
-    color: ${(props)=>props.textcolor ? css`white`: css`black`};
+    color: ${(props) => (props.textcolor ? css`white` : css`black`)};
 
     input {
-        color: ${(props)=>props.textcolor ? css`white`: css`black`};
+        color: ${(props) => (props.textcolor ? css`white` : css`black`)};
     }
 
     .textInput {
@@ -42,9 +44,10 @@ export const Frame=Styled.section<{textcolor:number}>`
         margin: 7px auto 0;
         width: 75px;
         border: none;
-        border-bottom: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid black`};
+        border-bottom: ${(props) =>
+          props.textcolor ? css`1px solid white` : css`1px solid black`};
         background: transparent;
-        color: ${(props)=>props.textcolor ? css`white`: css`black`};
+        color: ${(props) => (props.textcolor ? css`white` : css`black`)};
 
         &:focus {
             outline: none;
@@ -56,8 +59,8 @@ export const Frame=Styled.section<{textcolor:number}>`
     }
 `;
 
-export const HSLFrame=Styled(Frame)<{aside:number}>`
-    margin-right: ${props=>props.aside? css`20px`:css`40px`};
+export const HSLFrame = Styled(Frame)<{ aside: number }>`
+    margin-right: ${(props) => (props.aside ? css`20px` : css`40px`)};
     transition: margin-right .5s;
     padding-bottom: 15px;
 
@@ -66,7 +69,7 @@ export const HSLFrame=Styled(Frame)<{aside:number}>`
     }
 `;
 
-export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
+export const OutputFrame = Styled(Frame)<{ bultin: Array<string | null> }>`
 
     .colorName {
         display: flex;
@@ -81,15 +84,16 @@ export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
             height: 15px;
             border: 1px solid grey;
             margin: 0 0 0 5px;
-            background-color:${(props)=>props.bultin[1]};
-            display: ${(props)=>props.bultin[1] ? css`block`: css`none`};
+            background-color:${(props) => props.bultin[1]};
+            display: ${(props) => (props.bultin[1] ? css`block` : css`none`)};
         }
 
     }
 
     hr {
         border: none;
-        border-top: ${props=>props.textcolor? css`1px solid white;`:css`1px solid grey;`};
+        border-top: ${(props) =>
+          props.textcolor ? css`1px solid white;` : css`1px solid grey;`};
     }
 
     .grid {
@@ -135,15 +139,24 @@ export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
                 box-sizing: border-box;
                 top: 0;
                 left: 0;
-                border-left: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
-                border-top: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
+                border-left: ${(props) =>
+                  props.textcolor
+                    ? css`1px white solid`
+                    : css`1px black solid`};
+                border-top: ${(props) =>
+                  props.textcolor
+                    ? css`1px white solid`
+                    : css`1px black solid`};
             }
             & :first-child{
                 top:auto;
                 left:auto;
                 bottom: 0;
                 right: 0;
-                border: ${(props)=>props.textcolor ? css`1px white solid`: css`1px black solid`};
+                border: ${(props) =>
+                  props.textcolor
+                    ? css`1px white solid`
+                    : css`1px black solid`};
             }
 
             &:hover {
@@ -165,7 +178,8 @@ export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
     .range {
         input {
             background: linear-gradient(90deg, #00000000,#ffffff);
-            border: ${(props)=>props.textcolor ? css`1px solid white`: css`1px solid #888888`};
+            border: ${(props) =>
+              props.textcolor ? css`1px solid white` : css`1px solid #888888`};
         }
     }
 
@@ -176,10 +190,9 @@ export const OutputFrame=Styled(Frame)<{bultin:Array<string | null>}>`
     }
 `;
 
-
-export const Aside=Styled.aside<{aside:number}>`
+export const Aside = Styled.aside<{ aside: number }>`
     position: absolute;
-    left:${props=>props.aside? css`0`:css`-500px`};
+    left:${(props) => (props.aside ? css`0` : css`-500px`)};
     top:0;
     height: 100vh;
     width:500px;
@@ -247,7 +260,9 @@ export const Aside=Styled.aside<{aside:number}>`
         padding: 0;
         margin: 0;
         overflow: auto;
-        height: ${window.innerHeight-200+"px"}; // If change height sibling div, don't forget to change this too.
+        height: ${
+          window.innerHeight - 200 + "px"
+        }; // If change height sibling div, don't forget to change this too.
         
         li{
             position: relative;
@@ -295,7 +310,7 @@ export const Aside=Styled.aside<{aside:number}>`
     }//ul
 `;
 
-export const ToggleDiv=Styled.div<{toggle:number}>`
+export const ToggleDiv = Styled.div<{ toggle: number }>`
     margin: 0 auto 7px;
     position: relative;
     height: 24px;
@@ -312,12 +327,14 @@ export const ToggleDiv=Styled.div<{toggle:number}>`
         z-index:1;
         cursor: pointer;
         &:nth-of-type(1) {
-            color: ${(props)=>props.toggle ? css`#ffffff`: css`#888888`};
-            pointer-events: ${(props)=>props.toggle ? css`none`: css`auto`};
+            color: ${(props) => (props.toggle ? css`#ffffff` : css`#888888`)};
+            pointer-events: ${(props) =>
+              props.toggle ? css`none` : css`auto`};
         }
         &:nth-of-type(2) {
-            color: ${(props)=>props.toggle ? css`#888888`: css`#ffffff`};
-            pointer-events: ${(props)=>props.toggle ? css`auto`: css`none`};
+            color: ${(props) => (props.toggle ? css`#888888` : css`#ffffff`)};
+            pointer-events: ${(props) =>
+              props.toggle ? css`auto` : css`none`};
         }
     }
     div {
@@ -326,8 +343,9 @@ export const ToggleDiv=Styled.div<{toggle:number}>`
         height: 100%;
         top: 0;
 
-        left: ${(props) => props.toggle? css`0`: css`100%`};
-        transform: ${(props) => props.toggle? css`none`: css`translateX(-100%);`};
+        left: ${(props) => (props.toggle ? css`0` : css`100%`)};
+        transform: ${(props) =>
+          props.toggle ? css`none` : css`translateX(-100%);`};
         transition: all .3s ease-out;
 
         background-color: hsl(0, 0%, 30%);
@@ -335,15 +353,21 @@ export const ToggleDiv=Styled.div<{toggle:number}>`
     }
 `;
 
-export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, pointerposition:ppType, aside:number}>`
-    display: ${(props)=>props.toggle? css`block`: css`none`};
+export const ColorSpaceDiv = Styled.div<{
+  toggle: boolean;
+  hue: number;
+  hsl: number;
+  pointerposition: positionType;
+  aside: number;
+}>`
+    display: ${(props) => (props.toggle ? css`block` : css`none`)};
     position: relative;
     width: 360px;
     height: 200px; 
     overflow: hidden;
     margin: 0 auto 15px;
-    transition: ${(prop)=>prop.aside?css`all 1s ease-out`:css`none`};
-    background: ${(props)=>css`hsl(${props.hue},100%,50%)`};
+    transition: ${(prop) => (prop.aside ? css`all 1s ease-out` : css`none`)};
+    background: ${(props) => css`hsl(${props.hue},100%,50%)`};
     
     &::before {
         position: absolute;
@@ -352,10 +376,10 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
         content: "";
         width: 100%;
         height: 100%;
-        background: ${(props)=>props.hsl?
-            css`linear-gradient(90deg, hsl(0,0%,50%),transparent)`:
-            css`linear-gradient(90deg, white,transparent)`
-        };
+        background: ${(props) =>
+          props.hsl
+            ? css`linear-gradient(90deg, hsl(0,0%,50%),transparent)`
+            : css`linear-gradient(90deg, white,transparent)`};
         
     }
     &::after {
@@ -366,14 +390,29 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
         width: 100%;
         height: 100%;
         
-        background: ${(props)=>props.hsl?
-            css`linear-gradient(white, transparent,black)`:
-            css`linear-gradient(transparent,black)`};
+        background: ${(props) =>
+          props.hsl
+            ? css`linear-gradient(white, transparent,black)`
+            : css`linear-gradient(transparent,black)`};
     }
     img {
         position: absolute;
-        top: ${(props)=>props.hsl?css`${props.pointerposition.HSL_top}`:css`${props.pointerposition.HSV_top}`};
-        left: ${(props)=>props.hsl?css`${props.pointerposition.HSL_left}`:css`${props.pointerposition.HSV_left}`};
+        top: ${(props) =>
+          props.hsl
+            ? css`
+                ${props.pointerposition.HSL_top}
+              `
+            : css`
+                ${props.pointerposition.HSV_top}
+              `};
+        left: ${(props) =>
+          props.hsl
+            ? css`
+                ${props.pointerposition.HSL_left}
+              `
+            : css`
+                ${props.pointerposition.HSV_left}
+              `};
         z-index:1;
     }
     div {
@@ -391,7 +430,7 @@ export const ColorSpaceDiv=Styled.div<{toggle:boolean, hue:number, hsl:number, p
     }
 `;
 
-export const ColorRange=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
+export const ColorRange = Styled.div<{ bg?: string; rangebg?: rangeBGType }>`
 
     margin: 7px auto;
     display: flex;
@@ -406,21 +445,50 @@ export const ColorRange=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
     }
 
     .range {
-        background:${(props)=>
-            props.bg=="LS"? css`${props.rangebg?.LS}`:
-            props.bg=="L"? css`${props.rangebg?.L}`:
-            props.bg=="VS"? css`${props.rangebg?.VS}`:
-            props.bg=="V"? css`${props.rangebg?.V}`:
-
-            props.bg=="R"? css`${props.rangebg?.R}`:
-            props.bg=="G"? css`${props.rangebg?.G}`:
-            props.bg=="B"? css`${props.rangebg?.B}`:
-
-            props.bg=="C"? css`${props.rangebg?.C}`:
-            props.bg=="M"? css`${props.rangebg?.M}`:
-            props.bg=="Y"? css`${props.rangebg?.Y}`:
-            css`${props.rangebg?.K}`
-        };
+        background:${(props) =>
+          props.bg == "LS"
+            ? css`
+                ${props.rangebg?.LS}
+              `
+            : props.bg == "L"
+            ? css`
+                ${props.rangebg?.L}
+              `
+            : props.bg == "VS"
+            ? css`
+                ${props.rangebg?.VS}
+              `
+            : props.bg == "V"
+            ? css`
+                ${props.rangebg?.V}
+              `
+            : props.bg == "R"
+            ? css`
+                ${props.rangebg?.R}
+              `
+            : props.bg == "G"
+            ? css`
+                ${props.rangebg?.G}
+              `
+            : props.bg == "B"
+            ? css`
+                ${props.rangebg?.B}
+              `
+            : props.bg == "C"
+            ? css`
+                ${props.rangebg?.C}
+              `
+            : props.bg == "M"
+            ? css`
+                ${props.rangebg?.M}
+              `
+            : props.bg == "Y"
+            ? css`
+                ${props.rangebg?.Y}
+              `
+            : css`
+                ${props.rangebg?.K}
+              `};
         height: 15px;
         margin: 0 5px;
         
@@ -433,7 +501,7 @@ export const ColorRange=Styled.div<{bg?:string, rangebg?:rangeBGType}>`
 
 `;
 
-export const OpacityColorRange=Styled(ColorRange)`
+export const OpacityColorRange = Styled(ColorRange)`
     margin: 7px auto;
     width: fit-content;
     label {
@@ -448,8 +516,8 @@ export const OpacityColorRange=Styled(ColorRange)`
     }
 `;
 
-export const HSLColorRange=Styled(ColorRange)<{toggle:boolean}>`
-    display: ${(props)=>props.toggle ? css`flex`: css`none`};
+export const HSLColorRange = Styled(ColorRange)<{ toggle: boolean }>`
+    display: ${(props) => (props.toggle ? css`flex` : css`none`)};
     .range {
         input {
             width: 360px;
@@ -464,12 +532,15 @@ export const HSLColorRange=Styled(ColorRange)<{toggle:boolean}>`
     }
 `;
 
-export const BG=Styled.div<{aside:number,colorcodes:CCs}>`
+export const BG = Styled.div<{ aside: number; colorcodes: colorCodeType }>`
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color:${(props)=>css`hsla(${Math.round(props.colorcodes.H)},${Math.round(props.colorcodes.LS)}%,${Math.round(props.colorcodes.L)}%,${props.colorcodes.opacity})`};
-    transition:${(props)=>props.aside?css`all 1s ease-out`:`none`}
+    background-color:${(props) =>
+      css`hsla(${Math.round(props.colorcodes.H)},${Math.round(
+        props.colorcodes.LS
+      )}%,${Math.round(props.colorcodes.L)}%,${props.colorcodes.opacity})`};
+    transition:${(props) => (props.aside ? css`all 1s ease-out` : `none`)}
 `;
