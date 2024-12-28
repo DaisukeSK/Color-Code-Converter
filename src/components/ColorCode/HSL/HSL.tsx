@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../../App.tsx";
-import { HSLFrame, ToggleDiv } from "../../../StyledComponents.tsx";
+import { HSLFrame, ToggleDiv } from "../../../StyledComponents.ts";
 import ColorSpace from "./ColorSpace.tsx";
 import HSLInput from "./HSLInput.tsx";
 

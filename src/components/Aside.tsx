@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext, builtInColors } from "../App.tsx";
-import { Aside } from "../StyledComponents.tsx";
+import { Aside } from "../StyledComponents.ts";
 import logo from "../../public/logo_letter.svg";
 import Github from "../SVG/Github.tsx";
 import LinkedIn from "../SVG/LinkedIn.tsx";
@@ -11,16 +11,20 @@ export const SideBar = () => {
   const LiClick = (e: React.MouseEvent<HTMLLIElement>) => {
     const target: HTMLLIElement = e.target as HTMLLIElement;
 
-    dispatch({ type: "opacity", payload: 1 });
     dispatch({
-      type: "Hexa",
+      type: "inputChanged",
+      payload: { type: "opacity", value: 1 },
+    });
+
+    dispatch({
+      type: "inputHexaChanged",
       payload: "#" + target.closest("li")!.id.replace("h", ""),
     });
-    dispatch({ type: "HexaToRGB", payload: null });
-    dispatch({ type: "RGBtoCMYK", payload: null });
-    dispatch({ type: "RGBtoHSL", payload: null });
-    dispatch({ type: "HSLtoHSV", payload: null });
-    dispatch({ type: "trigger", payload: true });
+
+    dispatch({ type: "HexaToRGB" });
+    dispatch({ type: "RGBtoCMYK" });
+    dispatch({ type: "RGBtoHSL" });
+    dispatch({ type: "HSLtoHSV" });
   };
 
   return (

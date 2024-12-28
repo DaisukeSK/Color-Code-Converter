@@ -1,34 +1,18 @@
 import { useState, useEffect, useReducer, createContext } from "react";
-import { Main } from "./StyledComponents.tsx";
-import {
-  HSLtoPointer,
-  textColorChange,
-  check_Built_In_Color,
-  updateOutput,
-  inputRangeBG,
-  reducer,
-} from "./Functions.tsx";
+import { Main } from "./StyledComponents.ts";
+import { inputRangeBG, reducer } from "./Functions.ts";
 import { SideBar } from "./components/Aside.tsx";
 import { HSL } from "./components/ColorCode/HSL/HSL.tsx";
-import { BG } from "./StyledComponents.tsx";
+import { BG } from "./StyledComponents.ts";
 import CMYK from "./components/ColorCode/CMYK.tsx";
 import RGB from "./components/ColorCode/RGB.tsx";
 import Hexa from "./components/ColorCode/Hexa.tsx";
 import OutPut from "./components/ColorCode/OutPut.tsx";
 import imgPath from "../public/tree.png";
-
-import {
-  outputType,
-  ppType,
-  rangeBGType,
-  Context,
-  builtInColorsType,
-} from "./type";
-
+import { ppType, rangeBGType, Context, builtInColorsType } from "./type";
 import json from "./builtInColors.json";
 
 export const builtInColors: builtInColorsType = { ...json };
-
 export const AppContext = createContext<Context>({} as Context);
 
 export function App() {
@@ -47,21 +31,13 @@ export function App() {
     Y: 0,
     K: 0,
     opacity: 1,
-    trigger: 0,
-    boolean: true,
+    manipulatingPointer: false,
   });
 
   const [textColor, setTextColor] = useState<boolean>(true);
   const [aside, setAside] = useState<boolean>(false);
   const [HSLtoggle, setHSLtoggle] = useState<boolean>(true);
   const [builtInColor, setBuiltInColor] = useState<Array<string | null>>([]);
-  const [output, setOutput] = useState<outputType>({
-    HSL: "",
-    HSV: "",
-    Hexa: "",
-    RGB: "",
-    CMYK: "",
-  });
   const [pointerPosition, setPointerPosition] = useState<ppType>({
     HSL_top: "",
     HSL_left: "",
@@ -83,11 +59,10 @@ export function App() {
   });
 
   useEffect(() => {
-    dispatch({ type: "HSLtoHSV", payload: null });
-    dispatch({ type: "HSLtoRGB", payload: null });
-    dispatch({ type: "RGBtoHexa", payload: null });
-    dispatch({ type: "RGBtoCMYK", payload: null });
-    dispatch({ type: "trigger", payload: true });
+    dispatch({ type: "HSLtoHSV" });
+    dispatch({ type: "HSLtoRGB" });
+    dispatch({ type: "RGBtoHexa" });
+    dispatch({ type: "RGBtoCMYK" });
 
     // If put them in css, tree img shows up when loading page.
     document.body.style.background = `url(${imgPath})`;
@@ -97,19 +72,29 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    updateOutput(ColorCodes, setOutput);
-    textColorChange(ColorCodes, setTextColor);
-  }, [ColorCodes.opacity]);
-
-  useEffect(() => {
-    if (ColorCodes.boolean) {
-      HSLtoPointer(ColorCodes, setPointerPosition);
+    if (!ColorCodes.manipulatingPointer) {
+      setPointerPosition({
+        HSL_top: Math.abs(ColorCodes.L * 2 - 200) - 12 + "px",
+        HSL_left: ColorCodes.LS * 3.6 - 12 + "px",
+        HSV_top: Math.abs(ColorCodes.V * 2 - 200) - 12 + "px",
+        HSV_left: ColorCodes.VS * 3.6 - 12 + "px",
+      });
+      console.log("pointer");
     }
-    updateOutput(ColorCodes, setOutput);
-    textColorChange(ColorCodes, setTextColor);
+
+    setBuiltInColor(["--", null]);
+    Object.keys(builtInColors).forEach((val: string) => {
+      ColorCodes.Hexa == builtInColors[val]["hexa"] &&
+        setBuiltInColor(
+          builtInColors[val]["hexa"] == "#00FFFF"
+            ? ["Aqua/Cyan", builtInColors[val]["hexa"]]
+            : [val, builtInColors[val]["hexa"]]
+        );
+    });
+
+    setTextColor(ColorCodes.L <= 50 ? true : false);
     inputRangeBG(ColorCodes, setRangeBG);
-    check_Built_In_Color(ColorCodes, builtInColors, setBuiltInColor);
-  }, [ColorCodes.trigger]);
+  }, [ColorCodes]);
 
   return (
     <AppContext.Provider
@@ -119,7 +104,6 @@ export function App() {
         textColor,
         rangeBG,
         builtInColor,
-        output,
         aside,
         pointerPosition,
         setAside,

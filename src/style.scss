@@ -176,7 +176,7 @@ input[type="range"]:focus::-moz-range-thumb {
   outline-offset: 1px;
 }
 
-input.input_H[type="range"]::-webkit-slider-runnable-track {
+input.H[type="range"]::-webkit-slider-runnable-track {
   background: linear-gradient(
     90deg,
     #ff0000,
@@ -189,7 +189,7 @@ input.input_H[type="range"]::-webkit-slider-runnable-track {
   );
 }
 
-input.input_H[type="range"]::-moz-range-track {
+input.H[type="range"]::-moz-range-track {
   background: linear-gradient(
     90deg,
     #ff0000,

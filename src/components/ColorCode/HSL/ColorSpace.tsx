@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../../App.tsx";
-import { ColorSpaceDiv } from "../../../StyledComponents.tsx";
+import { ColorSpaceDiv } from "../../../StyledComponents.ts";
 import custom_pointer from "../../../../public/pointer.png";
 
 const ColorSpace = () => {
@@ -35,45 +35,53 @@ const ColorSpace = () => {
 
       if (target.id == "CS_HSL") {
         dispatch({
-          type: "LS",
-          payload: top == 200 || top == 0 ? 0 : (left * 100) / 360,
+          type: "inputChanged",
+          payload: {
+            type: "LS",
+            value: top == 200 || top == 0 ? 0 : (left * 100) / 360,
+          },
         });
-        dispatch({ type: "L", payload: Math.abs(top / 2 - 100) });
-        dispatch({ type: "HSLtoHSV", payload: null });
 
-        // Doing the same things as above to use these variables below
+        dispatch({
+          type: "inputChanged",
+          payload: { type: "L", value: Math.abs(top / 2 - 100) },
+        });
+
+        dispatch({ type: "HSLtoHSV" });
+
         const LS = top == 200 || top == 0 ? 0 : (left * 100) / 360;
         const L = Math.abs(top / 2 - 100);
         const V = 100 * (L / 100 + (LS / 100) * Math.min(1 - L / 100, L / 100));
         const VS = V == 0 ? 0 : 200 * (1 - L / V);
 
         setPointerPosition({
-          ...pointerPosition,
           HSL_top: top - 12 + "px",
           HSL_left: left - 12 + "px",
           HSV_top: Math.abs(V * 2 - 200) - 12 + "px",
           HSV_left: VS * 3.6 - 12 + "px",
         });
       } else if (target.id == "CS_HSV") {
-        dispatch({ type: "VS", payload: top == 200 ? 0 : (left * 100) / 360 });
-        dispatch({ type: "V", payload: Math.abs(top / 2 - 100) });
-        dispatch({ type: "HSVtoHSL", payload: null });
+        dispatch({
+          type: "inputChanged",
+          payload: { type: "VS", value: top == 200 ? 0 : (left * 100) / 360 },
+        });
 
-        // Doing the same things as above to use these variables below
+        dispatch({
+          type: "inputChanged",
+          payload: { type: "V", value: Math.abs(top / 2 - 100) },
+        });
+
+        dispatch({ type: "HSVtoHSL" });
+
         const VS = top == 200 ? 0 : (left * 100) / 360;
         const V = Math.abs(top / 2 - 100);
-
         const L = 100 * ((V / 100) * (1 - VS / 100 / 2));
-
-        let LS;
-        if (L == 0 || L == 100) {
-          LS = 0;
-        } else {
-          LS = 100 * ((V / 100 - L / 100) / Math.min(L / 100, 1 - L / 100));
-        }
+        const LS =
+          L == 0 || L == 100
+            ? 0
+            : 100 * ((V / 100 - L / 100) / Math.min(L / 100, 1 - L / 100));
 
         setPointerPosition({
-          ...pointerPosition,
           HSL_top: Math.abs(L * 2 - 200) - 12 + "px",
           HSL_left: LS * 3.6 - 12 + "px",
           HSV_top: top - 12 + "px",
@@ -81,10 +89,10 @@ const ColorSpace = () => {
         });
       }
 
-      dispatch({ type: "HSLtoRGB", payload: null });
-      dispatch({ type: "RGBtoHexa", payload: null });
-      dispatch({ type: "RGBtoCMYK", payload: null });
-      dispatch({ type: "trigger", payload: false });
+      dispatch({ type: "HSLtoRGB" });
+      dispatch({ type: "RGBtoHexa" });
+      dispatch({ type: "RGBtoCMYK" });
+      dispatch({ type: "manipulatingPointer", payload: true });
     }
   };
 
@@ -110,9 +118,13 @@ const ColorSpace = () => {
               }}
               onClick={(e) => {
                 movePointer(e);
+                dispatch({ type: "manipulatingPointer", payload: false });
               }}
               onDrag={(e) => movePointer(e)}
-              onDragEnd={(e) => movePointer(e)}
+              onDragEnd={(e) => {
+                movePointer(e);
+                dispatch({ type: "manipulatingPointer", payload: false });
+              }}
             ></div>
           </ColorSpaceDiv>
         );

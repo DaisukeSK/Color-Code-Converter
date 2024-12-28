@@ -46,8 +46,7 @@ export type CCs = {
   Y: number;
   K: number;
   opacity: number;
-  trigger: number;
-  boolean: boolean;
+  manipulatingPointer: boolean;
 };
 
 export type Context = {
@@ -56,7 +55,6 @@ export type Context = {
   textColor: boolean;
   rangeBG: rangeBGType;
   builtInColor: Array<string | null>;
-  output: outputType;
   aside: boolean;
   pointerPosition: ppType;
   setAside: (aside: boolean) => void;
@@ -67,94 +65,38 @@ export type Context = {
 
 export type actionType =
   | {
-      type: "trigger";
-      payload: boolean;
-    }
-  | {
-      type: "opacity";
-      payload: number;
-    }
-  | {
       type: "CMYKtoRGB";
-      payload: null;
     }
   | {
       type: "RGBtoHSL";
-      payload: null;
     }
   | {
       type: "HexaToRGB";
-      payload: null;
     }
   | {
       type: "RGBtoCMYK";
-      payload: null;
     }
   | {
       type: "RGBtoHexa";
-      payload: null;
     }
   | {
       type: "HSLtoRGB";
-      payload: null;
     }
   | {
       type: "HSLtoHSV";
-      payload: null;
     }
   | {
       type: "HSVtoHSL";
-      payload: null;
     }
   | {
-      type: "H";
-      payload: number;
+      type: "inputChanged";
+      payload: { type: string; value: number };
     }
   | {
-      type: "LS";
-      payload: number;
-    }
-  | {
-      type: "L";
-      payload: number;
-    }
-  | {
-      type: "VS";
-      payload: number;
-    }
-  | {
-      type: "V";
-      payload: number;
-    }
-  | {
-      type: "Hexa";
+      type: "inputHexaChanged";
       payload: string;
     }
   | {
-      type: "R";
-      payload: number;
-    }
-  | {
-      type: "G";
-      payload: number;
-    }
-  | {
-      type: "B";
-      payload: number;
-    }
-  | {
-      type: "C";
-      payload: number;
-    }
-  | {
-      type: "M";
-      payload: number;
-    }
-  | {
-      type: "Y";
-      payload: number;
-    }
-  | {
-      type: "K";
-      payload: number;
+      type: "manipulatingPointer";
+      payload: boolean;
     };
