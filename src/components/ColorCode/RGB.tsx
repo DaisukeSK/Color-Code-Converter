@@ -1,32 +1,19 @@
 import { useContext } from "react";
 import { AppContext } from "../../App.tsx";
-import { Frame, ColorRange } from "../../StyledComponents.tsx";
-import { sync_Input } from "../../Functions.tsx";
+import { Frame, ColorRange } from "../../StyledComponents.ts";
 
 const RGB = () => {
-  const { ColorCodes, dispatch, setAside, textColor, rangeBG } =
-    useContext(AppContext);
+  const { ColorCodes, dispatch, textColor, rangeBG } = useContext(AppContext);
 
   const RGB_inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    sync_Input(e, setAside);
-
-    switch (true) {
-      case e.target.className.includes("input_R"):
-        dispatch({ type: "R", payload: +e.target.value });
-        break;
-      case e.target.className.includes("input_G"):
-        dispatch({ type: "G", payload: +e.target.value });
-        break;
-      case e.target.className.includes("input_B"):
-        dispatch({ type: "B", payload: +e.target.value });
-        break;
-    }
-
-    dispatch({ type: "RGBtoHSL", payload: null });
-    dispatch({ type: "HSLtoHSV", payload: null });
-    dispatch({ type: "RGBtoHexa", payload: null });
-    dispatch({ type: "RGBtoCMYK", payload: null });
-    dispatch({ type: "trigger", payload: true });
+    dispatch({
+      type: "inputChanged",
+      payload: { type: e.target.className, value: +e.target.value },
+    });
+    dispatch({ type: "RGBtoHSL" });
+    dispatch({ type: "HSLtoHSV" });
+    dispatch({ type: "RGBtoHexa" });
+    dispatch({ type: "RGBtoCMYK" });
   };
 
   const CCarray = [ColorCodes.R, ColorCodes.G, ColorCodes.B];
@@ -42,7 +29,7 @@ const RGB = () => {
 
             <div className="range">
               <input
-                className={`input_${elm}`}
+                className={elm}
                 type="range"
                 min="0"
                 max="255"
@@ -53,17 +40,7 @@ const RGB = () => {
               />
             </div>
 
-            <input
-              type="number"
-              className={`input_${elm}`}
-              min="0"
-              max="255"
-              step="1"
-              onChange={(e) => {
-                RGB_inputChange(e);
-              }}
-              value={Math.round(CCarray[key])}
-            />
+            <input type="number" value={Math.round(CCarray[key])} />
           </ColorRange>
         );
       })}

@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { AppContext } from "../../App.tsx";
-import { Frame } from "../../StyledComponents.tsx";
+import { Frame } from "../../StyledComponents.ts";
 
 const Hexa = () => {
   const { ColorCodes, dispatch, textColor } = useContext(AppContext);
@@ -13,12 +13,11 @@ const Hexa = () => {
 
     if (target.value.match(/^#([a-fA-F0-9]){6}$/)) {
       setValidHexaCode(true);
-      dispatch({ type: "Hexa", payload: target.value });
-      dispatch({ type: "HexaToRGB", payload: null });
-      dispatch({ type: "RGBtoCMYK", payload: null });
-      dispatch({ type: "RGBtoHSL", payload: null });
-      dispatch({ type: "HSLtoHSV", payload: null });
-      dispatch({ type: "trigger", payload: true });
+      dispatch({ type: "inputHexaChanged", payload: target.value });
+      dispatch({ type: "HexaToRGB" });
+      dispatch({ type: "RGBtoCMYK" });
+      dispatch({ type: "RGBtoHSL" });
+      dispatch({ type: "HSLtoHSV" });
     } else {
       setValidHexaCode(false);
     }
@@ -27,12 +26,6 @@ const Hexa = () => {
   useEffect(() => {
     Hexa_Ref.current!.value = ColorCodes.Hexa;
   }, [ColorCodes.Hexa]);
-
-  useEffect(() => {
-    Hexa_Ref.current?.value.length == 7 &&
-      Hexa_Ref.current?.value[0] == "#" &&
-      setValidHexaCode(true);
-  }, [Hexa_Ref.current?.value]);
 
   return (
     <Frame className="hexa" textcolor={textColor ? 1 : 0}>
