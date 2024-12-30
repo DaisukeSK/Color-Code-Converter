@@ -1,38 +1,38 @@
 {
   "AliceBlue": {
     "hexa": "#F0F8FF",
-    "letterColor": "hsl(210, 100%, 80%)"
+    "textColor": "#8AC8FF"
   },
   "AntiqueWhite": {
     "hexa": "#FAEBD7",
-    "letterColor": "hsl(35, 100%, 75%)"
+    "textColor": "#E9A74E"
   },
   "Aqua": {
     "hexa": "#00FFFF",
-    "letterColor": "hsl(195, 100%, 50%)"
+    "textColor": "#00B3B3"
   },
   "Aquamarine": {
     "hexa": "#7FFFD4",
-    "letterColor": "hsl(160, 100%, 42%)"
+    "textColor": "#00CC87"
   },
   "Azure": {
     "hexa": "#F0FFFF",
-    "letterColor": "hsl(180, 75%, 65%)"
+    "textColor": "#00F0F0"
   },
   "Beige": {
     "hexa": "#F5F5DC",
-    "letterColor": "hsl(60, 55%, 65%)"
+    "textColor": "#C8C83D"
   },
   "Bisque": {
     "hexa": "#FFE4C4",
-    "letterColor": "hsl(35, 100%, 70%)"
+    "textColor": "#FF9E2B"
   },
   "Black": {
     "hexa": "#000000"
   },
   "BlanchedAlmond": {
     "hexa": "#FFEBCD",
-    "letterColor": "hsl(35, 100%, 70%)"
+    "textColor": "#FFAD33"
   },
   "Blue": {
     "hexa": "#0000FF"
@@ -50,7 +50,8 @@
     "hexa": "#5F9EA0"
   },
   "Chartreuse": {
-    "hexa": "#7FFF00"
+    "hexa": "#7FFF00",
+    "textColor": "#59B300"
   },
   "Chocolate": {
     "hexa": "#D2691E"
@@ -63,14 +64,14 @@
   },
   "Cornsilk": {
     "hexa": "#FFF8DC",
-    "letterColor": "hsl(40, 65%, 65%)"
+    "textColor": "#FFCF10"
   },
   "Crimson": {
     "hexa": "#DC143C"
   },
   "Cyan": {
     "hexa": "#00FFFF",
-    "letterColor": "hsl(195, 100%, 50%)"
+    "textColor": "#00B3B3"
   },
   "DarkBlue": {
     "hexa": "#00008B"
@@ -140,7 +141,7 @@
   },
   "FloralWhite": {
     "hexa": "#FFFAF0",
-    "letterColor": "hsl(40, 65%, 65%)"
+    "textColor": "#FFC757"
   },
   "ForestGreen": {
     "hexa": "#228B22"
@@ -150,14 +151,15 @@
   },
   "Gainsboro": {
     "hexa": "#DCDCDC",
-    "letterColor": "hsl(0, 0%, 55%)"
+    "textColor": "#9C9C9C"
   },
   "GhostWhite": {
     "hexa": "#F8F8FF",
-    "letterColor": "hsl(0, 0%, 65%)"
+    "textColor": "#ACACFF"
   },
   "Gold": {
-    "hexa": "#FFD700"
+    "hexa": "#FFD700",
+    "textColor": "#B39700"
   },
   "GoldenRod": {
     "hexa": "#DAA520"
@@ -169,11 +171,12 @@
     "hexa": "#008000"
   },
   "GreenYellow": {
-    "hexa": "#ADFF2F"
+    "hexa": "#ADFF2F",
+    "textColor": "#6AAF00"
   },
   "HoneyDew": {
     "hexa": "#F0FFF0",
-    "letterColor": "hsl(120, 70%, 70%)"
+    "textColor": "#57FF57"
   },
   "HotPink": {
     "hexa": "#FF69B4"
@@ -186,49 +189,54 @@
   },
   "Ivory": {
     "hexa": "#FFFFF0",
-    "letterColor": "hsl(60, 35%, 55%)"
+    "textColor": "#D7D700"
   },
   "Khaki": {
     "hexa": "#F0E68C",
-    "letterColor": "hsl(55, 70%, 40%)"
+    "textColor": "#C9B71A"
   },
   "Lavender": {
     "hexa": "#E6E6FA",
-    "letterColor": "hsl(240, 70%, 70%)"
+    "textColor": "#9191E9"
   },
   "LavenderBlush": {
     "hexa": "#FFF0F5",
-    "letterColor": "hsl(340, 85%, 80%)"
+    "textColor": "#FFA4C2"
   },
   "LawnGreen": {
-    "hexa": "#7CFC00"
+    "hexa": "#7CFC00",
+    "textColor": "#4A9600"
   },
   "LemonChiffon": {
     "hexa": "#FFFACD",
-    "letterColor": "hsl(60, 35%, 55%)"
+    "textColor": "#CDB800"
   },
   "LightBlue": {
-    "hexa": "#ADD8E6"
+    "hexa": "#ADD8E6",
+    "textColor": "#4BAAC8"
   },
   "LightCoral": {
     "hexa": "#F08080"
   },
   "LightCyan": {
     "hexa": "#E0FFFF",
-    "letterColor": "hsl(180, 70%, 55%)"
+    "textColor": "#00E0E0"
   },
   "LightGoldenRodYellow": {
     "hexa": "#FAFAD2",
-    "letterColor": "hsl(60, 35%, 55%)"
+    "textColor": "#CFCF17"
   },
   "LightGrey": {
-    "hexa": "#D3D3D3"
+    "hexa": "#D3D3D3",
+    "textColor": "#A0A0A0"
   },
   "LightGreen": {
-    "hexa": "#90EE90"
+    "hexa": "#90EE90",
+    "textColor": "#1EC71E"
   },
   "LightPink": {
-    "hexa": "#FFB6C1"
+    "hexa": "#FFB6C1",
+    "textColor": "#FF6980"
   },
   "LightSalmon": {
     "hexa": "#FFA07A"
@@ -237,27 +245,30 @@
     "hexa": "#20B2AA"
   },
   "LightSkyBlue": {
-    "hexa": "#87CEFA"
+    "hexa": "#87CEFA",
+    "textColor": "#0D9CF5"
   },
   "LightSlateGrey": {
     "hexa": "#778899"
   },
   "LightSteelBlue": {
-    "hexa": "#B0C4DE"
+    "hexa": "#B0C4DE",
+    "textColor": "#688EC0"
   },
   "LightYellow": {
     "hexa": "#FFFFE0",
-    "letterColor": "hsl(60, 35%, 55%)"
+    "textColor": "#C7C700"
   },
   "Lime": {
-    "hexa": "#00FF00"
+    "hexa": "#00FF00",
+    "textColor": "#00B300"
   },
   "LimeGreen": {
     "hexa": "#32CD32"
   },
   "Linen": {
     "hexa": "#FAF0E6",
-    "letterColor": "hsl(30, 30%, 60%)"
+    "textColor": "#E0A467"
   },
   "Magenta": {
     "hexa": "#FF00FF"
@@ -285,7 +296,7 @@
   },
   "MediumSpringGreen": {
     "hexa": "#00FA9A",
-    "letterColor": "hsl(157, 100%, 35%)"
+    "textColor": "#00AD6B"
   },
   "MediumTurquoise": {
     "hexa": "#48D1CC"
@@ -298,26 +309,26 @@
   },
   "MintCream": {
     "hexa": "#F5FFFA",
-    "letterColor": "hsl(150, 40%, 65%)"
+    "textColor": "#42FFA1"
   },
   "MistyRose": {
     "hexa": "#FFE4E1",
-    "letterColor": "hsl(5, 30%, 70%)"
+    "textColor": "#FF887B"
   },
   "Moccasin": {
     "hexa": "#FFE4B5",
-    "letterColor": "hsl(35, 70%, 55%)"
+    "textColor": "#FFAC1C"
   },
   "NavajoWhite": {
     "hexa": "#FFDEAD",
-    "letterColor": "hsl(35, 70%, 55%)"
+    "textColor": "#FFA014"
   },
   "Navy": {
     "hexa": "#000080"
   },
   "OldLace": {
     "hexa": "#FDF5E6",
-    "letterColor": "hsl(40, 40%, 60%)"
+    "textColor": "#F2BC58"
   },
   "Olive": {
     "hexa": "#808000"
@@ -336,39 +347,40 @@
   },
   "PaleGoldenRod": {
     "hexa": "#EEE8AA",
-    "letterColor": "hsl(55, 55%, 55%)"
+    "textColor": "#BFB226"
   },
   "PaleGreen": {
     "hexa": "#98FB98",
-    "letterColor": "hsl(120, 65%, 55%)"
+    "textColor": "#07C007"
   },
   "PaleTurquoise": {
     "hexa": "#AFEEEE",
-    "letterColor": "hsl(180, 55%, 50%)"
+    "textColor": "#29C1C1"
   },
   "PaleVioletRed": {
     "hexa": "#DB7093"
   },
   "PapayaWhip": {
     "hexa": "#FFEFD5",
-    "letterColor": "hsl(40, 80%, 70%)"
+    "textColor": "#FFB53C"
   },
   "PeachPuff": {
     "hexa": "#FFDAB9",
-    "letterColor": "hsl(28, 90%, 70%)"
+    "textColor": "#FFA453"
   },
   "Peru": {
     "hexa": "#CD853F"
   },
   "Pink": {
-    "hexa": "#FFC0CB"
+    "hexa": "#FFC0CB",
+    "textColor": "#FF738C"
   },
   "Plum": {
     "hexa": "#DDA0DD"
   },
   "PowderBlue": {
     "hexa": "#B0E0E6",
-    "letterColor": "hsl(190, 35%, 60%)"
+    "textColor": "#3DB2C0"
   },
   "Purple": {
     "hexa": "#800080"
@@ -399,7 +411,7 @@
   },
   "SeaShell": {
     "hexa": "#FFF5EE",
-    "letterColor": "hsl(25, 30%, 80%)"
+    "textColor": "#FFB988"
   },
   "Sienna": {
     "hexa": "#A0522D"
@@ -408,7 +420,8 @@
     "hexa": "#C0C0C0"
   },
   "SkyBlue": {
-    "hexa": "#87CEEB"
+    "hexa": "#87CEEB",
+    "textColor": "#239ED0"
   },
   "SlateBlue": {
     "hexa": "#6A5ACD"
@@ -418,11 +431,11 @@
   },
   "Snow": {
     "hexa": "#FFFAFA",
-    "letterColor": "hsl(0, 0%, 80%)"
+    "textColor": "#FFADAD"
   },
   "SpringGreen": {
     "hexa": "#00FF7F",
-    "letterColor": "hsl(150, 100%, 40%)"
+    "textColor": "#00994C"
   },
   "SteelBlue": {
     "hexa": "#4682B4"
@@ -434,32 +447,34 @@
     "hexa": "#008080"
   },
   "Thistle": {
-    "hexa": "#D8BFD8"
+    "hexa": "#D8BFD8",
+    "textColor": "#B180B1"
   },
   "Tomato": {
     "hexa": "#FF6347"
   },
   "Turquoise": {
-    "hexa": "#40E0D0"
+    "hexa": "#40E0D0",
+    "textColor": "#1AA093"
   },
   "Violet": {
     "hexa": "#EE82EE"
   },
   "Wheat": {
     "hexa": "#F5DEB3",
-    "letterColor": "hsl(40, 70%, 60%)"
+    "textColor": "#E3A32C"
   },
   "White": {
     "hexa": "#FFFFFF",
-    "letterColor": "hsl(0, 0%, 80%)"
+    "textColor": "#B3B3B3"
   },
   "WhiteSmoke": {
     "hexa": "#F5F5F5",
-    "letterColor": "hsl(0, 0%, 70%)"
+    "textColor": "#A9A9A9"
   },
   "Yellow": {
     "hexa": "#FFFF00",
-    "letterColor": "hsl(40, 100%, 50%)"
+    "textColor": "#B3B300"
   },
   "YellowGreen": {
     "hexa": "#9ACD32"

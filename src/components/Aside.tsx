@@ -2,8 +2,9 @@ import { useContext } from "react";
 import { AppContext, builtInColors } from "../App.tsx";
 import { Aside } from "../StyledComponents.ts";
 import logo from "../../public/logo_letter.svg";
-import Github from "../SVG/Github.tsx";
-import LinkedIn from "../SVG/LinkedIn.tsx";
+import { Button, Box, IconButton } from "@mui/material";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export const SideBar = () => {
   const { dispatch, aside, setAside } = useContext(AppContext);
@@ -18,7 +19,7 @@ export const SideBar = () => {
 
     dispatch({
       type: "inputHexaChanged",
-      payload: "#" + target.closest("li")!.id.replace("h", ""),
+      payload: "#" + target.closest("button")!.id.replace("h", ""),
     });
 
     dispatch({ type: "HexaToRGB" });
@@ -48,37 +49,87 @@ export const SideBar = () => {
         <img src={logo} />
         <hr />
         <div className="presentedBy">Presented by DaisukeSK</div>
-        <div className="links">
-          <a href="https://github.com/DaisukeSK" target="_blank">
-            <Github />
-          </a>
-          <a
+        <div>
+          <IconButton href="https://github.com/DaisukeSK" target="_blank">
+            <GitHubIcon
+              fontSize="large"
+              sx={{
+                fill: "#ffffff33",
+                "&:hover": {
+                  fill: "#ffffff77",
+                },
+              }}
+            />
+          </IconButton>
+
+          <IconButton
             href="https://www.linkedin.com/in/daisuke-seki-670202261"
             target="_blank"
           >
-            <LinkedIn />
-          </a>
+            <LinkedInIcon
+              fontSize="large"
+              sx={{
+                fill: "#ffffff33",
+                "&:hover": {
+                  fill: "#ffffff77",
+                },
+              }}
+            />
+          </IconButton>
         </div>
       </div>
 
       <ul>
         {Object.keys(builtInColors).map((val: string, key: number) => {
           return (
-            <li
+            <Button
               key={key}
               id={"h" + builtInColors[val]["hexa"].replace("#", "")}
-              onClick={(e) => LiClick(e)}
-              style={{
+              onClick={(e: any) => LiClick(e)}
+              variant="contained"
+              sx={{
+                width: "150px",
+                height: "60px",
+                margin: "7px 0",
+                lineHeight: 1,
                 backgroundColor: builtInColors[val]["hexa"],
-                color: builtInColors[val].letterColor
-                  ? builtInColors[val]["letterColor"]
-                  : "hsla(0, 0%, 100%, 0.7)",
+                color: builtInColors[val].textColor
+                  ? builtInColors[val].textColor
+                  : "#ffffffaa",
+                border: `3px solid transparent`,
+                "&:hover": {
+                  border: `3px solid ${
+                    builtInColors[val].textColor
+                      ? builtInColors[val].textColor
+                      : "#ffffff77"
+                  }`,
+                },
               }}
             >
-              {val}
-              <br />
-              {builtInColors[val]["hexa"]}
-            </li>
+              <Box>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize:
+                      val == "LightGoldenRodYellow"
+                        ? "0.6rem"
+                        : val == "MediumAquaMarine" ||
+                          val == "MediumSpringGreen"
+                        ? "0.75rem"
+                        : val == "BlanchedAlmond" ||
+                          val == "CornflowerBlue" ||
+                          val == "MediumTurquoise" ||
+                          val == "MediumVioletRed" ||
+                          val == "MediumSlateBlue"
+                        ? "0.8rem"
+                        : "0.875rem",
+                  }}
+                >
+                  {val}
+                </div>
+                <div>{builtInColors[val]["hexa"]}</div>
+              </Box>
+            </Button>
           );
         })}
       </ul>

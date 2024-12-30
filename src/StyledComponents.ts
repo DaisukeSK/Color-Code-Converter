@@ -238,17 +238,6 @@ export const Aside = Styled.aside<{ aside: number }>`
             color: #cccccc;
             margin: 10px 0;
         }
-        .links {
-            svg {
-                width: 30px;
-                margin: 0 5px;
-                fill: #cccccc;
-                transition: fill .3s;
-                &:hover {
-                    fill: orange;
-                }
-            }
-        }
     }
 
     ul {
