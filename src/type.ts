@@ -1,5 +1,5 @@
 export type builtInColorsType = {
-  [key: string]: { hexa: string; letterColor?: string };
+  [key: string]: { hexa: string; textColor?: string };
 };
 
 export type outputType = {
